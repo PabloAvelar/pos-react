@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export async function postByUrl(url, data){
     const _data = await axios.post(url, data);
     return _data.data;

@@ -12,7 +12,7 @@ function App() {
           <Route path="/" element={<Login />} /> 
 
           {/* Aquí creen sus páginas para enrutarlos */}
-          <Route path="/" />
+          <Route path="/dashboard" />
           <Route path="/" />
           <Route path="/" />
         </Routes>

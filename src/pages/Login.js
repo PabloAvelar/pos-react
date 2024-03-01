@@ -1,7 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import '../styles/login.css';
 import React, { useState } from 'react';
-import axios from 'axios';
+import registerService from '../services/registerService';
+
 
 export const Login = () => {
     const [inputs, setInputs] = useState({});
@@ -20,29 +21,24 @@ export const Login = () => {
 
         try{
 
-            const response = await axios.post(
-                'http://localhost/pos-backend/api/login.php',
-                new URLSearchParams({
-                            'username': inputs.username,
-                            'password': inputs.password
-                        }).toString(),
-                {
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    },
-                    withCredentials: true
-                }
-            )
-
-            // console.log(response.data)
+            const data = new URLSearchParams({
+                    'username': inputs.username,
+                    'password': inputs.password
+                }).toString()
             
-            const result = await response.data;
-
-            if (result.success){
-                console.log("LOGIN!");
-            }else{
-                console.log("NOOOO");
-            }
+                registerService.login(data)
+                .then((res) => {
+                    if (res.success){
+                        console.log("LOGIN!");
+                        navigate('/dashboard');
+                    }else{
+                        console.log("NOOOO");
+                    }
+                })
+                .catch((err) => {
+                    console.error(err);
+                })
+            
         }catch (e){
             console.error("Error: ", e);
         }
