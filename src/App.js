@@ -1,7 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
-import { Login } from './pages/Login';
+import Login from './pages/Login';
+import Dashboard from './pages/Dashboard';
+import Sales from './pages/Sales';
 
 function App() {
   return (
@@ -12,8 +14,8 @@ function App() {
           <Route path="/" element={<Login />} /> 
 
           {/* Aquí creen sus páginas para enrutarlos */}
-          <Route path="/dashboard" />
-          <Route path="/" />
+          <Route path="/dashboard" element={<Dashboard/>}/>
+          <Route path="/sales" element={<Sales/>} />
           <Route path="/" />
         </Routes>
       </Router>
