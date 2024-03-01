@@ -1,4 +1,6 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
+
 
 function Dashboard() {
   return (
@@ -6,4 +8,4 @@ function Dashboard() {
   )
 }
 
-export default Dashboard
+export default Dashboard;
