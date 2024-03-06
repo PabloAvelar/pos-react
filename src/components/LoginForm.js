@@ -50,7 +50,7 @@ function LoginForm() {
     return (
         <div className='login-card-container'>
             <div style={{marginTop: 20}}>
-                <span style={{ color: "#370021", fontWeight: 'bold', fontSize: 48 }}>
+                <span style={{ color: "#370021", fontWeight: 'bold', fontSize: 36 }}>
                     Login
                 </span>
             </div>
@@ -60,7 +60,7 @@ function LoginForm() {
 
                 <div className='input-container'>
                     <div className="input-prepend">
-                        <input className='input-form' type="text" onChange={handleChange} name="username" placeholder="User" required />
+                        <input className='input-form' type="text" onChange={handleChange} name="username" placeholder="Username" required />
                         <FontAwesomeIcon icon={faUser} className='icon' />
                     </div>
                     <div className="input-prepend">

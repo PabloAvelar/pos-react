@@ -61,3 +61,8 @@
     background-color: #370021;
     transition: .5s all;
 }
+
+.icon{
+    color: var(--text);
+    font-size: 20px;
+}
