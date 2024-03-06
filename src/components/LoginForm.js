@@ -48,7 +48,7 @@ function LoginForm() {
     }
 
     return (
-        <div className='login-card-container'>
+        <div className='login-card-container shadow'>
             <div style={{marginTop: 20}}>
                 <span style={{ color: "#370021", fontWeight: 'bold', fontSize: 36 }}>
                     Login
@@ -70,7 +70,7 @@ function LoginForm() {
                 </div>
 
                 <div className="submit-container">
-                    <button className="submit-button" href="dashboard.html" type="submit">Login</button>
+                    <button className="submit-button shadow" href="dashboard.html" type="submit">Login</button>
                 </div>
             </form>
         </div>
