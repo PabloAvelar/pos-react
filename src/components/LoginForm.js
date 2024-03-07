@@ -9,6 +9,8 @@ import '../styles/loginform.css';
 function LoginForm() {
     const [inputs, setInputs] = useState({});
     const [errorMessages, setErrorMessages] = useState([]);
+    const [authenticated, setAuthenticated] = useState(null);
+    const [token, setToken] = useState('');
     let navigate = useNavigate();
 
 
@@ -31,9 +33,12 @@ function LoginForm() {
 
             registerService.login(data)
                 .then((res) => {
+                    console.log(res);
                     if (res.success) {
                         console.log("LOGIN!");
-                        navigate('/dashboard');
+                        // setToken(res.token);
+
+                        // navigate('/dashboard');
                     } else {
                         console.log("NOOOO");
                     }
