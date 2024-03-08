@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import Login from './pages/Login';
+import Clients from './pages/Clients'
 import Dashboard from './pages/Dashboard';
 import Sales from './pages/Sales';
 import Products from './pages/Products';
@@ -24,23 +25,9 @@ function ProtectedRoute({children}){
 
   return <>{auth.auth !== null && children}</>
 }
-import Clients from './pages/Clients'
 
 function App() {
-  // const [token, setToken] = useState(null);
   const auth = useAuth();
-
-  // // Cargar el token al inicio
-  // useEffect(() => {
-  //   const storedToken = localStorage.getItem('token');
-  //   if (storedToken) {
-  //     setToken(storedToken);
-  //   }else{
-      
-  //   }
-  // }, []);
-
-
 
   return (
     <div className="App">
@@ -51,6 +38,7 @@ function App() {
 
           {/* Otras rutas protegidas */}
           <Route path="/sales" element={<ProtectedRoute><Sales/></ProtectedRoute>} />
+          <Route path="/clients" element={<ProtectedRoute><Clients/></ProtectedRoute>} />
           <Route path="/products" element={<ProtectedRoute><Products/></ProtectedRoute>} />
           <Route path="/reports" element={<ProtectedRoute><Reports/></ProtectedRoute>} />
         </Routes>
