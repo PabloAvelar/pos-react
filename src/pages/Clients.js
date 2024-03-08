@@ -1,48 +1,20 @@
 import React, { useState, useEffect } from 'react'
 import registerService from '../services/registerService';
 import { useNavigate } from 'react-router-dom';
+import Table from '../components/Table';
 
 
 function Clients() {
 
   const [clientsRegistered, setClientsRegistered] = useState([]);
-  // const tableHeaders = {
-  //   header1: {
-  //     title: "Full Name",
-  //     space: "17%"
-  //   },
-
-  //   header2: {
-  //     title: "Address",
-  //     space: "10%"
-  //   },
-
-  //   header3: {
-  //     title: "Phone Number",
-  //     space: "10%"
-  //   },
-
-  //   header4: {
-  //     title: "Phone Number",
-  //     space: "10%"
-  //   },
-
-  //   header5: {
-  //     title: "Total",
-  //     space: "10%"
-  //   },
-
-  //   header4: {
-  //     title: "Note",
-  //     space: "10%"
-  //   },
-  // };
+  const [dataLoaded, setDataLoaded] = useState(false);
 
   useEffect(() => {
     // Cargando sólo una vez los clientes que hay
     registerService.getClients()
       .then((clients) => {
         setClientsRegistered(clients);
+        setDataLoaded(true);
       })
       .catch((err) => {
         console.error(err);
@@ -50,9 +22,11 @@ function Clients() {
   }, []);
   return (
 
-    <div className="container-fluid">
+    <div className="clients-container">
+      {/* {console.log(clientsRegistered)} */}
+      {dataLoaded ? <Table data={clientsRegistered} /> : <p>cargando datos</p>}
 
-      <div className="row-fluid">
+      {/* <div className="row-fluid">
 
         <div className="span10">
           <div className="contentheader">
@@ -117,7 +91,7 @@ function Clients() {
           <div className="clearfix"></div>
 
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
