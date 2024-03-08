@@ -2,9 +2,41 @@ import React, { useState, useEffect } from 'react'
 import registerService from '../services/registerService';
 import { useNavigate } from 'react-router-dom';
 
+
 function Clients() {
 
   const [clientsRegistered, setClientsRegistered] = useState([]);
+  // const tableHeaders = {
+  //   header1: {
+  //     title: "Full Name",
+  //     space: "17%"
+  //   },
+
+  //   header2: {
+  //     title: "Address",
+  //     space: "10%"
+  //   },
+
+  //   header3: {
+  //     title: "Phone Number",
+  //     space: "10%"
+  //   },
+
+  //   header4: {
+  //     title: "Phone Number",
+  //     space: "10%"
+  //   },
+
+  //   header5: {
+  //     title: "Total",
+  //     space: "10%"
+  //   },
+
+  //   header4: {
+  //     title: "Note",
+  //     space: "10%"
+  //   },
+  // };
 
   useEffect(() => {
     // Cargando sólo una vez los clientes que hay
