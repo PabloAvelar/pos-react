@@ -6,7 +6,6 @@ import Dashboard from './pages/Dashboard';
 import Sales from './pages/Sales';
 import Products from './pages/Products';
 import Reports from './pages/Reports';
-import ProtectedRoute from './components/ProtectedRoute';
 import React, { useEffect, useState } from 'react';
 
 function App() {
@@ -17,6 +16,8 @@ function App() {
     const storedToken = localStorage.getItem('token');
     if (storedToken) {
       setToken(storedToken);
+    }else{
+      
     }
   }, []);
 
@@ -25,12 +26,12 @@ function App() {
       <Router>
         <Routes>
           {/* Para el login */}
-          <Route path="/" element={<Dashboard />} />
+          <Route path="/" element={token ? <Dashboard/> : <Login />} />
 
           {/* Otras rutas protegidas */}
-          <Route path="/sales" element={<Sales />} />
-          <Route path="/products" element={<Products />} />
-          <Route path="/reports" element={<Reports />} />
+          <Route path="/sales" element={token ? <Sales/> : <Login />} />
+          <Route path="/products" element={token ? <Products/> : <Login />} />
+          <Route path="/reports" element={token ? <Reports/> : <Login />} />
         </Routes>
       </Router>
     </div>

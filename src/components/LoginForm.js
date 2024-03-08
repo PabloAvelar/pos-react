@@ -38,8 +38,10 @@ function LoginForm() {
                         // Guardando el perro token en local
                         localStorage.setItem('token', res.token);
                         setToken(res.token);
-
-                        // navigate('/dashboard');
+                        navigate('/');
+                        
+                        // Refrescando la página
+                        window.location.reload(false);
                     } else {
                         console.log("NOOOO");
                     }
@@ -65,7 +67,7 @@ function LoginForm() {
                             token
                         });
                         console.log(response);
-                        if (response){
+                        if (response) {
                             console.log("Token validated");
                         }
                     } catch (error) {
