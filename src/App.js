@@ -25,12 +25,12 @@ function App() {
       <Router>
         <Routes>
           {/* Para el login */}
-          <Route path="/" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+          <Route path="/" element={<Dashboard />} />
 
           {/* Otras rutas protegidas */}
-          <Route path="/sales" element={<ProtectedRoute><Sales /></ProtectedRoute>} />
-          <Route path="/products" element={<ProtectedRoute><Products /></ProtectedRoute>} />
-          <Route path="/reports" element={<ProtectedRoute><Reports /></ProtectedRoute>} />
+          <Route path="/sales" element={<Sales />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/reports" element={<Reports />} />
         </Routes>
       </Router>
     </div>
