@@ -30,6 +30,7 @@ function App() {
           <Route path="/" element={token ? <Dashboard/> : <Login />} />
 
           {/* Otras rutas protegidas */}
+          <Route path="/clients" element={token ? <Clients/> : <Login />} />
           <Route path="/sales" element={token ? <Sales/> : <Login />} />
           <Route path="/products" element={token ? <Products/> : <Login />} />
           <Route path="/reports" element={token ? <Reports/> : <Login />} />

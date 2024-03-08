@@ -1,4 +1,4 @@
-import { postByUrl, postByUrlWithConfig } from "./utils";
+import { postByUrl, getByUrl, postByUrlWithConfig } from "./utils";
 
 const endpoint = 'http://localhost/pos-backend/api/controllers';
 
