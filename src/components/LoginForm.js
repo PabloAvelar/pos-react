@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import registerService from '../services/registerService';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -12,7 +12,6 @@ function LoginForm() {
     const [authenticated, setAuthenticated] = useState(null);
     const [token, setToken] = useState('');
     let navigate = useNavigate();
-
 
     const handleChange = (event) => {
         const name = event.target.name;
@@ -36,7 +35,9 @@ function LoginForm() {
                     console.log(res);
                     if (res.success) {
                         console.log("LOGIN!");
-                        // setToken(res.token);
+                        // Guardando el perro token en local
+                        localStorage.setItem('token', res.token);
+                        setToken(res.token);
 
                         // navigate('/dashboard');
                     } else {
@@ -44,6 +45,7 @@ function LoginForm() {
                     }
                 })
                 .catch((err) => {
+                    console.log("ERREOROEROEROER")
                     console.error(err);
                 })
 
@@ -52,9 +54,33 @@ function LoginForm() {
         }
     }
 
+    // if the token changes
+    useEffect(() => {
+        setTimeout(() => {
+            if (token) {
+                // verifying the token
+                async function validateToken() {
+                    try {
+                        const response = registerService.validateToken({
+                            token
+                        });
+                        console.log(response);
+                        if (response){
+                            console.log("Token validated");
+                        }
+                    } catch (error) {
+                        console.error(error);
+                    }
+                }
+
+                validateToken();
+            }
+        }, 1000);
+    }, [token]); // dependency
+
     return (
         <div className='login-card-container shadow'>
-            <div style={{marginTop: 20}}>
+            <div style={{ marginTop: 20 }}>
                 <span style={{ color: "#370021", fontWeight: 'bold', fontSize: 36 }}>
                     Login
                 </span>
@@ -70,7 +96,7 @@ function LoginForm() {
                     </div>
                     <div className="input-prepend">
                         <input className='input-form' type="password" onChange={handleChange} name="password" placeholder="Password" required />
-                        <FontAwesomeIcon icon={faLock} className='icon'/>
+                        <FontAwesomeIcon icon={faLock} className='icon' />
                     </div>
                 </div>
 
