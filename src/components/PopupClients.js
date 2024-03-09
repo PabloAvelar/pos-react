@@ -11,12 +11,25 @@ function PopupClients({ closeModal, data }) {
         // Setting data to edit a customer
         if (data){
             document.clientForm.customer_name.value = data.customer_name;
+            setInputs(values => ({ ...values, ['customer_name']: data.customer_name }))
+
             document.clientForm.contact.value = data.contact;
+            setInputs(values => ({ ...values, ['contact']: data.contact }))
+
             document.clientForm.address.value = data.address;
+            setInputs(values => ({ ...values, ['address']: data.address }))
+
             document.clientForm.membership_number.value = data.membership_number;
+            setInputs(values => ({ ...values, ['membership_number']: data.membership_number }))
+
             document.clientForm.prod_name.value = data.prod_name;
+            setInputs(values => ({ ...values, ['prod_name']: data.prod_name }))
+
             document.clientForm.note.value = data.note;
+            setInputs(values => ({ ...values, ['note']: data.note }))
+
             document.clientForm.expected_date.value = data.expected_date;
+            setInputs(values => ({ ...values, ['expected_date']: data.expected_date }))
         }
     }, [])
 
@@ -24,7 +37,7 @@ function PopupClients({ closeModal, data }) {
         const name = event.target.name;
         const value = event.target.value;
 
-        setInputs(values => ({ ...values, [name]: value }))
+        setInputs(values => ({ ...values, [name]: value }));
     }
 
     async function handleSubmit(e) {
