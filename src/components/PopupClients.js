@@ -112,7 +112,7 @@ function PopupClients({ closeModal, data }) {
                         <input className='input-form-popup' onChange={handleChange} type="text" name="address" required />
                     </div>
                     <div className="input-add-client-container">
-                        <span style={{ fontSize: 16 }}>Membership Number: </span>
+                        <span style={{ fontSize: 16 }}>Membership #: </span>
                         <input className='input-form-popup' onChange={handleChange} type="text" name="membership_number" required />
                     </div>
                     <div className="input-add-client-container">
