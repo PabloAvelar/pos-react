@@ -2,8 +2,8 @@ import { postByUrl, getByUrl, postByUrlWithConfig } from "./utils";
 
 const endpoint = 'http://localhost/pos-backend/api/controllers';
 
-// POST
-async function addClient(data){
+// PUT
+async function putClient(data){
     const urlPostLogin = endpoint + '/addclient.php';
     const res = postByUrl(urlPostLogin, data);
     return res;
@@ -23,5 +23,5 @@ async function getClientById(id){
 }
 
 export default {
-    addClient, getClients
+    putClient, getClients
 };
