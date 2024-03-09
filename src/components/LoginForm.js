@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import registerService from '../services/registerService';
+import { Auth, use } from './AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLock, faUser } from '@fortawesome/free-solid-svg-icons'
@@ -8,10 +9,10 @@ import '../styles/loginform.css';
 
 function LoginForm() {
     const [inputs, setInputs] = useState({});
-    const [errorMessages, setErrorMessages] = useState([]);
-    const [authenticated, setAuthenticated] = useState(null);
-    const [token, setToken] = useState('');
+    const [userData, setUserData] = useState('');
+
     let navigate = useNavigate();
+    const auth = useContext(Auth);
 
     const handleChange = (event) => {
         const name = event.target.name;
@@ -32,22 +33,16 @@ function LoginForm() {
 
             registerService.login(data)
                 .then((res) => {
-                    console.log(res);
                     if (res.success) {
-                        console.log("LOGIN!");
                         // Guardando el perro token en local
-                        localStorage.setItem('token', res.token);
-                        setToken(res.token);
-                        navigate('/');
-                        
-                        // Refrescando la página
-                        window.location.reload(false);
+                        auth.updateAuth(res);
+                        // navigate('/');
+
                     } else {
                         console.log("NOOOO");
                     }
                 })
                 .catch((err) => {
-                    console.log("ERREOROEROEROER")
                     console.error(err);
                 })
 
@@ -59,16 +54,18 @@ function LoginForm() {
     // if the token changes
     useEffect(() => {
         setTimeout(() => {
-            if (token) {
+            if (userData) {
                 // verifying the token
                 async function validateToken() {
                     try {
                         const response = registerService.validateToken({
-                            token
+                            userData
                         });
                         console.log(response);
                         if (response) {
                             console.log("Token validated");
+                        }else{
+                            console.error("no validado")
                         }
                     } catch (error) {
                         console.error(error);
@@ -78,7 +75,7 @@ function LoginForm() {
                 validateToken();
             }
         }, 1000);
-    }, [token]); // dependency
+    }, [userData]); // dependency
 
     return (
         <div className='login-card-container shadow'>
