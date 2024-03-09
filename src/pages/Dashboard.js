@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-
 function Dashboard() {
   const [token, setToken] = useState('');
   let navigate = useNavigate();
