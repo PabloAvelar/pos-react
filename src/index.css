@@ -18,6 +18,8 @@ code {
   --placeholder: #573448;
   --page-title: #593325;
   --btn: #713916;
+  --popup-color: #260B01;
+  --popup-color-light:rgb(85, 28, 5);
 }
 
 .page-container{
