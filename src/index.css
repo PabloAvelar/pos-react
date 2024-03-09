@@ -12,6 +12,35 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+:root{
+  --text: #370021;
+  --placeholder: #573448;
+  --page-title: #593325;
+  --btn: #713916;
+  --popup-color: #260B01;
+  --popup-color-light:rgb(85, 28, 5);
+}
+
+.page-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.page-title-container{
+  display: flex;
+  margin: 2%;
+}
+
+
+.page-title{
+  font-weight: bold;
+  color: var(--page-title);
+  font-size: 32px;
+}
+
 /* 
 #root{
   display: flex;

@@ -1,0 +1,25 @@
+.clients-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 90%;
+}
+
+.add-customer-content{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.add-customer-container{   
+    display: flex;
+    justify-content: center;
+    background: var(--btn);
+    padding: 10px 15px;
+    border-radius: 20px;
+}
+
+.add-customer{
+   
+    color: white;
+    
+}

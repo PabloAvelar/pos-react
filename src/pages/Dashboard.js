@@ -1,30 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import { useAuth } from '../components/AuthContext';
 
 function Dashboard() {
-  const [token, setToken] = useState('');
   let navigate = useNavigate();
-  
-  useEffect(() => {
-    const storedToken = localStorage.getItem('token');
-    if (storedToken) {
-        setToken(storedToken);
-        navigate("/");
-    }
-}, []);
+  const auth = useAuth();
 
   const handleLogout = () => {
-    localStorage.removeItem('token'); // Elimina el token del almacenamiento local
-    setToken(null);
+    auth.logout();
     navigate("/");
-    // Refrescando la página
-    window.location.reload(false);
   }
 
+  if (!auth.auth){
+    return <></>
+  }
   return (
     <div>
       <p>Dashboard</p>
+      <p>hola {auth.auth.username}</p>
       <button onClick={handleLogout}>cerrar sesion</button>
 
     </div>
