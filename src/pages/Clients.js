@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Table from '../components/Table';
 import '../styles/clients.css';
 import PopupClients from '../components/PopupClients';
+import clientsService from '../services/clientsService';
 
 function Clients() {
 
@@ -13,7 +14,7 @@ function Clients() {
 
   useEffect(() => {
     // Cargando sólo una vez los clientes que hay
-    registerService.getClients()
+    clientsService.getClients()
       .then((clients) => {
         setClientsRegistered(clients);
         setDataLoaded(true);

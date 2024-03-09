@@ -2,29 +2,27 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPencil, faTrash } from '@fortawesome/free-solid-svg-icons'
 
-export function EditButton(object) {
+export function EditButton({ onEditClick }) {
 
-    const handleEdit = (e) => {
-        e.preventDefault();
-        console.log(object)
-
-    }
-    //box-shadow: rgba(0, 0, 0, 0.45) 1.95px 1.95px 2.6px;
+    const handleEdit = () => {
+        // Puedes realizar otras operaciones aquí si es necesario
+        onEditClick(); // Llama a la función proporcionada como prop
+    };
 
     return (
         <div>
-            <a onClick={handleEdit}> 
-                <FontAwesomeIcon icon={faPencil} style={{ color: '#593325'}} />
+            <a onClick={handleEdit}>
+                <FontAwesomeIcon icon={faPencil} style={{ color: '#593325' }} />
             </a>
         </div>
     )
 }
 
-export function DeleteButton(object) {
-    const handleDelete = (e) => {
-        e.preventDefault();
-        console.log(object)
-    }
+export function DeleteButton({ onDeleteClick }) {
+    const handleDelete = () => {
+        // Puedes realizar otras operaciones aquí si es necesario
+        onDeleteClick(); // Llama a la función proporcionada como prop
+    };
 
     return (
         <div>

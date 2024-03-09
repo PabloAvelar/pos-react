@@ -3,11 +3,22 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { useAuth } from '../components/AuthContext';
 import { EditButton, DeleteButton } from './Buttons';
+import PopupClients from './PopupClients';
 import '../styles/table.css';
 
 function Table(data) {
-    console.log(data["data"]);
+    const [showModal, setShowModal] = useState(false);
+    const [clientData, setClientData] = useState({});
     const auth = useAuth();
+
+    const handleDeleteClient = (rowData) => {
+        console.log(rowData)
+    }
+
+    const handleEditClient = (rowData) => {
+        setClientData(rowData);
+        setShowModal(true);
+    }
 
     if (!auth.auth) {
         return <></>
@@ -20,14 +31,14 @@ function Table(data) {
                     headerClassName='table-column-header'
                     bodyClassName='table-column-body'
                     header="Delete"
-                    body={(rowData) => <DeleteButton data={rowData} />}
+                    body={(rowData) => <DeleteButton onDeleteClick={() => handleDeleteClient(rowData)} />}
                 >
 
                 </Column>
                 <Column headerClassName='table-column-header'
                     bodyClassName='table-column-body'
                     header="Edit"
-                    body={(rowData) => <EditButton data={rowData} />}
+                    body={(rowData) => <EditButton onEditClick={() => handleEditClient(rowData)} />}
                 >
 
                 </Column>
@@ -75,7 +86,8 @@ function Table(data) {
                 </Column>
             </DataTable>
 
-        {/* <PopupClients/> */}
+            {showModal && <PopupClients closeModal={setShowModal} data={clientData} />}
+            
         </div>
 
     )

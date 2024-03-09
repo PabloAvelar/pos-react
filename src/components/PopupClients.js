@@ -3,9 +3,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmarkSquare } from '@fortawesome/free-solid-svg-icons'
 import '../styles/popupclients.css';
 
-function PopupClients({closeModal}) {
-
+function PopupClients({closeModal, data}) {
+    console.log(data)
     return (
+        
         <div className='popup-client-card-container shadow'>
             <a className='close-modal' onClick={() => closeModal(false)}>
                 <FontAwesomeIcon icon={faXmarkSquare} size='2x' color='#260B01' />
@@ -22,31 +23,31 @@ function PopupClients({closeModal}) {
                 <div className='input-container'>
                     <div className="input-add-client-container">
                         <span style={{ fontSize: 16 }}>Full Name: </span>
-                        <input className='input-form-popup' type="text" name="fullname" required />
+                        <input className='input-form-popup' type="text" name="fullname" value={data?data.customer_name:""} required />
                     </div>
                     <div className="input-add-client-container">
                         <span style={{ fontSize: 16 }}>Phone Number: </span>
-                        <input className='input-form-popup' type="text" name="contact" required />
+                        <input className='input-form-popup' type="text" name="contact" value={data?data.contact:""} required />
                     </div>
                     <div className="input-add-client-container">
                         <span style={{ fontSize: 16 }}>Address: </span>
-                        <input className='input-form-popup' type="text" name="address" required />
+                        <input className='input-form-popup' type="text" name="address" value={data?data.address:""} required />
                     </div>
                     <div className="input-add-client-container">
                         <span style={{ fontSize: 16 }}>Membership Number: </span>
-                        <input className='input-form-popup' type="text" name="membership_number" required />
+                        <input className='input-form-popup' type="text" name="membership_number" value={data?data.membership_number:""} required />
                     </div>
                     <div className="input-add-client-container">
                         <span style={{ fontSize: 16 }}>Product Name: </span>
-                        <input className='input-form-popup' type="text" name="prod_name" required />
+                        <input className='input-form-popup' type="text" name="prod_name" value={data?data.prod_name:""} required />
                     </div>
                     <div className="input-add-client-container">
                         <span style={{ fontSize: 16 }}>Note: </span>
-                        <input className='input-form-popup' type="text" name="note" required />
+                        <input className='input-form-popup' type="text" name="note" value={data?data.note:""} required />
                     </div>
                     <div className="input-add-client-container">
                         <span style={{ fontSize: 16 }}>Expected Date: </span>
-                        <input className='input-form-popup' type="date" name="expected_date" required />
+                        <input className='input-form-popup' type="date" name="expected_date" value={data?data.expected_date:""} required />
                     </div>
                 </div>
 
