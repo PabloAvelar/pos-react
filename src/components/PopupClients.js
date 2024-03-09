@@ -8,9 +8,9 @@ function PopupClients({ closeModal, data }) {
     const [inputs, setInputs] = useState({});
     const [customer_name, setCustomer_name] = useState(data ? data.customer_name : "");
 
-    useEffect(()=>{
+    useEffect(() => {
         // Setting data to edit a customer
-        if (data){
+        if (data) {
             setInputs(values => ({ ...values, ['customer_id']: data.customer_id }))
 
             document.clientForm.customer_name.value = data.customer_name;
@@ -48,7 +48,7 @@ function PopupClients({ closeModal, data }) {
 
         try {
 
-            
+
             const data = new URLSearchParams({
                 'customer_id': inputs.customer_id,
                 'customer_name': inputs.customer_name,
@@ -61,21 +61,31 @@ function PopupClients({ closeModal, data }) {
             })
 
             // If it's a new customer
-            if (inputs.customer_id === undefined){
+            if (inputs.customer_id === undefined) {
                 data.delete("customer_id");
-                
+
                 clientsService.postClient(data.toString())
-                .then((res)=>{
-                    if (res.status === 'success'){
-                        console.log("cliente agregado");
-                        window.location.reload();
-                    }
-                })
-                .catch((err)=>{
-                    console.error(err);
-                })
-            }else{
-                            
+                    .then((res) => {
+                        if (res.status === 'success') {
+                            console.log("cliente agregado");
+                            window.location.reload();
+                        }
+                    })
+                    .catch((err) => {
+                        console.error(err);
+                    })
+            } else {
+                // If a client is being edited
+                clientsService.putClient(data.toString())
+                    .then((res) => {
+                        if (res.status === 'success') {
+                            console.log("cliente editado");
+                            window.location.reload();
+                        }
+                    })
+                    .catch((err) => {
+                        console.error(err);
+                    })
             }
 
         } catch (e) {
