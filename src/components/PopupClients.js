@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmarkSquare } from '@fortawesome/free-solid-svg-icons'
 import '../styles/popupclients.css';
+import clientsService from '../services/clientsService';
 
 function PopupClients({ closeModal, data }) {
     const [inputs, setInputs] = useState({});
@@ -10,6 +11,8 @@ function PopupClients({ closeModal, data }) {
     useEffect(()=>{
         // Setting data to edit a customer
         if (data){
+            setInputs(values => ({ ...values, ['customer_id']: data.customer_id }))
+
             document.clientForm.customer_name.value = data.customer_name;
             setInputs(values => ({ ...values, ['customer_name']: data.customer_name }))
 
@@ -44,7 +47,10 @@ function PopupClients({ closeModal, data }) {
         e.preventDefault();
 
         try {
+
+            
             const data = new URLSearchParams({
+                'customer_id': inputs.customer_id,
                 'customer_name': inputs.customer_name,
                 'contact': inputs.contact,
                 'address': inputs.address,
@@ -52,12 +58,28 @@ function PopupClients({ closeModal, data }) {
                 'prod_name': inputs.prod_name,
                 'note': inputs.note,
                 'expected_date': inputs.expected_date,
-            }).toString()
-            
-            console.log(data);
+            })
+
+            // If it's a new customer
+            if (inputs.customer_id === undefined){
+                data.delete("customer_id");
+                
+                clientsService.postClient(data.toString())
+                .then((res)=>{
+                    if (res.status === 'success'){
+                        console.log("cliente agregado");
+                        window.location.reload();
+                    }
+                })
+                .catch((err)=>{
+                    console.error(err);
+                })
+            }else{
+                            
+            }
 
         } catch (e) {
-
+            console.error(e);
         }
     }
 
