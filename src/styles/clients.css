@@ -16,10 +16,11 @@
     background: var(--btn);
     padding: 10px 15px;
     border-radius: 20px;
+    box-shadow: rgba(0, 0, 0, 0.45) 1.95px 1.95px 2.6px;
 }
 
 .add-customer{
-   
+    cursor: default;
     color: white;
     
 }

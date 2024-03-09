@@ -4,8 +4,6 @@ import { Column } from 'primereact/column';
 import { useAuth } from '../components/AuthContext';
 import { EditButton, DeleteButton } from './Buttons';
 import '../styles/table.css';
-import PopupClients from './PopupClients';
-
 
 function Table(data) {
     console.log(data["data"]);
@@ -77,7 +75,7 @@ function Table(data) {
                 </Column>
             </DataTable>
 
-        <PopupClients/>
+        {/* <PopupClients/> */}
         </div>
 
     )

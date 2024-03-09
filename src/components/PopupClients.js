@@ -1,14 +1,18 @@
-import React from 'react'
-import '../styles/popupclients.css';
+import React, { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faLock, faUser } from '@fortawesome/free-solid-svg-icons'
+import { faXmarkSquare } from '@fortawesome/free-solid-svg-icons'
+import '../styles/popupclients.css';
 
-function PopupClients() {
+function PopupClients({closeModal}) {
+
     return (
         <div className='popup-client-card-container shadow'>
+            <a className='close-modal' onClick={() => closeModal(false)}>
+                <FontAwesomeIcon icon={faXmarkSquare} size='2x' color='#260B01' />
+            </a>
             <div style={{ marginTop: 20 }}>
                 <span style={{ color: "#370021", fontWeight: 'bold', fontSize: 36 }}>
-                    ADD CUSTOMER
+                    Add Customer
                 </span>
             </div>
             <form className='popup-client-card'>
@@ -16,31 +20,38 @@ function PopupClients() {
                 {/* <br> */}
 
                 <div className='input-container'>
-                    <div className="input-prepend">
-                        <input className='input-form' type="text" name="fullname" placeholder="Full Name" required />
+                    <div className="input-add-client-container">
+                        <span style={{ fontSize: 16 }}>Full Name: </span>
+                        <input className='input-form-popup' type="text" name="fullname" required />
                     </div>
-                    <div className="input-prepend">
-                        <input className='input-form' type="text" name="contact" placeholder="Phone Number" required />
+                    <div className="input-add-client-container">
+                        <span style={{ fontSize: 16 }}>Phone Number: </span>
+                        <input className='input-form-popup' type="text" name="contact" required />
                     </div>
-                    <div className="input-prepend">
-                        <input className='input-form' type="text"  name="address" placeholder="Address" required />
+                    <div className="input-add-client-container">
+                        <span style={{ fontSize: 16 }}>Address: </span>
+                        <input className='input-form-popup' type="text" name="address" required />
                     </div>
-                    <div className="input-prepend">
-                        <input className='input-form' type="text" name="expected_date" placeholder="Expected Date" required />
+                    <div className="input-add-client-container">
+                        <span style={{ fontSize: 16 }}>Membership Number: </span>
+                        <input className='input-form-popup' type="text" name="membership_number" required />
                     </div>
-                    <div className="input-prepend">
-                        <input className='input-form' type="text" name="membership_number" placeholder="Membership Number" required />
+                    <div className="input-add-client-container">
+                        <span style={{ fontSize: 16 }}>Product Name: </span>
+                        <input className='input-form-popup' type="text" name="prod_name" required />
                     </div>
-                    <div className="input-prepend">
-                        <input className='input-form' type="text" name="prod_name" placeholder="Product Name" required />
+                    <div className="input-add-client-container">
+                        <span style={{ fontSize: 16 }}>Note: </span>
+                        <input className='input-form-popup' type="text" name="note" required />
                     </div>
-                    <div className="input-prepend">
-                        <input className='input-form' type="text" name="note" placeholder="Note" required />
+                    <div className="input-add-client-container">
+                        <span style={{ fontSize: 16 }}>Expected Date: </span>
+                        <input className='input-form-popup' type="date" name="expected_date" required />
                     </div>
                 </div>
 
                 <div className="submit-container">
-                    <button className="submit-button shadow" href="dashboard.html" type="submit">Save</button>
+                    <button className="submit-button shadow" type="submit">Save</button>
                 </div>
             </form>
         </div>

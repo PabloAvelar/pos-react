@@ -9,11 +9,12 @@ export function EditButton(object) {
         console.log(object)
 
     }
+    //box-shadow: rgba(0, 0, 0, 0.45) 1.95px 1.95px 2.6px;
 
     return (
         <div>
-            <a onClick={handleEdit}>
-                <FontAwesomeIcon icon={faPencil} style={{ color: '#593325' }} />
+            <a onClick={handleEdit}> 
+                <FontAwesomeIcon icon={faPencil} style={{ color: '#593325'}} />
             </a>
         </div>
     )
