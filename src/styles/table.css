@@ -1,0 +1,16 @@
+.table-container{
+    margin-top: 5%;
+}
+
+.table-column-header{
+    background: #F2DEC4;
+    color: #BF8339;
+    padding: 10px;
+}
+
+.table-column-body{
+    text-align: center;
+    padding: 15px 8px;
+    border-bottom: 1px #E0E0E0 solid;
+    border-right: 1px #E0E0E0 solid;
+}
