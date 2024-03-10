@@ -18,7 +18,7 @@ function Header() {
         <div className="header-container">
             <div>
               
-                <div className="welcome-message">Bienvenido: {auth.auth.username}</div>
+                <div className="welcome-message">Welcome: {auth.auth.username}</div>
             </div>
             <div className="date-time">
                 <div className="time">{getCurrentDateTime().split(',')[1]}</div>
