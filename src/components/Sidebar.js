@@ -2,8 +2,8 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCubes, faCashRegister, faUsers, faTruck, faChartLine, faLongArrowAltUp, faAnchorLock, faBacteria, faPowerOff, faAnkh, faGaugeMed, faBookSkull } from '@fortawesome/free-solid-svg-icons';
 import '../styles/sidebar.css';
-import logo from '../images/logo.png';
 
+import logo from '../images/logo.png';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../components/AuthContext';
 function Sidebar() {
@@ -20,14 +20,20 @@ function Sidebar() {
   }
 
   return (
+    
     <div className="container-fluid">
+    <div>
+    
+      </div>
       <div className="row-fluid">
         <div className="span2">
           <div className="well sidebar-nav">
+            
             <ul className="nav nav-list">
+                 
             <li>
             <img className='fixed-logo' src={logo} style={{width: '120px', height: '120px'}} />
-                <p style={{color: '#', fontSize: '35px'}}>BaseD</p>
+                <p style={{color: '#fff', fontSize: '35px'}}>BaseD</p>
               
               </li>
             <hr />
@@ -64,7 +70,9 @@ function Sidebar() {
               </li>
               <br/><br/><br/><br/><br/><br/>
             </ul>
+            
           </div>
+          
         </div>
       </div>
     </div>

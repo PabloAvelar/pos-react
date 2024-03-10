@@ -1,57 +1,58 @@
-
 /* Estilos para la barra lateral */
 .container-fluid {
-    padding: 0; /*Separación de la sidebar hacia el lado derecho*/
-    display: flex;
-  }
-  
-  .sidebar-nav {
-    padding: 9px 9;
-    background-color: #734434;
-    height: 100%; /* Establece la altura de la barra lateral al 100% de la altura de la ventana */
+  padding: 0; /*Separación de la sidebar hacia el lado derecho*/
+  display: flex;
    
-  }
-  
-  .sidebar-nav .nav-list {
-    padding-right: 25px;
-    padding-left: 20px;
-  }
-  
-  .sidebar-nav .nav-list li {
-    list-style: none;
-    display: flex;
-    align-items: center;
-  }
-  
-  .sidebar-nav .nav-list li a {
-    display: block;
-    padding: 40px 40px; /*Tamaño de separacion del texto de arriba y abajo*/
-    text-decoration: none;
-    color: #ffffff;
-    font-size: 25px;
-  }
-  
-  .sidebar-nav .nav-list li.active a {
-    background-color: #ffff;
-  }
-  
-  .sidebar-nav .nav-list li a:hover {
-    background-color: #8C5340;
-   
-   
-  }
-
-  
-  /* Estilos para los íconos */
-.sidebar-nav .nav-list li svg {
-  width: 35px; /* Ajusta el tamaño de los íconos */
-  height: 35px;
-  margin-right: 10px; /* Espacio entre el icono y el texto */
-  color: #F2D888;
 }
 
-  .span2 {
-    height: 100%;
-    width: 100%; /* esto es el ancho de la sidebar xd */
-  }
-  
+.sidebar-nav {
+  padding: 9px 9;
+  background-color: #734434;
+  height: 100%; /* Establece la altura de la barra lateral al 100% de la altura de la ventana */
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.9); /* Agrega una sombra debajo del header */
+
+}
+
+.sidebar-nav .nav-list {
+  padding-right: 25px;
+  padding-left: 20px;
+}
+
+.sidebar-nav .nav-list li {
+  list-style: none;
+  display: flex;
+  align-items: center;
+}
+
+.sidebar-nav .nav-list li a {
+  display: block;
+  padding: 40px 40px; /*Tamaño de separacion del texto de arriba y abajo*/
+  text-decoration: none;
+  color: #ffffff;
+  font-size: 25px;
+}
+
+.sidebar-nav .nav-list li.active a {
+  background-color: #ffff;
+}
+
+.sidebar-nav .nav-list li a:hover {
+  background-color: #8C5340;
+ 
+ 
+}
+
+
+/* Estilos para los íconos */
+.sidebar-nav .nav-list li svg {
+width: 35px; /* Ajusta el tamaño de los íconos */
+height: 35px;
+margin-right: 10px; /* Espacio entre el icono y el texto */
+color: #F2D888;
+}
+
+.span2 {
+  height: 100%;
+  width: 100%; /* esto es el ancho de la sidebar xd */
+  margin-top: -6%; /* Agrega un margen superior del 10% */
+}
