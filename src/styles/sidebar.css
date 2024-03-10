@@ -1,58 +1,78 @@
-/* Estilos para la barra lateral */
 .container-fluid {
-  padding: 0; /*Separación de la sidebar hacia el lado derecho*/
+  padding: 0;
   display: flex;
-   
+  flex-direction: column;
+  background-color: #734434;
+  box-shadow: 0px 02px 6px rgba(0, 0, 0, 0.9);
+  width: 100%;
+  max-width: 250px;
+  height: 100vh;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  min-width: 180px;
+  padding: 10px;
 }
 
 .sidebar-nav {
-  padding: 9px 9;
-  background-color: #734434;
-  height: 100%; /* Establece la altura de la barra lateral al 100% de la altura de la ventana */
-  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.9); /* Agrega una sombra debajo del header */
+  background: #734434;
+}
+
+.row-fluid {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: space-between;
+}
+
+.span2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
 }
 
 .sidebar-nav .nav-list {
-  padding-right: 25px;
   padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  
+}
+
+.icon-container{
+  width: 100%;
+}
+
+.icon-sidebar{
+  font-size: 20px;
+  color: #F2D888;
+  margin-right: 10px;
 }
 
 .sidebar-nav .nav-list li {
   list-style: none;
   display: flex;
+  flex-direction: row;
   align-items: center;
+  
 }
 
+.sidebar-nav .nav-list li:hover {
+  
+}
+
+
 .sidebar-nav .nav-list li a {
-  display: block;
-  padding: 40px 40px; /*Tamaño de separacion del texto de arriba y abajo*/
   text-decoration: none;
   color: #ffffff;
-  font-size: 25px;
+  
 }
 
 .sidebar-nav .nav-list li.active a {
   background-color: #ffff;
 }
 
-.sidebar-nav .nav-list li a:hover {
-  background-color: #8C5340;
- 
- 
-}
-
-
-/* Estilos para los íconos */
-.sidebar-nav .nav-list li svg {
-width: 35px; /* Ajusta el tamaño de los íconos */
-height: 35px;
-margin-right: 10px; /* Espacio entre el icono y el texto */
-color: #F2D888;
-}
-
-.span2 {
-  height: 100%;
-  width: 100%; /* esto es el ancho de la sidebar xd */
-  margin-top: -6%; /* Agrega un margen superior del 10% */
-}
