@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmarkSquare } from '@fortawesome/free-solid-svg-icons'
 import '../styles/popupclients.css';
-import clientsService from '../services/clientsService';
+import suppliersService from '../services/suppliersService';
 
 function PopupSuppliers({ closeModal, data }) {
     const [inputs, setInputs] = useState({});
@@ -56,10 +56,10 @@ function PopupSuppliers({ closeModal, data }) {
             if (inputs.suplier_id === undefined) {
                 data.delete("suplier_id");
 
-                clientsService.postClient(data.toString())
+                suppliersService.postSupplier(data.toString())
                     .then((res) => {
                         if (res.status === 'success') {
-                            console.log("cliente agregado");
+                            console.log("Supplier agregado");
                             window.location.reload();
                         }
                     })
@@ -67,8 +67,8 @@ function PopupSuppliers({ closeModal, data }) {
                         console.error(err);
                     })
             } else {
-                // If a client is being edited
-                clientsService.putClient(data.toString())
+                // If a Supplier is being edited
+                suppliersService.putSupplier(data.toString())
                     .then((res) => {
                         if (res.status === 'success') {
                             console.log("cliente editado");
@@ -102,21 +102,22 @@ function PopupSuppliers({ closeModal, data }) {
 
                 <div className='input-container'>
                     <div className="input-add-client-container">
-                        <span style={{ fontSize: 16 }}>Full Name: </span>
+                        <span style={{ fontSize: 16 }}>Supplier Name: </span>
                         <input className='input-form-popup' onChange={handleChange} type="text" name="suplier_name" required />
                     </div>
                     <div className="input-add-client-container">
-                        <span style={{ fontSize: 16 }}>Phone Number: </span>
+                        <span style={{ fontSize: 16 }}>Address: </span>
+                        <input className='input-form-popup' onChange={handleChange} type="text" name="suplier_address" required />
+                    </div>
+                    <div className="input-add-client-container">
+                        <span style={{ fontSize: 16 }}>Contact Name: </span>
                         <input className='input-form-popup' onChange={handleChange} type="text" name="contact_person" required />
                     </div>
                     <div className="input-add-client-container">
-                        <span style={{ fontSize: 16 }}>suplier_contact: </span>
+                        <span style={{ fontSize: 16 }}>Contact Number: </span>
                         <input className='input-form-popup' onChange={handleChange} type="text" name="suplier_contact" required />
                     </div>
-                    <div className="input-add-client-container">
-                        <span style={{ fontSize: 16 }}>Membership #: </span>
-                        <input className='input-form-popup' onChange={handleChange} type="text" name="suplier_address" required />
-                    </div>
+                    
                     <div className="input-add-client-container">
                         <span style={{ fontSize: 16 }}>Note: </span>
                         <input className='input-form-popup' onChange={handleChange} type="text" name="note" required />

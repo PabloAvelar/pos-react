@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import TableSuppliers from '../components/TableSuppliers';
 import '../styles/clients.css';
-import PopupClients from '../components/PopupClients';
+import PopupSuppliers from '../components/PopupSuppliers';
 import suppliersService from '../services/suppliersService';
 
 function Suppliers() {
@@ -40,7 +40,7 @@ function Suppliers() {
       </section>
 
       {dataLoaded ? <TableSuppliers data={suppliers} /> : <p>cargando datos</p>}
-      {showModal && <PopupClients closeModal={setShowModal} />}
+      {showModal && <PopupSuppliers closeModal={setShowModal} />}
 
     </main>
   );
