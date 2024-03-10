@@ -5,6 +5,7 @@ import { useAuth } from './AuthContext';
 import { EditButton, DeleteButton } from './Buttons';
 import PopupSuppliers from './PopupSuppliers';
 import '../styles/tableclients.css';
+import suppliersService from '../services/suppliersService';
 
 function TableClients(data) {
     const [showModal, setShowModal] = useState(false);
@@ -12,7 +13,26 @@ function TableClients(data) {
     const auth = useAuth();
 
     const handleDeleteClient = (rowData) => {
-        console.log(rowData)
+        try{
+            const data = new URLSearchParams({
+                'suplier_id': rowData.suplier_id
+            }).toString();
+
+            suppliersService.deleteSupplier(data)
+            .then((res) => {
+                if (res.status === 'success'){
+                    console.log("Customer deleted");
+                    window.location.reload();
+                }else{
+                    console.log(res.status);
+                }
+            })
+            .catch((e) => {
+                console.error(e);
+            })
+        }catch($e){
+            console.error($e);
+        }
     }
 
     const handleEditClient = (rowData) => {

@@ -32,34 +32,34 @@ function Sidebar() {
             <hr/>
             <li className='page-ref'>
               <FontAwesomeIcon className='icon-sidebar' icon={faChartLine} />
-              <a href="#">Panel</a>
+              <a onClick={(e) => navigate('/')} style={{cursor: 'pointer'}}>Dashboard</a>
             </li>
             <li className='page-ref'>
               <FontAwesomeIcon icon={faCubes} className='icon-sidebar'/>
-              <a href="products.php">Productos</a>
+              <a onClick={(e) => navigate('/products')} style={{cursor: 'pointer'}}>Products</a>
             </li>
             <li className='page-ref'>
               <FontAwesomeIcon className='icon-sidebar' icon={faCashRegister} />
-              <a href="sales.php">Ventas</a>
+              <a onClick={(e) => navigate('/sales')} style={{cursor: 'pointer'}}>Sales</a>
             </li>
             <li className='page-ref'>
               <FontAwesomeIcon className='icon-sidebar' icon={faUsers} />
-              <a href="customer.php">Clientes</a>
+              <a onClick={(e) => navigate('/clients')} style={{cursor: 'pointer'}}>Clients</a>
             </li>
             <li className='page-ref'>
               <FontAwesomeIcon className='icon-sidebar' icon={faTruck} />
-              <a href="supplier.php">Proveedores</a>
+              <a onClick={(e) => navigate('/suppliers')} style={{cursor: 'pointer'}}>Suppliers</a>
             </li>
             <li className='page-ref'>
               <FontAwesomeIcon className='icon-sidebar' icon={faChartLine} />
-              <a href="salesreport.php?d1=0&d2=0">Reportes</a>
+              <a onClick={(e) => navigate('/reports')} style={{cursor: 'pointer'}}>Reports</a>
             </li>
 
 
             <hr />
             <li className='page-ref'>
               <FontAwesomeIcon className='icon-sidebar' icon={faPowerOff} />
-              <a onClick={handleLogout}>Cerrar Sesión</a>
+              <a onClick={handleLogout} style={{cursor: 'pointer'}} >Logout</a>
             </li>
 
           </ul>

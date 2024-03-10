@@ -28,9 +28,11 @@ function Suppliers() {
   return (
 
     <main className="page-container">
+
       <aside>
         <Sidebar />
       </aside>
+
       <article className='page-content-container'>
         <Header />
         <section className='clients-container'>
@@ -45,10 +47,9 @@ function Suppliers() {
             </div>
           </div>
         </section>
+        {dataLoaded ? <TableSuppliers data={suppliers} /> : <p>cargando datos</p>}
       </article>
-
-
-      {dataLoaded ? <TableSuppliers data={suppliers} /> : <p>cargando datos</p>}
+      
       {showModal && <PopupSuppliers closeModal={setShowModal} />}
 
     </main>
