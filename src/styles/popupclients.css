@@ -1,5 +1,6 @@
 .popup-client-card-container {
     position: fixed;
+    z-index: 1;
     top: 10%;
     left: 50%;
     transform: translateX(-50%);
@@ -9,7 +10,7 @@
     border: var(--popup-color) 3px solid;
     border-radius: 15px;
     backdrop-filter: blur(13px);
-    width: 30%;
+    width: 35%;
     height: 80%;
 }
 

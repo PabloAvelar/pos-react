@@ -13,10 +13,38 @@ code {
     monospace;
 }
 
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 12px;
+  
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+  border-radius: 10px;
+  
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+  border-radius: 10px;
+  background-color: var(--page-title);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+  background-color: var(--page-title-hover);
+}
+
 :root{
   --text: #370021;
   --placeholder: #573448;
   --page-title: #593325;
+  --page-title-hover: rgb(125, 77, 61);
   --btn: #713916;
   --popup-color: #260B01;
   --popup-color-light:rgb(85, 28, 5);
