@@ -30,6 +30,13 @@ async function getSupplierById(id){
     return res;
 }
 
+// DELETE
+async function deleteSupplier(data){
+    const endpoint = baseUrl + '/deletesupplier.php';
+    const res = postByUrl(endpoint, data);
+    return res;
+}
+
 export default {
-    putSupplier, getSuppliers, postSupplier
+    putSupplier, getSuppliers, postSupplier, deleteSupplier
 };
