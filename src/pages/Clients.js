@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import registerService from '../services/registerService';
 import { useNavigate } from 'react-router-dom';
-import Table from '../components/Table';
+import TableClients from '../components/TableClients';
 import '../styles/clients.css';
 import PopupClients from '../components/PopupClients';
 import clientsService from '../services/clientsService';
@@ -40,7 +40,7 @@ function Clients() {
         </div>
       </section>
 
-      {dataLoaded ? <Table data={clientsRegistered} /> : <p>cargando datos</p>}
+      {dataLoaded ? <TableClients data={clientsRegistered} /> : <p>cargando datos</p>}
       {showModal && <PopupClients closeModal={setShowModal}/>}
 
     </main>

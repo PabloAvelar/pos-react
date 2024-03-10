@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
-import { useAuth } from '../components/AuthContext';
+import { useAuth } from './AuthContext';
 import { EditButton, DeleteButton } from './Buttons';
 import PopupClients from './PopupClients';
-import '../styles/table.css';
+import '../styles/tableclients.css';
 
-function Table(data) {
+function TableClients(data) {
     const [showModal, setShowModal] = useState(false);
     const [clientData, setClientData] = useState({});
     const auth = useAuth();
@@ -100,4 +100,4 @@ function Table(data) {
     )
 }
 
-export default Table
+export default TableClients
