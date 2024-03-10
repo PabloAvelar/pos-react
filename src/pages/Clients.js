@@ -28,9 +28,9 @@ function Clients() {
 
     <main className="page-container">
 
-      <div className='aside'>
+      <aside>
         <Sidebar />
-      </div>
+      </aside>
 
       <article className='page-content-container'>
         <Header />
