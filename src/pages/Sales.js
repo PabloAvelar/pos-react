@@ -22,13 +22,20 @@ function Sales() {
       })
   }, []);
 
-  console.log(suppliers);
   return (
 
     <main className="page-container">
       <section className='clients-container'>
         <div className='page-title-container'>
           <span className='page-title'>Sales</span>
+        </div>
+        <div className='select-container'>
+          <label for='select'>Select a Product</label>
+          <select name='select' id='select'>
+            <option>
+              
+            </option>
+          </select>
         </div>
         <div className='add-customer-content'>
           <div className='add-customer-container'>
