@@ -7,6 +7,7 @@ import Dashboard from './pages/Dashboard';
 import Sales from './pages/Sales';
 import Products from './pages/Products';
 import Reports from './pages/Reports';
+import Suppliers from './pages/Suppliers';
 import React, { useEffect, useState } from 'react';
 import { useAuth } from './components/AuthContext';
 
@@ -38,6 +39,7 @@ function App() {
 
           {/* Otras rutas protegidas */}
           <Route path="/sales" element={<ProtectedRoute><Sales/></ProtectedRoute>} />
+          <Route path="/suppliers" element={<ProtectedRoute><Suppliers/></ProtectedRoute>} />
           <Route path="/clients" element={<ProtectedRoute><Clients/></ProtectedRoute>} />
           <Route path="/products" element={<ProtectedRoute><Products/></ProtectedRoute>} />
           <Route path="/reports" element={<ProtectedRoute><Reports/></ProtectedRoute>} />

@@ -2,13 +2,12 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPencil, faTrash } from '@fortawesome/free-solid-svg-icons'
 
-export function EditButton(object) {
+export function EditButton({ onEditClick }) {
 
-    const handleEdit = (e) => {
-        e.preventDefault();
-        console.log(object)
-
-    }
+    const handleEdit = () => {
+        // Puedes realizar otras operaciones aquí si es necesario
+        onEditClick(); // Llama a la función proporcionada como prop
+    };
 
     return (
         <div>
@@ -19,11 +18,11 @@ export function EditButton(object) {
     )
 }
 
-export function DeleteButton(object) {
-    const handleDelete = (e) => {
-        e.preventDefault();
-        console.log(object)
-    }
+export function DeleteButton({ onDeleteClick }) {
+    const handleDelete = () => {
+        // Puedes realizar otras operaciones aquí si es necesario
+        onDeleteClick(); // Llama a la función proporcionada como prop
+    };
 
     return (
         <div>

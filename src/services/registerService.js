@@ -9,20 +9,6 @@ async function login(data) {
     return res;
 }
 
-async function addClient(data){
-    const urlPostLogin = endpoint + '/addclient.php';
-    const res = postByUrl(urlPostLogin, data);
-    return res;
-}
-
-// GET
-
-async function getClients(){
-    const urlPostLogin = endpoint + '/getclients.php';
-    const res = getByUrl(urlPostLogin);
-    return res;
-}
-
 async function validateToken(data) {
     const urlPostValidation = endpoint + '/validate.php';
     // configuration
@@ -37,5 +23,5 @@ async function validateToken(data) {
 }
 
 export default {
-    login, addClient, getClients, validateToken
+    login, validateToken
 };
