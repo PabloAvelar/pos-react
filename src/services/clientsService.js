@@ -30,6 +30,13 @@ async function getClientById(id){
     return res;
 }
 
+// DELETE
+async function deleteClient(data){
+    const endpoint = baseUrl + '/deleteclient.php';
+    const res = postByUrl(endpoint, data);
+    return res;
+}
+
 export default {
-    putClient, getClients, postClient
+    putClient, getClients, postClient, deleteClient
 };

@@ -22,16 +22,12 @@ function Sidebar() {
   return (
 
     <div className="container-fluid">
-
       <div className="span2">
         <div className="sidebar-nav">
-
           <ul className="nav-list">
-
             <li>
               <img className='fixed-logo' src={logo} style={{ width: '5em', height: '5em' }} />
               <p style={{ color: '#fff', fontSize: '1.2em' }}>BaseD</p>
-
             </li>
             <hr/>
             <li className='page-ref'>

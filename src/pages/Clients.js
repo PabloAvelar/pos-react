@@ -35,7 +35,6 @@ function Clients() {
       <article className='page-content-container'>
         <Header />
         <section className='clients-container'>
-          {/* <Sidebar /> */}
           <div className='page-title-container'>
             <span className='page-title'>Customers</span>
           </div>
