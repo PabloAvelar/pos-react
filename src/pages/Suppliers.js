@@ -3,6 +3,8 @@ import TableSuppliers from '../components/TableSuppliers';
 import '../styles/clients.css';
 import PopupSuppliers from '../components/PopupSuppliers';
 import suppliersService from '../services/suppliersService';
+import Sidebar from '../components/Sidebar';
+import Header from '../components/Header';
 
 function Suppliers() {
 
@@ -26,18 +28,25 @@ function Suppliers() {
   return (
 
     <main className="page-container">
-      <section className='clients-container'>
-        <div className='page-title-container'>
-          <span className='page-title'>Suppliers</span>
-        </div>
-        <div className='add-customer-content'>
-          <div className='add-customer-container'>
-            <a className='add-customer' onClick={() => {
-              setShowModal(true);
-            }}>+ Add Supplier</a>
+      <aside>
+        <Sidebar />
+      </aside>
+      <article className='page-content-container'>
+        <Header />
+        <section className='clients-container'>
+          <div className='page-title-container'>
+            <span className='page-title'>Suppliers</span>
           </div>
-        </div>
-      </section>
+          <div className='add-customer-content'>
+            <div className='add-customer-container'>
+              <a className='add-customer' onClick={() => {
+                setShowModal(true);
+              }}>+ Add Supplier</a>
+            </div>
+          </div>
+        </section>
+      </article>
+
 
       {dataLoaded ? <TableSuppliers data={suppliers} /> : <p>cargando datos</p>}
       {showModal && <PopupSuppliers closeModal={setShowModal} />}
