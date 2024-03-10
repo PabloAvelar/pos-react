@@ -1,0 +1,63 @@
+/* Estilos para la barra lateral */
+.container-fluid {
+  padding: 0;
+  /*Separación de la sidebar hacia el lado derecho*/
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar-nav {
+  /* padding: 9px 9; */
+  background-color: #734434;
+  height: 100%;
+  /* Establece la altura de la barra lateral al 100% de la altura de la ventana */
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.9);
+  /* Agrega una sombra debajo del header */
+
+}
+
+.nav-list {
+  padding: 0;
+  margin: 0;
+  min-width: 210px;
+}
+
+.sidebar-nav .nav-list li {
+  list-style: none;
+  display: flex;
+  align-items: center;
+}
+
+.page-ref {
+  width: 100%;
+  margin-right: 2.5em;
+  transition: .3s all;
+  height: 10%;
+}
+
+.page-ref:hover {
+  background-color: #8C5340;
+  transition: .3s all;
+}
+
+.sidebar-nav .nav-list li a {
+  display: block;
+  text-decoration: none;
+  color: #ffffff;
+  font-size: 1.2em;
+}
+
+
+.icon-sidebar{
+  font-size: 1.7em;
+  margin-right: 10%;
+  margin-left: 2%;
+  color: #F2D888;
+}
+
+.span2 {
+  height: 100%;
+  width: 100%;
+  /* esto es el ancho de la sidebar xd */
+  /* Agrega un margen superior del 10% */
+}

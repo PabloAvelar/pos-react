@@ -1,0 +1,22 @@
+.datatable-container{
+   display: flex;
+   justify-content: center;
+}
+
+.table-container{
+    margin-top: 5%;
+    width: 95%;
+}
+
+.table-column-header{
+    padding: 15px 8px;
+    background: #F2DEC4;
+    color: #BF8339;
+}
+
+.table-column-body{
+    text-align: left;
+    padding: 15px 8px;
+    border-bottom: 1px #E0E0E0 solid;
+    /* border-right: 1px #E0E0E0 solid; */
+}
