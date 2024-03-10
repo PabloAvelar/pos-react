@@ -23,70 +23,74 @@ function TableSales(data) {
     if (!auth.auth) {
         return <></>
     }
+
     return (
         <section className='datatable-container'>
 
-            <DataTable value={data["data"]} scrollable stripedRows editMode="row" dataKey="suplier_id" className='table-container'>
+            <DataTable value={data["data"]} scrollable stripedRows editMode="row" dataKey="product_id" className='table-container'>
                 <Column
                     headerClassName='table-column-header'
                     bodyClassName='table-column-body'
                     header=""
-                    style={{minWidth: 20}}
+                    style={{ minWidth: 20 }}
                     body={(rowData) => <DeleteButton onDeleteClick={() => handleDeleteClient(rowData)} />}
                 >
 
                 </Column>
-                <Column headerClassName='table-column-header'
+                <Column field="product_name"
+                    headerClassName='table-column-header'
                     bodyClassName='table-column-body'
-                    header=""
-                    style={{minWidth: 20}}
-                    body={(rowData) => <EditButton onEditClick={() => handleEditClient(rowData)} />}
+                    style={{ minWidth: 160 }}
+                    header="Product"
                 >
 
                 </Column>
-                <Column field="suplier_name"
+                <Column field="gen_name"
                     headerClassName='table-column-header'
                     bodyClassName='table-column-body'
-                    style={{minWidth: 190}}
-                    header="Supplier"
-                >
-
-</Column>
-                <Column field="contact_person"
-                    headerClassName='table-column-header'
-                    bodyClassName='table-column-body'
-                    style={{minWidth: 100}}
-                    header="Contact Name"
-                >
-
-</Column>
-                <Column field="suplier_contact"
-                    headerClassName='table-column-header'
-                    bodyClassName='table-column-body'
-                    style={{minWidth: 100}}
-                    header="Contact"
+                    style={{ minWidth: 140 }}
+                    header="Gen. Name"
                 >
 
                 </Column>
-                <Column field="suplier_address"
+                <Column field="product_code"
                     headerClassName='table-column-header'
                     bodyClassName='table-column-body'
-                    style={{minWidth: 250}}
-                    header="Address"
+                    style={{ minWidth: 50 }}
+                    header="Product Code"
                 >
 
                 </Column>
-                <Column field="note"
+                <Column field="price"
                     headerClassName='table-column-header'
                     bodyClassName='table-column-body'
-                    style={{minWidth: 330}}
-                    header="Note"
+                    style={{ minWidth: 50 }}
+                    header="Price"
                 >
 
                 </Column>
+                <Column field="quantity"
+                    headerClassName='table-column-header'
+                    bodyClassName='table-column-body'
+                    style={{ minWidth: 50 }}
+                    header="Quantity"
+                >
+
+                </Column>
+
+                <Column field="amount"
+                    headerClassName='table-column-header'
+                    bodyClassName='table-column-body'
+                    style={{ minWidth: 50 }}
+                    header="Amount"
+                >
+
+                </Column>
+
             </DataTable>
-
+            
             {showModal && <PopupSuppliers closeModal={setShowModal} data={clientData} />}
+            
         </section>
 
     )
