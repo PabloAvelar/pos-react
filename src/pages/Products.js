@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import TableSuppliers from '../components/TableSuppliers';
-import '../styles/clients.css';
-import PopupSuppliers from '../components/PopupSuppliers';
+import TableProducts from '../components/TableProducts';
+import '../styles/tableproducts.css';
+import PopuProducts from '../components/PopuProducts';
 import suppliersService from '../services/suppliersService';
 import Sidebar from '../components/Sidebar';
 import Header from '../components/Header';
@@ -43,14 +43,14 @@ function Products() {
             <div className='add-customer-container'>
               <a className='add-customer' onClick={() => {
                 setShowModal(true);
-              }}>+ Add Supplier</a>
+              }}>+ Add Products</a>
             </div>
           </div>
         </section>
-        {dataLoaded ? <TableSuppliers data={suppliers} /> : <p>cargando datos</p>}
+        {dataLoaded ? <TableProducts data={suppliers} /> : <p>cargando datos</p>}
       </article>
       
-      {showModal && <PopupSuppliers closeModal={setShowModal} />}
+      {showModal && <PopuProducts closeModal={setShowModal} />}
 
     </main>
   );

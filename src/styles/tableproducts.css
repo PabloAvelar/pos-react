@@ -1,0 +1,25 @@
+.datatable-container1{
+    display: flex;
+    justify-content: center;
+ }
+ 
+ .table-container1{
+     margin-top: 5%;
+     width: 95%;
+     font-size: 200px;
+ }
+ 
+ .table-column1-header{
+     padding: 12px 8px;
+     background: #F2DEC4;
+     color: #BF8339;
+     font-size: 14px;
+ }
+ 
+ .table-column1-body{
+     text-align: left;
+     padding: 15px 8px;
+     border-bottom: 1px #E0E0E0 solid;
+     /* border-right: 1px #E0E0E0 solid; */
+     font-size: 14px;
+ }

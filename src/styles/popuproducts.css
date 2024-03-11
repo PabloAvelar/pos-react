@@ -1,0 +1,91 @@
+.popup-client-card-container {
+    position: fixed;
+    z-index: 1;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: var(--popup-color) 3px solid;
+    border-radius: 15px;
+    backdrop-filter: blur(13px);
+    width: 38%;
+    height: 75%;
+}
+
+
+.popup-client-card1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 75%;
+    height: 80%;
+}
+
+.hide{
+    display: none;
+}
+
+.input-add-client-container {
+    display: flex;
+    align-items: center;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    height: 70%;
+    justify-content: space-evenly;
+}
+
+.input-form-popup {
+    position: absolute;
+    right: 12.5%;
+    background: transparent;
+    border: none;
+    border-bottom: 2px var(--text) solid;
+    width: 40%;
+    color: var(--text);
+    font-size: 19px;
+}
+
+.input-form-popup::placeholder {
+    color: var(--placeholder);
+}
+
+.input-form-popup:focus {
+    outline: none;
+}
+
+.submit-button {
+    width: 60%;
+    height: 40px;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    background: var(--popup-color);
+    border: none;
+    border-radius: 20px;
+    transition: .5s all;
+}
+
+.submit-button:hover {
+    background-color: var(--popup-color-light);
+    transition: .5s all;
+}
+
+.icon {
+    color: var(--text);
+    font-size: 20px;
+}
+
+.shadow {
+    box-shadow: rgba(0, 0, 0, 0.45) 1.95px 1.95px 2.6px;
+}
+
+.close-modal{
+    position: inherit;
+    right: 10px;
+    top: 10px;
+}
