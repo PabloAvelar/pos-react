@@ -43,11 +43,11 @@ function LoginForm() {
                     }
                 })
                 .catch((err) => {
-                    console.error(err);
+                    console.log(err);
                 })
 
         } catch (e) {
-            console.error("Error: ", e);
+            console.log("Error: ", e);
         }
     }
 
@@ -56,7 +56,7 @@ function LoginForm() {
         setTimeout(() => {
             if (userData) {
                 // verifying the token
-                async function validateToken() {
+                async function validateToken() { 
                     try {
                         const response = registerService.validateToken({
                             userData
@@ -65,10 +65,10 @@ function LoginForm() {
                         if (response) {
                             console.log("Token validated");
                         }else{
-                            console.error("no validado")
+                            console.log("no validado")
                         }
                     } catch (error) {
-                        console.error(error);
+                        console.log(error);
                     }
                 }
 
