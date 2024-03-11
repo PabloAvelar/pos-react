@@ -77,7 +77,7 @@ function PopupSales({ closeModal, data }) {
                         console.error(err);
                     })
             })
-
+            window.location.reload();
         } catch (e) {
             console.error(e);
         }
