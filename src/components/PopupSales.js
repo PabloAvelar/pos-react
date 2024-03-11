@@ -91,7 +91,7 @@ function PopupSales({ closeModal, data }) {
             </a>
             <div style={{ marginTop: 20 }}>
                 <span style={{ color: "#370021", fontWeight: 'bold', fontSize: 36 }}>
-                    Supplier Information
+                    Cash
                 </span>
             </div>
             <form className='popup-client-card' onSubmit={handleSubmit} name='clientForm'>
