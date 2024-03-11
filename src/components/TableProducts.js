@@ -3,8 +3,8 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { useAuth } from './AuthContext';
 import { EditButton, DeleteButton } from './Buttons';
-import PopuProducts from './PopuProducts';
-import suppliersService from '../services/suppliersService';
+import PopupProducts from './PopupProducts';
+import productsService from '../services/productsService';
 
 function TableProducts(data) {
     const [showModal, setShowModal] = useState(false);
@@ -14,10 +14,10 @@ function TableProducts(data) {
     const handleDeleteClient = (rowData) => {
         try{
             const data = new URLSearchParams({
-                'suplier_id': rowData.suplier_id
+                'product_id': rowData.product_id
             }).toString();
 
-            suppliersService.deleteSupplier(data)
+            productsService.deleteProduct(data)
             .then((res) => {
                 if (res.status === 'success'){
                     console.log("Customer deleted");
@@ -45,13 +45,22 @@ function TableProducts(data) {
     return (
         <section className='datatable-container'>
 
-            <DataTable value={data["data"]} scrollable stripedRows editMode="row" dataKey="suplier_id" className='table-container'>
+            <DataTable value={data["data"]} scrollable stripedRows editMode="row" dataKey="product_id" className='table-container'>
                 <Column
                     headerClassName='table-column1-header'
                     bodyClassName='table-column1-body'
                     header=""
                     style={{minWidth: 20}}
                     body={(rowData) => <DeleteButton onDeleteClick={() => handleDeleteClient(rowData)} />}
+                >
+
+                </Column>
+
+                <Column headerClassName='table-column1-header'
+                    bodyClassName='table-column1-body'
+                    header=""
+                    style={{minWidth: 20}}
+                    body={(rowData) => <EditButton onEditClick={() => handleEditClient(rowData)} />}
                 >
 
                 </Column>
@@ -91,7 +100,7 @@ function TableProducts(data) {
                headerClassName='table-column1-header'
                bodyClassName='table-column1-body'
                style={{minWidth: 20}}
-               header="Suplier"
+               header="Supplier"
                >
                 
                 </Column>
@@ -105,27 +114,6 @@ function TableProducts(data) {
                >
                 
                 </Column>
-
-               
-                <Column
-               field="expiry_date"
-               headerClassName='table-column1-header'
-               bodyClassName='table-column1-body'
-               style={{minWidth: 100}}
-               header="Expiration date"
-               >
-                
-                </Column>
-
-
-                {/* <Column headerClassName='table-column1-header'
-                    bodyClassName='table-column1-body'
-                    header=""
-                    style={{minWidth: 20}}
-                    body={(rowData) => <EditButton onEditClick={() => handleEditClient(rowData)} />}
-                >
-
-                </Column> */}
                 
                 <Column field="o_price"
                     headerClassName='table-column1-header'
@@ -166,21 +154,11 @@ function TableProducts(data) {
                     header="Total"
                 >
 
-                </Column>
-
-                <Column field="note"
-                    headerClassName='table-column1-header'
-                    bodyClassName='table-column1-body'
-                    style={{minWidth: 100}}
-                    header="Action"
-                >
-
-                </Column>
-                
+                </Column>                
                 
             </DataTable>
 
-            {showModal && <PopuProducts closeModal={setShowModal} data={clientData} />}
+            {showModal && <PopupProducts closeModal={setShowModal} data={clientData} />}
         </section>
 
     )

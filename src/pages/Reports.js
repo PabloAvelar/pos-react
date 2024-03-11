@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import TableProducts from '../components/TableProducts';
 import '../styles/tableproducts.css';
-import PopuProducts from '../components/PopuProducts';
+import PopupProducts from '../components/PopupProducts';
 import suppliersService from '../services/suppliersService';
 import Sidebar from '../components/Sidebar';
 import Header from '../components/Header';
@@ -44,7 +44,7 @@ function Products() {
         {dataLoaded ? <TableProducts data={suppliers} /> : <p>cargando datos</p>}
       </article>
       
-      {showModal && <PopuProducts closeModal={setShowModal} />}
+      {showModal && <PopupProducts closeModal={setShowModal} />}
 
     </main>
   );

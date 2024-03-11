@@ -4,7 +4,7 @@ import { faXmarkSquare } from '@fortawesome/free-solid-svg-icons'
 import '../styles/popuproducts.css';
 import productsService from '../services/productsService';
 
-function PopuProducts({ closeModal, data }) {
+function PopupProducts({ closeModal, data }) {
     const [inputs, setInputs] = useState({});
 
     useEffect(() => {
@@ -101,7 +101,7 @@ function PopuProducts({ closeModal, data }) {
                     })
             } else {
                 // If a Product is being edited
-                productService.putProduct(data.toString())
+                productsService.putProduct(data.toString())
                     .then((res) => {
                         if (res.status === 'success') {
                             console.log("cliente editado");
@@ -150,11 +150,6 @@ function PopuProducts({ closeModal, data }) {
                         <span style={{ fontSize: 16 }}>Date of reception: </span>
                         <input className='input-form-popup' onChange={handleChange} type="date" name="date_arrival" required />
                     </div>
-
-                    <div className="input-add-client-container">
-                        <span style={{ fontSize: 16 }}>Expiration date: </span>
-                        <input className='input-form-popup' onChange={handleChange} type="date" name="expiry_date" required />
-                    </div>
                     
                     <div className="input-add-client-container">
                         <span style={{ fontSize: 16 }}>Sales price: </span>
@@ -166,15 +161,6 @@ function PopuProducts({ closeModal, data }) {
                         <input className='input-form-popup' onChange={handleChange} type="text" name="o_price" required />
                     </div>
 
-                    {/* <div className="input-add-client-container">
-                        <span style={{ fontSize: 16 }}>Profit: </span>
-                        <input className='input-form-popup' onChange={handleChange} type="text" name="profit" readOnly />
-                    </div>
-
-                    <div className="input-add-client-container">
-                        <span style={{ fontSize: 16 }}>Suplier: </span>
-                        <input className='input-form-popup' onChange={handleChange} type="text" name="supplier" readOnly />
-                    </div> */}
                 </div>
 
                 <div className="submit-container">
@@ -185,4 +171,4 @@ function PopuProducts({ closeModal, data }) {
     )
 }
 
-export default PopuProducts;
+export default PopupProducts;

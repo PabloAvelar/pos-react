@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import TableProducts from '../components/TableProducts';
 import '../styles/tableproducts.css';
-import PopuProducts from '../components/PopuProducts';
+import PopupProducts from '../components/PopupProducts';
 import productsService from '../services/productsService';
 import Sidebar from '../components/Sidebar';
 import Header from '../components/Header';
@@ -13,7 +13,7 @@ function Products() {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    // Cargando sólo una vez los clientes que hay
+    
     productsService.getProducts()
       .then((clients) => {
         setProducts(clients);
@@ -50,7 +50,7 @@ function Products() {
         {dataLoaded ? <TableProducts data={products} /> : <p>cargando datos</p>}
       </article>
       
-      {showModal && <PopuProducts closeModal={setShowModal} />}
+      {showModal && <PopupProducts closeModal={setShowModal} />}
 
     </main>
   );
