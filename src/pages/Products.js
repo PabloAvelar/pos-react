@@ -2,21 +2,21 @@ import React, { useState, useEffect } from 'react'
 import TableProducts from '../components/TableProducts';
 import '../styles/tableproducts.css';
 import PopuProducts from '../components/PopuProducts';
-import suppliersService from '../services/suppliersService';
+import productsService from '../services/productsService';
 import Sidebar from '../components/Sidebar';
 import Header from '../components/Header';
 
 function Products() {
 
-  const [suppliers, setSuppliers] = useState([]);
+  const [products, setProducts] = useState([]);
   const [dataLoaded, setDataLoaded] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     // Cargando sólo una vez los clientes que hay
-    suppliersService.getSuppliers()
+    productsService.getProducts()
       .then((clients) => {
-        setSuppliers(clients);
+        setProducts(clients);
         setDataLoaded(true);
       })
       .catch((err) => {
@@ -24,7 +24,7 @@ function Products() {
       })
   }, []);
 
-  console.log(suppliers);
+  console.log(products);
   return (
 
     <main className="page-container">
@@ -47,7 +47,7 @@ function Products() {
             </div>
           </div>
         </section>
-        {dataLoaded ? <TableProducts data={suppliers} /> : <p>cargando datos</p>}
+        {dataLoaded ? <TableProducts data={products} /> : <p>cargando datos</p>}
       </article>
       
       {showModal && <PopuProducts closeModal={setShowModal} />}

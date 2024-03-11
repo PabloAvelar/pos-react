@@ -16,7 +16,7 @@ async function postProduct(data){
     const res = postByUrl(endpoint, data);
     return res;
 }
-
+ 
 // GET
 async function getProducts(){
     const endpoint = baseUrl + '/getproducts.php';

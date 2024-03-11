@@ -3,7 +3,7 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { useAuth } from './AuthContext';
 import { EditButton, DeleteButton } from './Buttons';
-import PopupSuppliers from './PopupSuppliers';
+import PopuProducts from './PopuProducts';
 import suppliersService from '../services/suppliersService';
 
 function TableProducts(data) {
@@ -57,7 +57,7 @@ function TableProducts(data) {
                 </Column>
 
                 <Column
-               field="suplier_address"
+               field="product_code"
                headerClassName='table-column1-header'
                bodyClassName='table-column1-body'
                style={{minWidth: 20}}
@@ -67,7 +67,7 @@ function TableProducts(data) {
                 </Column>
 
                 <Column
-               field="suplier_address"
+               field="gen_name"
                headerClassName='table-column1-header'
                bodyClassName='table-column1-body'
                style={{minWidth: 20}}
@@ -77,7 +77,7 @@ function TableProducts(data) {
                 </Column>
 
                 <Column
-               field="suplier_address"
+               field="product_name"
                headerClassName='table-column1-header'
                bodyClassName='table-column1-body'
                style={{minWidth: 20}}
@@ -87,7 +87,7 @@ function TableProducts(data) {
                 </Column>
 
                 <Column
-               field="suplier_address"
+               field="supplier"
                headerClassName='table-column1-header'
                bodyClassName='table-column1-body'
                style={{minWidth: 20}}
@@ -97,22 +97,22 @@ function TableProducts(data) {
                 </Column>
 
                 <Column
-               field="suplier_address"
+               field="date_arrival"
                headerClassName='table-column1-header'
                bodyClassName='table-column1-body'
                style={{minWidth: 20}}
-               header="Date of reception"
+               header="Receipt date"
                >
                 
                 </Column>
 
                
                 <Column
-               field="suplier_address"
+               field="expiry_date"
                headerClassName='table-column1-header'
                bodyClassName='table-column1-body'
                style={{minWidth: 100}}
-               header="Expiration name"
+               header="Expiration date"
                >
                 
                 </Column>
@@ -127,7 +127,7 @@ function TableProducts(data) {
 
                 </Column> */}
                 
-                <Column field="suplier_name"
+                <Column field="o_price"
                     headerClassName='table-column1-header'
                     bodyClassName='table-column1-body'
                     style={{minWidth: 20}}
@@ -135,7 +135,7 @@ function TableProducts(data) {
                 >
 
                 </Column>
-                <Column field="contact_person"
+                <Column field="price"
                     headerClassName='table-column1-header'
                     bodyClassName='table-column1-body'
                     style={{minWidth: 100}}
@@ -143,7 +143,7 @@ function TableProducts(data) {
                 >
 
                 </Column>
-                <Column field="suplier_contact"
+                <Column field="qty"
                     headerClassName='table-column1-header'
                     bodyClassName='table-column1-body'
                     style={{minWidth: 100}}
@@ -151,7 +151,7 @@ function TableProducts(data) {
                 >
 
                 </Column>
-                <Column field="suplier_address"
+                <Column field="onhand_qty"
                     headerClassName='table-column1-header'
                     bodyClassName='table-column1-body'
                     style={{minWidth: 100}}
@@ -159,7 +159,7 @@ function TableProducts(data) {
                 >
 
                 </Column>
-                <Column field="note"
+                <Column field="profit"
                     headerClassName='table-column1-header'
                     bodyClassName='table-column1-body'
                     style={{minWidth: 100}}
@@ -180,7 +180,7 @@ function TableProducts(data) {
                 
             </DataTable>
 
-            {showModal && <PopupSuppliers closeModal={setShowModal} data={clientData} />}
+            {showModal && <PopuProducts closeModal={setShowModal} data={clientData} />}
         </section>
 
     )
