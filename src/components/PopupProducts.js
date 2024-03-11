@@ -15,20 +15,11 @@ function PopupProducts({ closeModal, data }) {
             document.clientForm.product_code.value = data.product_code;
             setInputs(values => ({ ...values, ['product_code']: data.product_code }))
 
-            document.clientForm.gen_name.value = data.gen_name;
-            setInputs(values => ({ ...values, ['gen_name']: data.gen_name }))
-
             document.clientForm.product_name.value = data.product_name;
             setInputs(values => ({ ...values, ['product_name']: data.product_name }))
 
-            document.clientForm.o_price.value = data.o_price;
-            setInputs(values => ({ ...values, ['o_price']: data.o_price }))
-
-            document.clientForm.price.value = data.price;
-            setInputs(values => ({ ...values, ['price']: data.price }))
-
-            document.clientForm.profit.value = data.profit;
-            setInputs(values => ({ ...values, ['profit']: data.profit }))
+            document.clientForm.gen_name.value = data.gen_name;
+            setInputs(values => ({ ...values, ['gen_name']: data.gen_name }))
 
             document.clientForm.supplier.value = data.supplier;
             setInputs(values => ({ ...values, ['supplier']: data.supplier }))
@@ -36,23 +27,17 @@ function PopupProducts({ closeModal, data }) {
             document.clientForm.qty.value = data.qty;
             setInputs(values => ({ ...values, ['qty']: data.qty }))
 
-            document.clientForm.qty_sold.value = data.qty_sold;
-            setInputs(values => ({ ...values, ['qty_sold']: data.qty_sold }))
-
-            
             document.clientForm.onhand_qty.value = data.onhand_qty;
             setInputs(values => ({ ...values, ['onhand_qty']: data.onhand_qty }))
 
-            
-            document.clientForm.expiry_date.value = data.expiry_date;
-            setInputs(values => ({ ...values, ['expiry_date']: data.expiry_date }))
+            document.clientForm.price.value = data.price;
+            setInputs(values => ({ ...values, ['price']: data.price }))
 
-            
+            document.clientForm.o_price.value = data.o_price;
+            setInputs(values => ({ ...values, ['o_price']: data.o_price }))
+
             document.clientForm.date_arrival.value = data.date_arrival;
             setInputs(values => ({ ...values, ['date_arrival']: data.date_arrival }))
-
-
-
         }
     }, [])
 
@@ -66,30 +51,27 @@ function PopupProducts({ closeModal, data }) {
     async function handleSubmit(e) {
         e.preventDefault();
 
+        console.log(inputs);
+
         try {
-
-
             const data = new URLSearchParams({
                 'product_id': inputs.product_id,
                 'product_code': inputs.product_code,
-                'gen_name': inputs.gen_name,
                 'product_name': inputs.product_name,
-                'o_price': inputs.o_price,
-                'price': inputs.price,
-                'profit': inputs.profit,
+                'gen_name': inputs.gen_name,
                 'supplier': inputs.supplier,
                 'qty': inputs.qty,
-                'qty_sold': inputs.qty_sold,
                 'onhand_qty': inputs.onhand_qty,
-                'expiry_date': inputs.expiry_date,
+                'price': inputs.price,
+                'o_price': inputs.o_price,
                 'date_arrival': inputs.date_arrival
             })
 
-            // If it's a new customer
+            // If it's a new product
             if (inputs.product_id === undefined) {
                 data.delete("product_id");
 
-                productsService.getProducts(data.toString())
+                productsService.postProduct(data.toString())
                     .then((res) => {
                         if (res.status === 'success') {
                             console.log("Producto agregado");
@@ -129,28 +111,37 @@ function PopupProducts({ closeModal, data }) {
                     Product Information
                 </span>
             </div>
-            <form className='popup-client-card1' onSubmit={handleSubmit} name='clientForm'>
+            <form className='popup-client-card' onSubmit={handleSubmit} name='clientForm'>
 
-                {/* <br> */}
-
-                <div className='input-container'>
+                <div className='input-container' >
                     <div className="input-add-client-container">
-                        <span style={{ fontSize: 16 }}>Brand: </span>
+                        <span style={{ fontSize: 16 }}>Product Code: </span>
                         <input className='input-form-popup' onChange={handleChange} type="text" name="product_code" required />
                     </div>
                     <div className="input-add-client-container">
-                        <span style={{ fontSize: 16 }}>Generic name: </span>
-                        <input className='input-form-popup' onChange={handleChange} type="text" name="name" required />
+                        <span style={{ fontSize: 16 }}>Product: </span>
+                        <input className='input-form-popup' onChange={handleChange} type="text" name="product_name" required />
                     </div>
                     <div className="input-add-client-container">
-                        <span style={{ fontSize: 16 }}>Category/Description: </span>
+                        <span style={{ fontSize: 16 }}>Generic name: </span>
                         <input className='input-form-popup' onChange={handleChange} type="text" name="gen_name" required />
                     </div>
+
                     <div className="input-add-client-container">
-                        <span style={{ fontSize: 16 }}>Date of reception: </span>
-                        <input className='input-form-popup' onChange={handleChange} type="date" name="date_arrival" required />
+                        <span style={{ fontSize: 16 }}>Supplier: </span>
+                        <input className='input-form-popup' onChange={handleChange} type="text" name="supplier" required />
                     </div>
-                    
+
+                    <div className="input-add-client-container">
+                        <span style={{ fontSize: 16 }}>Quantity: </span>
+                        <input className='input-form-popup' onChange={handleChange} type="text" name="qty" required />
+                    </div>
+
+                    <div className="input-add-client-container">
+                        <span style={{ fontSize: 16 }}>Quantity on-hand: </span>
+                        <input className='input-form-popup' onChange={handleChange} type="text" name="onhand_qty" required />
+                    </div>
+
                     <div className="input-add-client-container">
                         <span style={{ fontSize: 16 }}>Sales price: </span>
                         <input className='input-form-popup' onChange={handleChange} type="text" name="price" required />
@@ -159,6 +150,11 @@ function PopupProducts({ closeModal, data }) {
                     <div className="input-add-client-container">
                         <span style={{ fontSize: 16 }}>Original price: </span>
                         <input className='input-form-popup' onChange={handleChange} type="text" name="o_price" required />
+                    </div>
+
+                    <div className="input-add-client-container">
+                        <span style={{ fontSize: 16 }}>Date of reception: </span>
+                        <input className='input-form-popup' onChange={handleChange} type="date" name="date_arrival" required />
                     </div>
 
                 </div>

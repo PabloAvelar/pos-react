@@ -24,7 +24,6 @@ function Products() {
       })
   }, []);
 
-  console.log(products);
   return (
 
     <main className="page-container">
