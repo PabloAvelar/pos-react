@@ -6,28 +6,25 @@ import { EditButton, DeleteButton } from './Buttons';
 import PopupSuppliers from './PopupSuppliers';
 import '../styles/tableclients.css';
 
-function TableSales(data) {
+function TableSales({data, handleDeleteProduct}) {
     const [showModal, setShowModal] = useState(false);
     const [clientData, setClientData] = useState({});
     const auth = useAuth();
 
     const handleDeleteClient = (rowData) => {
-        console.log(rowData)
-    }
-
-    const handleEditClient = (rowData) => {
-        setClientData(rowData);
-        setShowModal(true);
+        // console.log(handleDeleteProduct);
+        handleDeleteProduct(rowData.product_id);
     }
 
     if (!auth.auth) {
         return <></>
     }
-
+    console.log(typeof data);
+    console.log(data);
     return (
         <section className='datatable-container'>
 
-            <DataTable value={data["data"]} scrollable stripedRows editMode="row" dataKey="product_id" className='table-container'>
+            <DataTable value={data} scrollable stripedRows editMode="row" dataKey="product_id" className='table-container'>
                 <Column
                     headerClassName='table-column-header'
                     bodyClassName='table-column-body'

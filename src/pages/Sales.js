@@ -47,6 +47,17 @@ function Sales() {
     setProductsCart([...productsCart, newProduct]);
   }
 
+  const handleSave = () => {
+    
+  }
+
+  const deleteProduct = (id) => {
+    const newObjects = productsCart.filter(p => p.product_id !== id);
+
+    // Actualizando productos en carrito
+    setProductsCart(newObjects);
+  }
+
   return (
 
     <main className="page-container">
@@ -87,7 +98,7 @@ function Sales() {
             </div>
           </div>
         </section>
-        {dataLoaded ? <TableSales data={productsCart} /> : <p>cargando datos</p>}
+        {dataLoaded ? <TableSales data={productsCart} handleDeleteProduct={deleteProduct} /> : <p>cargando datos</p>}
         <section className='total-sale'>
           <span>Total: ${productsCart.reduce((total, p) => total + p.amount, 0)}</span>
           
@@ -95,7 +106,7 @@ function Sales() {
 
         <div className='add-customer-content'>
             <div className='add-customer-container save-sale'>
-              <a className='add-customer' onClick={handleAddCart}>Save</a>
+              <a className='add-customer' onClick={handleSave}>Save</a>
             </div>
           </div>
 
