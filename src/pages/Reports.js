@@ -39,13 +39,7 @@ function Products() {
           <div className='page-title-container'>
             <span className='page-title'>Reports</span>
           </div>
-          <div className='add-customer-content'>
-            <div className='add-customer-container'>
-              <a className='add-customer' onClick={() => {
-                setShowModal(true);
-              }}>+ Add Products</a>
-            </div>
-          </div>
+        
         </section>
         {dataLoaded ? <TableProducts data={suppliers} /> : <p>cargando datos</p>}
       </article>
