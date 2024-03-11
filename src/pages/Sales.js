@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import '../styles/clients.css';
 import '../styles/uniqueStyleSales.css';
-import PopupSuppliers from '../components/PopupSuppliers';
+import PopupSales from '../components/PopupSales';
 import productsService from '../services/productsService';
 import Sidebar from '../components/Sidebar';
 import Header from '../components/Header';
 import TableSales from '../components/TableSales';
+import { useAuth } from '../components/AuthContext';
 
 function Sales() {
 
@@ -15,7 +16,7 @@ function Sales() {
   const [productSelected, setProductSelected] = useState({});
   const [productsCart, setProductsCart] = useState([]);
   const [productsQuantity, setProductsQuantity] = useState(0);
-
+  const auth = useAuth();
 
   useEffect(() => {
     // Cargando sólo una vez los clientes que hay
@@ -41,14 +42,25 @@ function Sales() {
       amount: productsQuantity * productSelected.price
     };
 
-    console.log(productSelected)
-
     // Agregando el nuevo producto al carrito con los demás
     setProductsCart([...productsCart, newProduct]);
   }
 
   const handleSave = () => {
-    
+    setShowModal(true);
+    // const todaysDate = new Date();
+    // const date = `${todaysDate.getFullYear()}-${(todaysDate.getMonth() + 1).toString().padStart(2, '0')}-${todaysDate.getDate().toString().padStart(2, '0')}`;
+
+    // const infoForSalesTable = {
+    //   cashier: auth.auth.username,
+    //   amount: productsCart.reduce((total, p) => total + p.amount, 0),
+    //   date: date,
+    // }
+
+    // const infoForSalesOrderTable = {
+    //   amount: productsCart.reduce((total, p) => total + p.amount, 0),
+    //   date: date,
+    // }
   }
 
   const deleteProduct = (id) => {
@@ -57,6 +69,7 @@ function Sales() {
     // Actualizando productos en carrito
     setProductsCart(newObjects);
   }
+
 
   return (
 
@@ -101,17 +114,24 @@ function Sales() {
         {dataLoaded ? <TableSales data={productsCart} handleDeleteProduct={deleteProduct} /> : <p>cargando datos</p>}
         <section className='total-sale'>
           <span>Total: ${productsCart.reduce((total, p) => total + p.amount, 0)}</span>
-          
+
         </section>
 
-        <div className='add-customer-content'>
+        {
+          productsCart.length > 0 &&
+          <div className='add-customer-content'>
             <div className='add-customer-container save-sale'>
               <a className='add-customer' onClick={handleSave}>Save</a>
             </div>
           </div>
+        }
+
 
       </article>
-
+      {showModal &&
+        <PopupSales
+          closeModal={setShowModal} data={productsCart}
+          />}
     </main >
   );
 }

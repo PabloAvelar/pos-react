@@ -1,28 +1,33 @@
-// import { postByUrl, getByUrl, postByUrlWithConfig } from "./utils";
+import { postByUrl, getByUrl, postByUrlWithConfig } from "./utils";
 
-// const baseUrl = 'http://localhost/pos-backend/api/controllers';
+const baseUrl = 'http://localhost/pos-backend/api/controllers';
 
-// // PUT pero en realidad es post porque pinche php es una mierda
-// async function putSupplier(data){
-//     const endpoint = baseUrl + '/putsupplier.php';
-//     const res = postByUrl(endpoint, data);
-//     return res;
-// }
+// POST
+async function postSales(data){
+    const endpoint = baseUrl + '/postsales.php';
+    const res = postByUrl(endpoint, data);
+    return res;
+}
 
-// // POST
+async function postSalesOrder(data){
+    const endpoint = baseUrl + '/postsalesorder.php';
+    const res = postByUrl(endpoint, data);
+    return res;
+}
 
-// async function postSupplier(data){
-//     const endpoint = baseUrl + '/postsupplier.php';
-//     const res = postByUrl(endpoint, data);
-//     return res;
-// }
+// GET
+async function getSales(){
+    const endpoint = baseUrl + '/getsales.php';
+    const res = getByUrl(endpoint);
+    return res;
+}
 
-// // GET
-// async function getSuppliers(){
-//     const endpoint = baseUrl + '/getsuppliers.php';
-//     const res = getByUrl(endpoint);
-//     return res;
-// }
+async function getSalesOrder(){
+    const endpoint = baseUrl + '/getsalesorder.php';
+    const res = getByUrl(endpoint);
+    return res;
+}
+
 
 // async function getSupplierById(id){
 //     const endpoint = baseUrl + '/getsupplier.php?'+id;
@@ -30,13 +35,7 @@
 //     return res;
 // }
 
-// // DELETE
-// async function deleteSupplier(data){
-//     const endpoint = baseUrl + '/deletesupplier.php';
-//     const res = postByUrl(endpoint, data);
-//     return res;
-// }
 
-// export default {
-//     putSupplier, getSuppliers, postSupplier, deleteSupplier
-// };
+export default {
+    getSales, getSalesOrder, postSales, postSalesOrder
+};

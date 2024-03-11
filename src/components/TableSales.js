@@ -19,8 +19,7 @@ function TableSales({data, handleDeleteProduct}) {
     if (!auth.auth) {
         return <></>
     }
-    console.log(typeof data);
-    console.log(data);
+
     return (
         <section className='datatable-container'>
 
