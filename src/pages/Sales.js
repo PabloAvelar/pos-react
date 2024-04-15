@@ -7,10 +7,12 @@ import Sidebar from '../components/Sidebar';
 import Header from '../components/Header';
 import TableSales from '../components/TableSales';
 import { useAuth } from '../components/AuthContext';
+import clientsService from '../services/clientsService';
 
 function Sales() {
 
   const [products, setProducts] = useState([]);
+  const [customers, setCustomers] = useState([]);
   const [dataLoaded, setDataLoaded] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [productSelected, setProductSelected] = useState({});
@@ -21,12 +23,25 @@ function Sales() {
   useEffect(() => {
     // Cargando sólo una vez los clientes que hay
     productsService.getProducts()
-      .then((clients) => {
-        setProducts(clients);
+      .then((prod) => {
+        setProducts(prod);
+        // asignando el primer producto en el select por defecto
+        try {
+          setProductSelected(prod[0])
+        } catch (error) {}
         setDataLoaded(true);
       })
       .catch((err) => {
         console.error(err);
+      })
+
+      // Cargando customers
+      clientsService.getClients()
+      .then((clients) => {
+        setCustomers(clients);
+      })
+      .catch((e) => {
+        console.error(e);
       })
   }, []);
 
@@ -130,7 +145,7 @@ function Sales() {
       </article>
       {showModal &&
         <PopupSales
-          closeModal={setShowModal} data={productsCart}
+          closeModal={setShowModal} data={productsCart} customers={customers}
           />}
     </main >
   );

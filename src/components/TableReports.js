@@ -6,7 +6,7 @@ import { EditButton, DeleteButton } from './Buttons';
 import PopupProducts from './PopupProducts';
 import productsService from '../services/productsService';
 
-function TableReports(data) {
+function TableReports({ data }) {
     const [showModal, setShowModal] = useState(false);
     const [clientData, setClientData] = useState({});
     const auth = useAuth();
@@ -24,7 +24,7 @@ function TableReports(data) {
     return (
         <section className='datatable-container'>
 
-            <DataTable value={data.data} scrollable stripedRows editMode="row" dataKey="product_id" className='table-container'>
+            <DataTable value={data} scrollable stripedRows editMode="row" dataKey="transaction_id" className='table-container'>
 
                 <Column
                     field="transaction_id"
@@ -32,6 +32,16 @@ function TableReports(data) {
                     bodyClassName='table-column1-body'
                     style={{ minWidth: 20 }}
                     header="ID"
+                >
+
+                </Column>
+
+                <Column
+                    field="customer_id"
+                    headerClassName='table-column1-header'
+                    bodyClassName='table-column1-body'
+                    style={{ minWidth: 20 }}
+                    header="Customer"
                 >
 
                 </Column>
@@ -62,16 +72,6 @@ function TableReports(data) {
                     bodyClassName='table-column1-body'
                     style={{ minWidth: 20 }}
                     header="Gen. Name"
-                >
-
-                </Column>
-
-                <Column
-                    field="name"
-                    headerClassName='table-column1-header'
-                    bodyClassName='table-column1-body'
-                    style={{ minWidth: 20 }}
-                    header="Name"
                 >
 
                 </Column>

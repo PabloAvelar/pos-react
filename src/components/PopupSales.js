@@ -6,8 +6,10 @@ import suppliersService from '../services/suppliersService';
 import { useAuth } from './AuthContext';
 import salesService from '../services/salesService';
 
-function PopupSales({ closeModal, data }) {
+function PopupSales({ closeModal, data, customers }) {
+
     const [inputs, setInputs] = useState({});
+    const [customerSelected, setCustomerSelected] = useState(customers[0]);
     const [change, setChange] = useState(0);
     const auth = useAuth();
     const getTotal = data.reduce((total, p) => total + p.amount, 0);
@@ -24,7 +26,6 @@ function PopupSales({ closeModal, data }) {
         }
 
     }
-
     async function handleSubmit(e) {
         e.preventDefault();
         const todaysDate = new Date();
@@ -41,19 +42,20 @@ function PopupSales({ closeModal, data }) {
                     'date': date,
                     'amount': product.quantity * product.price,
                     'type': product.gen_name,
-                    'name': inputs.customerName
+                    // 'name': inputs.customerName
                 }).toString()
 
                 const dataForSalesOrder = new URLSearchParams({
                     'product': product.product_name,
+                    'customer_id': customerSelected.customer_id,
                     'gen_name': product.gen_name,
                     'product_code': product.product_code,
                     'date': date,
                     'price': product.price,
                     'amount': product.quantity * product.price,
                     'qty': product.quantity,
-                    'name': inputs.customerName
                 }).toString()
+
 
                 // Mandando datos la table `sales`
                 salesService.postSales(dataForSalesTable)
@@ -101,7 +103,15 @@ function PopupSales({ closeModal, data }) {
                 <div className='input-container'>
                     <div className="input-add-client-container">
                         <span style={{ fontSize: 16 }}>Customer: </span>
-                        <input className='input-form-popup' onChange={handleChange} type="text" name="customerName" required />
+                        {/* <input className='input-form-popup' onChange={handleChange} type="text" name="customerName" required /> */}
+                        <select name='select' className='input-form-popup' onChange={(e) => { setCustomerSelected(JSON.parse(e.target.value)) }}>
+                            {
+                                customers.map((client) => (
+                                    <option key={client.customer_id} value={JSON.stringify(client)}>{client.customer_name}</option>
+                                ))
+
+                            }
+                        </select>
                     </div>
                     <div className="input-add-client-container">
                         <span style={{ fontSize: 16 }}>Cash: </span>

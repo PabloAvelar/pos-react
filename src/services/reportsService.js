@@ -1,6 +1,6 @@
 import { postByUrl, getByUrl, postByUrlWithConfig } from "./utils";
 
-const baseUrl = 'http://localhost/pos-backend/api/controllers';
+const baseUrl = 'http://localhost/pos-backend/api/reports';
 
 // GET
 async function getReports(){

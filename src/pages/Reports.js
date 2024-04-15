@@ -15,8 +15,9 @@ function Reports() {
   useEffect(() => {
     // Cargando sólo una vez los clientes que hay
     reportsService.getReports()
-      .then((clients) => {
-        setReports(clients);
+      .then((obj) => {
+        console.log("obj", obj);
+        setReports(obj);
         setDataLoaded(true);
       })
       .catch((err) => {
