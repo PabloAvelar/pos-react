@@ -28,15 +28,15 @@ function Sales() {
         // asignando el primer producto en el select por defecto
         try {
           setProductSelected(prod[0])
-        } catch (error) {}
+        } catch (error) { }
         setDataLoaded(true);
       })
       .catch((err) => {
         console.error(err);
       })
 
-      // Cargando customers
-      clientsService.getClients()
+    // Cargando customers
+    clientsService.getClients()
       .then((clients) => {
         setCustomers(clients);
       })
@@ -103,14 +103,20 @@ function Sales() {
 
             <div className='select-container select-qty'>
               <label htmlFor='quantity' className='label-select-product'>Quantity</label>
-              <input type="number" className='selection' id="quantity" name="quantity" min="1" max={productSelected.onhand_qty} onChange={(e) => setProductsQuantity(e.target.value)} />
+              {
+                productSelected !== undefined &&
+                <input type="number" className='selection' id="quantity" name="quantity" min="1" max={productSelected.onhand_qty} onChange={(e) => setProductsQuantity(e.target.value)} />
+              }
             </div>
 
           </div>
           <div className='add-customer-content'>
-            <div className='add-customer-container'>
-              <a className='add-customer' onClick={handleAddCart}>+ Add to Cart</a>
-            </div>
+            {productSelected !== undefined &&
+              <div className='add-customer-container'>
+                <a className='add-customer' onClick={handleAddCart}>+ Add to Cart</a>
+
+              </div>
+              }
           </div>
         </section>
         {dataLoaded ? <TableSales data={productsCart} handleDeleteProduct={deleteProduct} /> : <p>cargando datos</p>}
@@ -120,7 +126,7 @@ function Sales() {
         </section>
 
         {
-          productsCart.length > 0 &&
+          productsCart.length > 0 && productSelected !== undefined &&
           <div className='add-customer-content'>
             <div className='add-customer-container save-sale'>
               <a className='add-customer' onClick={handleSave}>Save</a>
@@ -133,7 +139,7 @@ function Sales() {
       {showModal &&
         <PopupSales
           closeModal={setShowModal} data={productsCart} customers={customers}
-          />}
+        />}
     </main >
   );
 }
