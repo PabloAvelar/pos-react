@@ -63,19 +63,6 @@ function Sales() {
 
   const handleSave = () => {
     setShowModal(true);
-    // const todaysDate = new Date();
-    // const date = `${todaysDate.getFullYear()}-${(todaysDate.getMonth() + 1).toString().padStart(2, '0')}-${todaysDate.getDate().toString().padStart(2, '0')}`;
-
-    // const infoForSalesTable = {
-    //   cashier: auth.auth.username,
-    //   amount: productsCart.reduce((total, p) => total + p.amount, 0),
-    //   date: date,
-    // }
-
-    // const infoForSalesOrderTable = {
-    //   amount: productsCart.reduce((total, p) => total + p.amount, 0),
-    //   date: date,
-    // }
   }
 
   const deleteProduct = (id) => {

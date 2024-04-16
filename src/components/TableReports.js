@@ -11,12 +11,6 @@ function TableReports({ data }) {
     const [clientData, setClientData] = useState({});
     const auth = useAuth();
 
-    // useEffect(() => {
-    //     data.data.map((p) => {
-    //         p.total = p.o_price * p.qty
-    //     })
-    // }, [data.data])
-
     if (!auth.auth) {
         return <></>
     }
@@ -37,7 +31,7 @@ function TableReports({ data }) {
                 </Column>
 
                 <Column
-                    field="customer_id"
+                    field="customer_name"
                     headerClassName='table-column1-header'
                     bodyClassName='table-column1-body'
                     style={{ minWidth: 20 }}
@@ -47,31 +41,11 @@ function TableReports({ data }) {
                 </Column>
 
                 <Column
-                    field="product"
+                    field="product_name"
                     headerClassName='table-column1-header'
                     bodyClassName='table-column1-body'
                     style={{ minWidth: 20 }}
                     header="Product"
-                >
-
-                </Column>
-
-                <Column
-                    field="product_code"
-                    headerClassName='table-column1-header'
-                    bodyClassName='table-column1-body'
-                    style={{ minWidth: 20 }}
-                    header="Product Code"
-                >
-
-                </Column>
-
-                <Column
-                    field="gen_name"
-                    headerClassName='table-column1-header'
-                    bodyClassName='table-column1-body'
-                    style={{ minWidth: 20 }}
-                    header="Gen. Name"
                 >
 
                 </Column>

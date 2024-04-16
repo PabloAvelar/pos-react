@@ -28,14 +28,6 @@ async function getSalesOrder(){
     return res;
 }
 
-
-// async function getSupplierById(id){
-//     const endpoint = baseUrl + '/getsupplier.php?'+id;
-//     const res = getByUrl(endpoint);
-//     return res;
-// }
-
-
 export default {
     getSales, getSalesOrder, postSales, postSalesOrder
 };

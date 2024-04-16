@@ -32,56 +32,42 @@ function PopupSales({ closeModal, data, customers }) {
         const date = `${todaysDate.getFullYear()}-${(todaysDate.getMonth() + 1).toString().padStart(2, '0')}-${todaysDate.getDate().toString().padStart(2, '0')}`;
 
         try {
-            // Se va iterar por todos los productos del carrito
-            // para registrar cada venta por separado
+            // Se va iterar por todos los productos del carrito para registrar cada venta por separado
 
             // Inserción a tabla Sales
-            data.map((product) => {
-                const dataForSalesTable = new URLSearchParams({
+            data.map( async (product) => {
+                const dataForSalesTable = {
                     'cashier': auth.auth.username,
                     'date': date,
                     'amount': product.quantity * product.price,
                     'type': product.gen_name,
                     // 'name': inputs.customerName
-                }).toString()
+                }
 
-                const dataForSalesOrder = new URLSearchParams({
-                    'product': product.product_name,
+                const dataForSalesOrder = {
+                    'product_id': product.product_id,
                     'customer_id': customerSelected.customer_id,
-                    'gen_name': product.gen_name,
-                    'product_code': product.product_code,
                     'date': date,
                     'price': product.price,
                     'amount': product.quantity * product.price,
                     'qty': product.quantity,
-                }).toString()
+                }
 
+                const urlParamsSales = new URLSearchParams(dataForSalesTable).toString();
+                const urlParamsSalesOrder = new URLSearchParams(dataForSalesOrder).toString();
 
                 // Mandando datos la table `sales`
-                salesService.postSales(dataForSalesTable)
-                    .then((res) => {
-                        if (res.status === 'success') {
-                            console.log("A new sale added");
-                        }
-                    })
-                    .catch((err) => {
-                        console.error(err);
-                    })
-
+                const res1 = await salesService.postSales(urlParamsSales)
+                console.log(res1)
+                
                 // Mandando datos la table `sales_order`
-                salesService.postSalesOrder(dataForSalesOrder)
-                    .then((res) => {
-                        if (res.status === 'success') {
-                            console.log("A new sale added");
-                        }
-                    })
-                    .catch((err) => {
-                        console.error(err);
-                    })
+                const res2 = await salesService.postSalesOrder(urlParamsSalesOrder)
+                console.log(res2)
+
+                // window.location.reload();
             })
-            window.location.reload();
         } catch (e) {
-            console.error(e);
+            console.log(e);
         }
     }
 
