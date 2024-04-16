@@ -4,11 +4,12 @@ import { faXmarkSquare } from '@fortawesome/free-solid-svg-icons'
 import '../styles/popuproducts.css';
 import productsService from '../services/productsService';
 
-function PopupProducts({ closeModal, data }) {
+function PopupProducts({ closeModal, data, suppliers }) {
     const [inputs, setInputs] = useState({});
+    const [supplierSelected, setSupplierSelected] = useState(suppliers === undefined ? "" : suppliers[0]);
 
     useEffect(() => {
-        // Setting data to edit a customer
+        // Setting data to edit a product
         if (data) {
             setInputs(values => ({ ...values, ['product_id']: data.product_id }))
 
@@ -22,7 +23,7 @@ function PopupProducts({ closeModal, data }) {
             setInputs(values => ({ ...values, ['gen_name']: data.gen_name }))
 
             document.clientForm.supplier.value = data.supplier;
-            setInputs(values => ({ ...values, ['supplier']: data.supplier }))
+            setInputs(values => ({ ...values, ['supplier_id']: data.supplier }))
 
             document.clientForm.qty.value = data.qty;
             setInputs(values => ({ ...values, ['qty']: data.qty }))
@@ -50,49 +51,41 @@ function PopupProducts({ closeModal, data }) {
 
     async function handleSubmit(e) {
         e.preventDefault();
-
-        console.log(inputs);
-
+        
         try {
-            const data = new URLSearchParams({
+            const data = {
                 'product_id': inputs.product_id,
                 'product_code': inputs.product_code,
                 'product_name': inputs.product_name,
                 'gen_name': inputs.gen_name,
-                'supplier': inputs.supplier,
+                'supplier_id': supplierSelected.supplier_id,
                 'qty': inputs.qty,
                 'onhand_qty': inputs.onhand_qty,
                 'price': inputs.price,
                 'o_price': inputs.o_price,
                 'date_arrival': inputs.date_arrival
-            })
+            }
 
             // If it's a new product
             if (inputs.product_id === undefined) {
-                data.delete("product_id");
+                delete data.product_id;
 
-                productsService.postProduct(data.toString())
-                    .then((res) => {
-                        if (res.status === 'success') {
-                            console.log("Producto agregado");
-                            window.location.reload();
-                        }
-                    })
-                    .catch((err) => {
-                        console.error(err);
-                    })
+                const sendData = new URLSearchParams(data).toString();
+
+                const res = await productsService.postProduct(sendData);
+                if (res.status === 'success') {
+                    console.log("Producto agregado");
+                    window.location.reload();
+                }
+
             } else {
                 // If a Product is being edited
-                productsService.putProduct(data.toString())
-                    .then((res) => {
-                        if (res.status === 'success') {
-                            console.log("cliente editado");
-                            window.location.reload();
-                        }
-                    })
-                    .catch((err) => {
-                        console.error(err);
-                    })
+                const sendData = new URLSearchParams(data).toString();
+                const res = await productsService.putProduct(sendData);
+                if (res.status === 'success') {
+                    console.log("cliente editado");
+                    window.location.reload();
+                }
             }
 
         } catch (e) {
@@ -129,7 +122,14 @@ function PopupProducts({ closeModal, data }) {
 
                     <div className="input-add-client-container">
                         <span style={{ fontSize: 16 }}>Supplier: </span>
-                        <input className='input-form-popup' onChange={handleChange} type="text" name="supplier" required />
+                        <select name='supplier' className='input-form-popup' onChange={(e) => { setSupplierSelected(JSON.parse(e.target.value)) }}>
+                            { suppliers !== undefined &&
+                                suppliers.map((supp) => (
+                                    <option key={supp.supplier_id} value={JSON.stringify(supp)}>{supp.supplier_name}</option>
+                                ))
+
+                            }
+                        </select>
                     </div>
 
                     <div className="input-add-client-container">

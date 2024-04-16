@@ -1,6 +1,6 @@
 import { postByUrl, getByUrl, postByUrlWithConfig } from "./utils";
 
-const endpoint = 'http://localhost/pos-backend/api/controllers';
+const endpoint = 'http://localhost/pos-backend/api/auth';
 
 // POST
 async function login(data) {

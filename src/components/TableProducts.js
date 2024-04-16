@@ -6,16 +6,19 @@ import { EditButton, DeleteButton } from './Buttons';
 import PopupProducts from './PopupProducts';
 import productsService from '../services/productsService';
 
-function TableProducts(data) {
+function TableProducts({data, suppliers}) {
     const [showModal, setShowModal] = useState(false);
     const [clientData, setClientData] = useState({});
-    const auth = useAuth();
 
+    const auth = useAuth();
+    
     useEffect(() => {
-        data.data.map((p) => {
+        data.map((p) => {
             p.total = p.o_price * p.qty
+            console.log(p.qty)
         })
-    }, [data.data])
+
+    }, [data])
 
     const handleDeleteClient = (rowData) => {
         try {
@@ -52,7 +55,7 @@ function TableProducts(data) {
     return (
         <section className='datatable-container'>
 
-            <DataTable value={data.data} scrollable stripedRows editMode="row" dataKey="product_id" className='table-container'>
+            <DataTable value={data} scrollable stripedRows editMode="row" dataKey="product_id" className='table-container'>
                 <Column
                     headerClassName='table-column1-header'
                     bodyClassName='table-column1-body'
@@ -103,7 +106,7 @@ function TableProducts(data) {
                 </Column>
 
                 <Column
-                    field="supplier"
+                    field="supplier_name"
                     headerClassName='table-column1-header'
                     bodyClassName='table-column1-body'
                     style={{ minWidth: 20 }}
@@ -116,7 +119,7 @@ function TableProducts(data) {
                     field="date_arrival"
                     headerClassName='table-column1-header'
                     bodyClassName='table-column1-body'
-                    style={{ minWidth: 20 }}
+                    style={{ minWidth: 100 }}
                     header="Receipt date"
                 >
 
@@ -133,7 +136,7 @@ function TableProducts(data) {
                 <Column field="price"
                     headerClassName='table-column1-header'
                     bodyClassName='table-column1-body'
-                    style={{ minWidth: 100 }}
+                    style={{ minWidth: 20 }}
                     header="Sales price"
                 >
 
@@ -141,7 +144,7 @@ function TableProducts(data) {
                 <Column field="qty"
                     headerClassName='table-column1-header'
                     bodyClassName='table-column1-body'
-                    style={{ minWidth: 100 }}
+                    style={{ minWidth: 10 }}
                     header="Quantity"
                 >
 
@@ -149,7 +152,7 @@ function TableProducts(data) {
                 <Column field="onhand_qty"
                     headerClassName='table-column1-header'
                     bodyClassName='table-column1-body'
-                    style={{ minWidth: 100 }}
+                    style={{ minWidth: 70 }}
                     header="Remaining quantity"
                 >
 
@@ -157,7 +160,7 @@ function TableProducts(data) {
                 <Column field="total"
                     headerClassName='table-column1-header'
                     bodyClassName='table-column1-body'
-                    style={{ minWidth: 100 }}
+                    style={{ minWidth: 40 }}
                     header="Total"
                 >
 
@@ -165,7 +168,7 @@ function TableProducts(data) {
 
             </DataTable>
 
-            {showModal && <PopupProducts closeModal={setShowModal} data={clientData} />}
+            {showModal && <PopupProducts closeModal={setShowModal} data={clientData} suppliers={suppliers} />}
         </section>
 
     )

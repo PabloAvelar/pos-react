@@ -36,35 +36,24 @@ function PopupSales({ closeModal, data, customers }) {
 
             // Inserción a tabla Sales
             data.map( async (product) => {
-                const dataForSalesTable = {
-                    'cashier': auth.auth.username,
-                    'date': date,
-                    'amount': product.quantity * product.price,
-                    'type': product.gen_name,
-                    // 'name': inputs.customerName
-                }
 
                 const dataForSalesOrder = {
                     'product_id': product.product_id,
                     'customer_id': customerSelected.customer_id,
+                    'user_id': auth.auth.id,
                     'date': date,
                     'price': product.price,
                     'amount': product.quantity * product.price,
                     'qty': product.quantity,
                 }
 
-                const urlParamsSales = new URLSearchParams(dataForSalesTable).toString();
                 const urlParamsSalesOrder = new URLSearchParams(dataForSalesOrder).toString();
 
-                // Mandando datos la table `sales`
-                const res1 = await salesService.postSales(urlParamsSales)
-                console.log(res1)
-                
                 // Mandando datos la table `sales_order`
-                const res2 = await salesService.postSalesOrder(urlParamsSalesOrder)
-                console.log(res2)
+                const res = await salesService.postSalesOrder(urlParamsSalesOrder)
+                console.log(res)
 
-                // window.location.reload();
+                window.location.reload();
             })
         } catch (e) {
             console.log(e);
@@ -89,7 +78,6 @@ function PopupSales({ closeModal, data, customers }) {
                 <div className='input-container'>
                     <div className="input-add-client-container">
                         <span style={{ fontSize: 16 }}>Customer: </span>
-                        {/* <input className='input-form-popup' onChange={handleChange} type="text" name="customerName" required /> */}
                         <select name='select' className='input-form-popup' onChange={(e) => { setCustomerSelected(JSON.parse(e.target.value)) }}>
                             {
                                 customers.map((client) => (

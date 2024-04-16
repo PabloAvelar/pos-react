@@ -24,7 +24,6 @@ function Suppliers() {
       })
   }, []);
 
-  console.log(suppliers);
   return (
 
     <main className="page-container">

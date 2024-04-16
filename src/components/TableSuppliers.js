@@ -7,7 +7,7 @@ import PopupSuppliers from './PopupSuppliers';
 import '../styles/tableclients.css';
 import suppliersService from '../services/suppliersService';
 
-function TableClients(data) {
+function TableClients({data}) {
     const [showModal, setShowModal] = useState(false);
     const [clientData, setClientData] = useState({});
     const auth = useAuth();
@@ -15,7 +15,7 @@ function TableClients(data) {
     const handleDeleteClient = (rowData) => {
         try{
             const data = new URLSearchParams({
-                'suplier_id': rowData.suplier_id
+                'supplier_id': rowData.supplier_id
             }).toString();
 
             suppliersService.deleteSupplier(data)
@@ -46,7 +46,7 @@ function TableClients(data) {
     return (
         <section className='datatable-container'>
 
-            <DataTable value={data["data"]} scrollable stripedRows editMode="row" dataKey="suplier_id" className='table-container'>
+            <DataTable value={data} scrollable stripedRows editMode="row" dataKey="supplier_id" className='table-container'>
                 <Column
                     headerClassName='table-column-header'
                     bodyClassName='table-column-body'
@@ -64,7 +64,7 @@ function TableClients(data) {
                 >
 
                 </Column>
-                <Column field="suplier_name"
+                <Column field="supplier_name"
                     headerClassName='table-column-header'
                     bodyClassName='table-column-body'
                     style={{minWidth: 190}}
@@ -80,7 +80,7 @@ function TableClients(data) {
                 >
 
 </Column>
-                <Column field="suplier_contact"
+                <Column field="supplier_contact"
                     headerClassName='table-column-header'
                     bodyClassName='table-column-body'
                     style={{minWidth: 100}}
@@ -88,7 +88,7 @@ function TableClients(data) {
                 >
 
                 </Column>
-                <Column field="suplier_address"
+                <Column field="supplier_address"
                     headerClassName='table-column-header'
                     bodyClassName='table-column-body'
                     style={{minWidth: 250}}
