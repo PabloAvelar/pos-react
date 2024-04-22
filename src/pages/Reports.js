@@ -51,9 +51,4 @@ function Reports() {
 }
 
 
-<<<<<<< HEAD
-export default Products
-
-=======
 export default Reports
->>>>>>> e5d14d2f7ae0a9275b56dfa20b93c9ff899c163e
