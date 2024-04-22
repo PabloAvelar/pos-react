@@ -7,10 +7,12 @@ import Sidebar from '../components/Sidebar';
 import Header from '../components/Header';
 import TableSales from '../components/TableSales';
 import { useAuth } from '../components/AuthContext';
+import clientsService from '../services/clientsService';
 
 function Sales() {
 
   const [products, setProducts] = useState([]);
+  const [customers, setCustomers] = useState([]);
   const [dataLoaded, setDataLoaded] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [productSelected, setProductSelected] = useState({});
@@ -21,12 +23,25 @@ function Sales() {
   useEffect(() => {
     // Cargando sólo una vez los clientes que hay
     productsService.getProducts()
-      .then((clients) => {
-        setProducts(clients);
+      .then((prod) => {
+        setProducts(prod);
+        // asignando el primer producto en el select por defecto
+        try {
+          setProductSelected(prod[0])
+        } catch (error) { }
         setDataLoaded(true);
       })
       .catch((err) => {
         console.error(err);
+      })
+
+    // Cargando customers
+    clientsService.getClients()
+      .then((clients) => {
+        setCustomers(clients);
+      })
+      .catch((e) => {
+        console.error(e);
       })
   }, []);
 
@@ -48,19 +63,6 @@ function Sales() {
 
   const handleSave = () => {
     setShowModal(true);
-    // const todaysDate = new Date();
-    // const date = `${todaysDate.getFullYear()}-${(todaysDate.getMonth() + 1).toString().padStart(2, '0')}-${todaysDate.getDate().toString().padStart(2, '0')}`;
-
-    // const infoForSalesTable = {
-    //   cashier: auth.auth.username,
-    //   amount: productsCart.reduce((total, p) => total + p.amount, 0),
-    //   date: date,
-    // }
-
-    // const infoForSalesOrderTable = {
-    //   amount: productsCart.reduce((total, p) => total + p.amount, 0),
-    //   date: date,
-    // }
   }
 
   const deleteProduct = (id) => {
@@ -101,14 +103,20 @@ function Sales() {
 
             <div className='select-container select-qty'>
               <label htmlFor='quantity' className='label-select-product'>Quantity</label>
-              <input type="number" className='selection' id="quantity" name="quantity" min="1" max={productSelected.onhand_qty} onChange={(e) => setProductsQuantity(e.target.value)} />
+              {
+                productSelected !== undefined &&
+                <input type="number" className='selection' id="quantity" name="quantity" min="1" max={productSelected.onhand_qty} onChange={(e) => setProductsQuantity(e.target.value)} />
+              }
             </div>
 
           </div>
           <div className='add-customer-content'>
-            <div className='add-customer-container'>
-              <a className='add-customer' onClick={handleAddCart}>+ Add to Cart</a>
-            </div>
+            {productSelected !== undefined &&
+              <div className='add-customer-container'>
+                <a className='add-customer' onClick={handleAddCart}>+ Add to Cart</a>
+
+              </div>
+              }
           </div>
         </section>
         {dataLoaded ? <TableSales data={productsCart} handleDeleteProduct={deleteProduct} /> : <p>cargando datos</p>}
@@ -118,7 +126,7 @@ function Sales() {
         </section>
 
         {
-          productsCart.length > 0 &&
+          productsCart.length > 0 && productSelected !== undefined &&
           <div className='add-customer-content'>
             <div className='add-customer-container save-sale'>
               <a className='add-customer' onClick={handleSave}>Save</a>
@@ -130,8 +138,8 @@ function Sales() {
       </article>
       {showModal &&
         <PopupSales
-          closeModal={setShowModal} data={productsCart}
-          />}
+          closeModal={setShowModal} data={productsCart} customers={customers}
+        />}
     </main >
   );
 }

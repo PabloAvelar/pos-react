@@ -6,8 +6,10 @@ import suppliersService from '../services/suppliersService';
 import { useAuth } from './AuthContext';
 import salesService from '../services/salesService';
 
-function PopupSales({ closeModal, data }) {
+function PopupSales({ closeModal, data, customers }) {
+
     const [inputs, setInputs] = useState({});
+    const [customerSelected, setCustomerSelected] = useState(customers[0]);
     const [change, setChange] = useState(0);
     const auth = useAuth();
     const getTotal = data.reduce((total, p) => total + p.amount, 0);
@@ -24,62 +26,37 @@ function PopupSales({ closeModal, data }) {
         }
 
     }
-
     async function handleSubmit(e) {
         e.preventDefault();
         const todaysDate = new Date();
         const date = `${todaysDate.getFullYear()}-${(todaysDate.getMonth() + 1).toString().padStart(2, '0')}-${todaysDate.getDate().toString().padStart(2, '0')}`;
 
         try {
-            // Se va iterar por todos los productos del carrito
-            // para registrar cada venta por separado
+            // Se va iterar por todos los productos del carrito para registrar cada venta por separado
 
             // Inserción a tabla Sales
-            data.map((product) => {
-                const dataForSalesTable = new URLSearchParams({
-                    'cashier': auth.auth.username,
-                    'date': date,
-                    'amount': product.quantity * product.price,
-                    'type': product.gen_name,
-                    'name': inputs.customerName
-                }).toString()
+            data.map( async (product) => {
 
-                const dataForSalesOrder = new URLSearchParams({
-                    'product': product.product_name,
-                    'gen_name': product.gen_name,
-                    'product_code': product.product_code,
+                const dataForSalesOrder = {
+                    'product_id': product.product_id,
+                    'customer_id': customerSelected.customer_id,
+                    'user_id': auth.auth.id,
                     'date': date,
                     'price': product.price,
                     'amount': product.quantity * product.price,
                     'qty': product.quantity,
-                    'name': inputs.customerName
-                }).toString()
+                }
 
-                // Mandando datos la table `sales`
-                salesService.postSales(dataForSalesTable)
-                    .then((res) => {
-                        if (res.status === 'success') {
-                            console.log("A new sale added");
-                        }
-                    })
-                    .catch((err) => {
-                        console.error(err);
-                    })
+                const urlParamsSalesOrder = new URLSearchParams(dataForSalesOrder).toString();
 
                 // Mandando datos la table `sales_order`
-                salesService.postSalesOrder(dataForSalesOrder)
-                    .then((res) => {
-                        if (res.status === 'success') {
-                            console.log("A new sale added");
-                        }
-                    })
-                    .catch((err) => {
-                        console.error(err);
-                    })
+                const res = await salesService.postSalesOrder(urlParamsSalesOrder)
+                console.log(res)
+
+                window.location.reload();
             })
-            window.location.reload();
         } catch (e) {
-            console.error(e);
+            console.log(e);
         }
     }
 
@@ -101,7 +78,14 @@ function PopupSales({ closeModal, data }) {
                 <div className='input-container'>
                     <div className="input-add-client-container">
                         <span style={{ fontSize: 16 }}>Customer: </span>
-                        <input className='input-form-popup' onChange={handleChange} type="text" name="customerName" required />
+                        <select name='select' className='input-form-popup' onChange={(e) => { setCustomerSelected(JSON.parse(e.target.value)) }}>
+                            {
+                                customers.map((client) => (
+                                    <option key={client.customer_id} value={JSON.stringify(client)}>{client.customer_name}</option>
+                                ))
+
+                            }
+                        </select>
                     </div>
                     <div className="input-add-client-container">
                         <span style={{ fontSize: 16 }}>Cash: </span>

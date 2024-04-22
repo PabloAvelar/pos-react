@@ -4,55 +4,41 @@ import { faXmarkSquare } from '@fortawesome/free-solid-svg-icons'
 import '../styles/popuproducts.css';
 import productsService from '../services/productsService';
 
-function PopuProducts({ closeModal, data }) {
+function PopupProducts({ closeModal, data, suppliers }) {
     const [inputs, setInputs] = useState({});
+    const [supplierSelected, setSupplierSelected] = useState(suppliers === undefined ? "" : suppliers[0]);
 
     useEffect(() => {
-        // Setting data to edit a customer
+        // Setting data to edit a product
         if (data) {
             setInputs(values => ({ ...values, ['product_id']: data.product_id }))
 
             document.clientForm.product_code.value = data.product_code;
             setInputs(values => ({ ...values, ['product_code']: data.product_code }))
 
-            document.clientForm.gen_name.value = data.gen_name;
-            setInputs(values => ({ ...values, ['gen_name']: data.gen_name }))
-
             document.clientForm.product_name.value = data.product_name;
             setInputs(values => ({ ...values, ['product_name']: data.product_name }))
 
-            document.clientForm.o_price.value = data.o_price;
-            setInputs(values => ({ ...values, ['o_price']: data.o_price }))
-
-            document.clientForm.price.value = data.price;
-            setInputs(values => ({ ...values, ['price']: data.price }))
-
-            document.clientForm.profit.value = data.profit;
-            setInputs(values => ({ ...values, ['profit']: data.profit }))
+            document.clientForm.gen_name.value = data.gen_name;
+            setInputs(values => ({ ...values, ['gen_name']: data.gen_name }))
 
             document.clientForm.supplier.value = data.supplier;
-            setInputs(values => ({ ...values, ['supplier']: data.supplier }))
+            setInputs(values => ({ ...values, ['supplier_id']: data.supplier }))
 
             document.clientForm.qty.value = data.qty;
             setInputs(values => ({ ...values, ['qty']: data.qty }))
 
-            document.clientForm.qty_sold.value = data.qty_sold;
-            setInputs(values => ({ ...values, ['qty_sold']: data.qty_sold }))
-
-            
             document.clientForm.onhand_qty.value = data.onhand_qty;
             setInputs(values => ({ ...values, ['onhand_qty']: data.onhand_qty }))
 
-            
-            document.clientForm.expiry_date.value = data.expiry_date;
-            setInputs(values => ({ ...values, ['expiry_date']: data.expiry_date }))
+            document.clientForm.price.value = data.price;
+            setInputs(values => ({ ...values, ['price']: data.price }))
 
-            
+            document.clientForm.o_price.value = data.o_price;
+            setInputs(values => ({ ...values, ['o_price']: data.o_price }))
+
             document.clientForm.date_arrival.value = data.date_arrival;
             setInputs(values => ({ ...values, ['date_arrival']: data.date_arrival }))
-
-
-
         }
     }, [])
 
@@ -65,52 +51,41 @@ function PopuProducts({ closeModal, data }) {
 
     async function handleSubmit(e) {
         e.preventDefault();
-
+        
         try {
-
-
-            const data = new URLSearchParams({
+            const data = {
                 'product_id': inputs.product_id,
                 'product_code': inputs.product_code,
-                'gen_name': inputs.gen_name,
                 'product_name': inputs.product_name,
-                'o_price': inputs.o_price,
-                'price': inputs.price,
-                'profit': inputs.profit,
-                'supplier': inputs.supplier,
+                'gen_name': inputs.gen_name,
+                'supplier_id': supplierSelected.supplier_id,
                 'qty': inputs.qty,
-                'qty_sold': inputs.qty_sold,
                 'onhand_qty': inputs.onhand_qty,
-                'expiry_date': inputs.expiry_date,
+                'price': inputs.price,
+                'o_price': inputs.o_price,
                 'date_arrival': inputs.date_arrival
-            })
+            }
 
-            // If it's a new customer
+            // If it's a new product
             if (inputs.product_id === undefined) {
-                data.delete("product_id");
+                delete data.product_id;
 
-                productsService.getProducts(data.toString())
-                    .then((res) => {
-                        if (res.status === 'success') {
-                            console.log("Producto agregado");
-                            window.location.reload();
-                        }
-                    })
-                    .catch((err) => {
-                        console.error(err);
-                    })
+                const sendData = new URLSearchParams(data).toString();
+
+                const res = await productsService.postProduct(sendData);
+                if (res.status === 'success') {
+                    console.log("Producto agregado");
+                    window.location.reload();
+                }
+
             } else {
                 // If a Product is being edited
-                productService.putProduct(data.toString())
-                    .then((res) => {
-                        if (res.status === 'success') {
-                            console.log("cliente editado");
-                            window.location.reload();
-                        }
-                    })
-                    .catch((err) => {
-                        console.error(err);
-                    })
+                const sendData = new URLSearchParams(data).toString();
+                const res = await productsService.putProduct(sendData);
+                if (res.status === 'success') {
+                    console.log("cliente editado");
+                    window.location.reload();
+                }
             }
 
         } catch (e) {
@@ -129,33 +104,44 @@ function PopuProducts({ closeModal, data }) {
                     Product Information
                 </span>
             </div>
-            <form className='popup-client-card1' onSubmit={handleSubmit} name='clientForm'>
+            <form className='popup-client-card' onSubmit={handleSubmit} name='clientForm'>
 
-                {/* <br> */}
-
-                <div className='input-container'>
+                <div className='input-container' >
                     <div className="input-add-client-container">
-                        <span style={{ fontSize: 16 }}>Brand: </span>
+                        <span style={{ fontSize: 16 }}>Product Code: </span>
                         <input className='input-form-popup' onChange={handleChange} type="text" name="product_code" required />
                     </div>
                     <div className="input-add-client-container">
+                        <span style={{ fontSize: 16 }}>Product: </span>
+                        <input className='input-form-popup' onChange={handleChange} type="text" name="product_name" required />
+                    </div>
+                    <div className="input-add-client-container">
                         <span style={{ fontSize: 16 }}>Generic name: </span>
-                        <input className='input-form-popup' onChange={handleChange} type="text" name="name" required />
-                    </div>
-                    <div className="input-add-client-container">
-                        <span style={{ fontSize: 16 }}>Category/Description: </span>
                         <input className='input-form-popup' onChange={handleChange} type="text" name="gen_name" required />
-                    </div>
-                    <div className="input-add-client-container">
-                        <span style={{ fontSize: 16 }}>Date of reception: </span>
-                        <input className='input-form-popup' onChange={handleChange} type="date" name="date_arrival" required />
                     </div>
 
                     <div className="input-add-client-container">
-                        <span style={{ fontSize: 16 }}>Expiration date: </span>
-                        <input className='input-form-popup' onChange={handleChange} type="date" name="expiry_date" required />
+                        <span style={{ fontSize: 16 }}>Supplier: </span>
+                        <select name='supplier' className='input-form-popup' onChange={(e) => { setSupplierSelected(JSON.parse(e.target.value)) }}>
+                            { suppliers !== undefined &&
+                                suppliers.map((supp) => (
+                                    <option key={supp.supplier_id} value={JSON.stringify(supp)}>{supp.supplier_name}</option>
+                                ))
+
+                            }
+                        </select>
                     </div>
-                    
+
+                    <div className="input-add-client-container">
+                        <span style={{ fontSize: 16 }}>Quantity: </span>
+                        <input className='input-form-popup' onChange={handleChange} type="text" name="qty" required />
+                    </div>
+
+                    <div className="input-add-client-container">
+                        <span style={{ fontSize: 16 }}>Quantity on-hand: </span>
+                        <input className='input-form-popup' onChange={handleChange} type="text" name="onhand_qty" required />
+                    </div>
+
                     <div className="input-add-client-container">
                         <span style={{ fontSize: 16 }}>Sales price: </span>
                         <input className='input-form-popup' onChange={handleChange} type="text" name="price" required />
@@ -166,15 +152,11 @@ function PopuProducts({ closeModal, data }) {
                         <input className='input-form-popup' onChange={handleChange} type="text" name="o_price" required />
                     </div>
 
-                    {/* <div className="input-add-client-container">
-                        <span style={{ fontSize: 16 }}>Profit: </span>
-                        <input className='input-form-popup' onChange={handleChange} type="text" name="profit" readOnly />
+                    <div className="input-add-client-container">
+                        <span style={{ fontSize: 16 }}>Date of reception: </span>
+                        <input className='input-form-popup' onChange={handleChange} type="date" name="date_arrival" required />
                     </div>
 
-                    <div className="input-add-client-container">
-                        <span style={{ fontSize: 16 }}>Suplier: </span>
-                        <input className='input-form-popup' onChange={handleChange} type="text" name="supplier" readOnly />
-                    </div> */}
                 </div>
 
                 <div className="submit-container">
@@ -185,4 +167,4 @@ function PopuProducts({ closeModal, data }) {
     )
 }
 
-export default PopuProducts;
+export default PopupProducts;

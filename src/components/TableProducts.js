@@ -3,33 +3,42 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { useAuth } from './AuthContext';
 import { EditButton, DeleteButton } from './Buttons';
-import PopuProducts from './PopuProducts';
-import suppliersService from '../services/suppliersService';
+import PopupProducts from './PopupProducts';
+import productsService from '../services/productsService';
 
-function TableProducts(data) {
+function TableProducts({data, suppliers}) {
     const [showModal, setShowModal] = useState(false);
     const [clientData, setClientData] = useState({});
+
     const auth = useAuth();
+    
+    useEffect(() => {
+        data.map((p) => {
+            p.total = p.o_price * p.qty
+            console.log(p.qty)
+        })
+
+    }, [data])
 
     const handleDeleteClient = (rowData) => {
-        try{
+        try {
             const data = new URLSearchParams({
-                'suplier_id': rowData.suplier_id
+                'product_id': rowData.product_id
             }).toString();
 
-            suppliersService.deleteSupplier(data)
-            .then((res) => {
-                if (res.status === 'success'){
-                    console.log("Customer deleted");
-                    window.location.reload();
-                }else{
-                    console.log(res.status);
-                }
-            })
-            .catch((e) => {
-                console.error(e);
-            })
-        }catch($e){
+            productsService.deleteProduct(data)
+                .then((res) => {
+                    if (res.status === 'success') {
+                        console.log("Customer deleted");
+                        window.location.reload();
+                    } else {
+                        console.log(res.status);
+                    }
+                })
+                .catch((e) => {
+                    console.error(e);
+                })
+        } catch ($e) {
             console.error($e);
         }
     }
@@ -42,95 +51,84 @@ function TableProducts(data) {
     if (!auth.auth) {
         return <></>
     }
+
     return (
         <section className='datatable-container'>
 
-            <DataTable value={data["data"]} scrollable stripedRows editMode="row" dataKey="suplier_id" className='table-container'>
+            <DataTable value={data} scrollable stripedRows editMode="row" dataKey="product_id" className='table-container'>
                 <Column
                     headerClassName='table-column1-header'
                     bodyClassName='table-column1-body'
                     header=""
-                    style={{minWidth: 20}}
+                    style={{ minWidth: 20 }}
                     body={(rowData) => <DeleteButton onDeleteClick={() => handleDeleteClient(rowData)} />}
                 >
 
                 </Column>
 
-                <Column
-               field="product_code"
-               headerClassName='table-column1-header'
-               bodyClassName='table-column1-body'
-               style={{minWidth: 20}}
-               header="Brand name"
-               >
-                
-                </Column>
-
-                <Column
-               field="gen_name"
-               headerClassName='table-column1-header'
-               bodyClassName='table-column1-body'
-               style={{minWidth: 20}}
-               header="Generic name"
-               >
-                
-                </Column>
-
-                <Column
-               field="product_name"
-               headerClassName='table-column1-header'
-               bodyClassName='table-column1-body'
-               style={{minWidth: 20}}
-               header="Category/Description"
-               >
-                
-                </Column>
-
-                <Column
-               field="supplier"
-               headerClassName='table-column1-header'
-               bodyClassName='table-column1-body'
-               style={{minWidth: 20}}
-               header="Suplier"
-               >
-                
-                </Column>
-
-                <Column
-               field="date_arrival"
-               headerClassName='table-column1-header'
-               bodyClassName='table-column1-body'
-               style={{minWidth: 20}}
-               header="Receipt date"
-               >
-                
-                </Column>
-
-               
-                <Column
-               field="expiry_date"
-               headerClassName='table-column1-header'
-               bodyClassName='table-column1-body'
-               style={{minWidth: 100}}
-               header="Expiration date"
-               >
-                
-                </Column>
-
-
-                {/* <Column headerClassName='table-column1-header'
+                <Column headerClassName='table-column1-header'
                     bodyClassName='table-column1-body'
                     header=""
-                    style={{minWidth: 20}}
+                    style={{ minWidth: 20 }}
                     body={(rowData) => <EditButton onEditClick={() => handleEditClient(rowData)} />}
                 >
 
-                </Column> */}
-                
+                </Column>
+
+                <Column
+                    field="product_code"
+                    headerClassName='table-column1-header'
+                    bodyClassName='table-column1-body'
+                    style={{ minWidth: 20 }}
+                    header="Brand name"
+                >
+
+                </Column>
+
+                <Column
+                    field="gen_name"
+                    headerClassName='table-column1-header'
+                    bodyClassName='table-column1-body'
+                    style={{ minWidth: 20 }}
+                    header="Generic name"
+                >
+
+                </Column>
+
+                <Column
+                    field="product_name"
+                    headerClassName='table-column1-header'
+                    bodyClassName='table-column1-body'
+                    style={{ minWidth: 20 }}
+                    header="Category/Description"
+                >
+
+                </Column>
+
+                <Column
+                    field="supplier_name"
+                    headerClassName='table-column1-header'
+                    bodyClassName='table-column1-body'
+                    style={{ minWidth: 20 }}
+                    header="Supplier"
+                >
+
+                </Column>
+
+                <Column
+                    field="date_arrival"
+                    headerClassName='table-column1-header'
+                    bodyClassName='table-column1-body'
+                    style={{ minWidth: 100 }}
+                    header="Receipt date"
+                >
+
+                </Column>
+
                 <Column field="o_price"
                     headerClassName='table-column1-header'
                     bodyClassName='table-column1-body'
-                    style={{minWidth: 20}}
+                    style={{ minWidth: 20 }}
                     header="Original price"
                 >
 
@@ -138,7 +136,7 @@ function TableProducts(data) {
                 <Column field="price"
                     headerClassName='table-column1-header'
                     bodyClassName='table-column1-body'
-                    style={{minWidth: 100}}
+                    style={{ minWidth: 20 }}
                     header="Sales price"
                 >
 
@@ -146,7 +144,7 @@ function TableProducts(data) {
                 <Column field="qty"
                     headerClassName='table-column1-header'
                     bodyClassName='table-column1-body'
-                    style={{minWidth: 100}}
+                    style={{ minWidth: 10 }}
                     header="Quantity"
                 >
 
@@ -154,33 +152,23 @@ function TableProducts(data) {
                 <Column field="onhand_qty"
                     headerClassName='table-column1-header'
                     bodyClassName='table-column1-body'
-                    style={{minWidth: 100}}
+                    style={{ minWidth: 70 }}
                     header="Remaining quantity"
                 >
 
                 </Column>
-                <Column field="profit"
+                <Column field="total"
                     headerClassName='table-column1-header'
                     bodyClassName='table-column1-body'
-                    style={{minWidth: 100}}
+                    style={{ minWidth: 40 }}
                     header="Total"
                 >
 
                 </Column>
 
-                <Column field="note"
-                    headerClassName='table-column1-header'
-                    bodyClassName='table-column1-body'
-                    style={{minWidth: 100}}
-                    header="Action"
-                >
-
-                </Column>
-                
-                
             </DataTable>
 
-            {showModal && <PopuProducts closeModal={setShowModal} data={clientData} />}
+            {showModal && <PopupProducts closeModal={setShowModal} data={clientData} suppliers={suppliers} />}
         </section>
 
     )

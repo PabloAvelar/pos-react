@@ -1,30 +1,36 @@
 import React, { useState, useEffect } from 'react'
 import TableProducts from '../components/TableProducts';
 import '../styles/tableproducts.css';
-import PopuProducts from '../components/PopuProducts';
+import PopupProducts from '../components/PopupProducts';
 import productsService from '../services/productsService';
 import Sidebar from '../components/Sidebar';
 import Header from '../components/Header';
+import suppliersService from '../services/suppliersService';
 
 function Products() {
 
   const [products, setProducts] = useState([]);
+  const [suppliers, setSuppliers] = useState([]);
   const [dataLoaded, setDataLoaded] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    // Cargando sólo una vez los clientes que hay
-    productsService.getProducts()
-      .then((clients) => {
-        setProducts(clients);
+    async function getData(){
+      try {
+        const getproducts = await productsService.getProducts();
+        const getsuppliers = await suppliersService.getSuppliers();
+        setProducts(getproducts)
+        setSuppliers(getsuppliers);
         setDataLoaded(true);
-      })
-      .catch((err) => {
-        console.error(err);
-      })
+
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+      getData();
   }, []);
 
-  console.log(products);
   return (
 
     <main className="page-container">
@@ -47,10 +53,10 @@ function Products() {
             </div>
           </div>
         </section>
-        {dataLoaded ? <TableProducts data={products} /> : <p>cargando datos</p>}
+        {dataLoaded ? <TableProducts data={products} suppliers={suppliers} /> : <p>cargando datos</p>}
       </article>
       
-      {showModal && <PopuProducts closeModal={setShowModal} />}
+      {showModal && <PopupProducts closeModal={setShowModal} suppliers={suppliers} />}
 
     </main>
   );

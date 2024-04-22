@@ -7,7 +7,8 @@ import PopupClients from './PopupClients';
 import '../styles/tableclients.css';
 import clientsService from '../services/clientsService';
 
-function TableClients(data) {
+function TableClients({data}) {
+
     const [showModal, setShowModal] = useState(false);
     const [clientData, setClientData] = useState({});
     const auth = useAuth();
@@ -46,7 +47,7 @@ function TableClients(data) {
     return (
         <section className='datatable-container'>
 
-            <DataTable value={data["data"]} scrollable stripedRows editMode="row" dataKey="customer_id" className='table-container'>
+            <DataTable value={data} scrollable stripedRows editMode="row" dataKey="customer_id" className='table-container'>
                 <Column
                     headerClassName='table-column-header'
                     bodyClassName='table-column-body'
@@ -93,22 +94,6 @@ function TableClients(data) {
                     bodyClassName='table-column-body'
                     style={{minWidth: 130}}
                     header="Membership"
-                >
-
-                </Column>
-                <Column field="prod_name"
-                    headerClassName='table-column-header'
-                    bodyClassName='table-column-body'
-                    style={{minWidth: 130}}
-                    header="Product"
-                >
-
-                </Column>
-                <Column field="note"
-                    headerClassName='table-column-header'
-                    bodyClassName='table-column-body'
-                    style={{minWidth: 330}}
-                    header="Note"
                 >
 
                 </Column>

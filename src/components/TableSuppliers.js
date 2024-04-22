@@ -7,36 +7,32 @@ import PopupSuppliers from './PopupSuppliers';
 import '../styles/tableclients.css';
 import suppliersService from '../services/suppliersService';
 
-function TableClients(data) {
+function TableSuppliers({ data }) {
     const [showModal, setShowModal] = useState(false);
     const [clientData, setClientData] = useState({});
     const auth = useAuth();
 
-    const handleDeleteClient = (rowData) => {
-        try{
+    const handleDelete = async (rowData) => {
+        try {
             const data = new URLSearchParams({
-                'suplier_id': rowData.suplier_id
+                'supplier_id': rowData.supplier_id
             }).toString();
 
-            suppliersService.deleteSupplier(data)
-            .then((res) => {
-                if (res.status === 'success'){
-                    console.log("Customer deleted");
-                    window.location.reload();
-                }else{
-                    console.log(res.status);
-                }
-            })
-            .catch((e) => {
-                console.error(e);
-            })
-        }catch($e){
-            console.error($e);
+            const res = await suppliersService.deleteSupplier(data)
+            if (res.status === 'success') {
+                console.log("Customer deleted");
+                window.location.reload();
+            } else {
+                console.log(res.status);
+            }
+        } catch (e) {
+            console.error(e);
         }
     }
 
-    const handleEditClient = (rowData) => {
+    const handleEdit = (rowData) => {
         setClientData(rowData);
+        console.log(rowData);
         setShowModal(true);
     }
 
@@ -46,52 +42,52 @@ function TableClients(data) {
     return (
         <section className='datatable-container'>
 
-            <DataTable value={data["data"]} scrollable stripedRows editMode="row" dataKey="suplier_id" className='table-container'>
+            <DataTable value={data} scrollable stripedRows editMode="row" dataKey="supplier_id" className='table-container'>
                 <Column
                     headerClassName='table-column-header'
                     bodyClassName='table-column-body'
                     header=""
-                    style={{minWidth: 20}}
-                    body={(rowData) => <DeleteButton onDeleteClick={() => handleDeleteClient(rowData)} />}
+                    style={{ minWidth: 20 }}
+                    body={(rowData) => <DeleteButton onDeleteClick={() => handleDelete(rowData)} />}
                 >
 
                 </Column>
                 <Column headerClassName='table-column-header'
                     bodyClassName='table-column-body'
                     header=""
-                    style={{minWidth: 20}}
-                    body={(rowData) => <EditButton onEditClick={() => handleEditClient(rowData)} />}
+                    style={{ minWidth: 20 }}
+                    body={(rowData) => <EditButton onEditClick={() => handleEdit(rowData)} />}
                 >
 
                 </Column>
-                <Column field="suplier_name"
+                <Column field="supplier_name"
                     headerClassName='table-column-header'
                     bodyClassName='table-column-body'
-                    style={{minWidth: 190}}
+                    style={{ minWidth: 190 }}
                     header="Supplier"
                 >
 
-</Column>
+                </Column>
                 <Column field="contact_person"
                     headerClassName='table-column-header'
                     bodyClassName='table-column-body'
-                    style={{minWidth: 100}}
+                    style={{ minWidth: 100 }}
                     header="Contact Name"
                 >
 
-</Column>
-                <Column field="suplier_contact"
+                </Column>
+                <Column field="supplier_contact"
                     headerClassName='table-column-header'
                     bodyClassName='table-column-body'
-                    style={{minWidth: 100}}
+                    style={{ minWidth: 100 }}
                     header="Contact"
                 >
 
                 </Column>
-                <Column field="suplier_address"
+                <Column field="supplier_address"
                     headerClassName='table-column-header'
                     bodyClassName='table-column-body'
-                    style={{minWidth: 250}}
+                    style={{ minWidth: 250 }}
                     header="Address"
                 >
 
@@ -99,7 +95,7 @@ function TableClients(data) {
                 <Column field="note"
                     headerClassName='table-column-header'
                     bodyClassName='table-column-body'
-                    style={{minWidth: 330}}
+                    style={{ minWidth: 330 }}
                     header="Note"
                 >
 
@@ -112,4 +108,4 @@ function TableClients(data) {
     )
 }
 
-export default TableClients
+export default TableSuppliers
