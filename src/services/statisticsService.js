@@ -16,7 +16,7 @@ async function getNumSales(){
 }
 
 async function getFrequentCostumers(){
-    const endpoint = baseUrl + '/getfrequentcostumers.php';
+    const endpoint = baseUrl + '/getfrequentcustomers.php';
     const res = getByUrl(endpoint);
     return res;
 }

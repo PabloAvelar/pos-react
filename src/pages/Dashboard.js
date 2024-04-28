@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react'
-import {PieChart, Pie, Tooltip, BarChart, Bar, XAxis, YAxis, CartesianGrid, Legend, Area, Line, ComposedChart } from "recharts";
+import { PieChart, Pie, Tooltip, BarChart, Bar, XAxis, YAxis, CartesianGrid, Legend, Area, Line, ComposedChart } from "recharts";
 import TableSuppliers from '../components/TableSuppliers';
 import '../styles/clients.css';
 import PopupSuppliers from '../components/PopupSuppliers';
 import suppliersService from '../services/suppliersService';
 import Sidebar from '../components/Sidebar';
 import Header from '../components/Header';
+import statisticsService from '../services/statisticsService';
 
 function Dashboard() {
-
   const [suppliers, setSuppliers] = useState([]);
+  const [_data1, set_Data1] = useState([])
   const [dataLoaded, setDataLoaded] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
@@ -23,14 +24,23 @@ function Dashboard() {
       .catch((err) => {
         console.error(err);
       })
+
+    statisticsService.getFrequentCostumers()
+      .then((tilin) => {
+        set_Data1(tilin)
+      })
+      .catch((e) => {
+        console.log("no se pudo", e);
+      })
+
   }, []);
 
   console.log(suppliers);
 
   const data = [
-    {name: "Facebook", value:2000},
-    {name: "Instagram", value:3000},
-    {name: "TikTok", value:1000},
+    { name: "Facebook", value: 2000 },
+    { name: "Instagram", value: 3000 },
+    { name: "TikTok", value: 1000 },
   ]
 
   const data1 = [
@@ -130,7 +140,7 @@ function Dashboard() {
           <div className='page-title-container'>
             <span className='page-title'>Dashboard</span>
           </div>
-          
+
         </section>
         <section style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div>
@@ -149,33 +159,33 @@ function Dashboard() {
             </PieChart>
           </div>
           <div>
-          <ComposedChart
-          layout="vertical"
-          width={420}
-          height={400}
-          data={data2}
-          margin={{
-            top: 5,
-            right: 70,
-            bottom: 20,
-            left: 20,
-          }}
-        >
-          <CartesianGrid stroke="#f5f5f5" />
-          <XAxis type="number" />
-          <YAxis dataKey="name" type="category" scale="band" />
-          <Tooltip />
-          <Legend />
-          
-          <Bar dataKey="pv" barSize={20} fill="#8C5340" />
-         
-        </ComposedChart>
-        </div>
+            <ComposedChart
+              layout="vertical"
+              width={420}
+              height={400}
+              data={data2}
+              margin={{
+                top: 5,
+                right: 70,
+                bottom: 20,
+                left: 20,
+              }}
+            >
+              <CartesianGrid stroke="#f5f5f5" />
+              <XAxis type="number" />
+              <YAxis dataKey="name" type="category" scale="band" />
+              <Tooltip />
+              <Legend />
+
+              <Bar dataKey="pv" barSize={20} fill="#8C5340" />
+
+            </ComposedChart>
+          </div>
           <div>
             <BarChart
               width={470}
               height={320}
-              data={data1}
+              data={_data1}
               margin={{
                 top: 5,
                 right: 90,
@@ -184,20 +194,20 @@ function Dashboard() {
               }}
               barSize={20}
             >
-              <XAxis dataKey="name" scale="point" padding={{ left: 40, right: 40 }} />
+              <XAxis dataKey="customer_name" scale="point" padding={{ left: 40, right: 40 }} />
               <YAxis />
               <Tooltip />
               <Legend />
               <CartesianGrid strokeDasharray="3 3" />
-              <Bar dataKey="datos" fill="#8C5340" background={{ fill: '#eee' }} />
+              <Bar dataKey="total_records" fill="#8C5340" background={{ fill: '#eee' }} />
             </BarChart>
           </div>
-         
+
         </section>
-        <section style={{width: '100wv'}}>
+        <section style={{ width: '100wv' }}>
         </section>
       </article>
-      
+
       {showModal && <PopupSuppliers closeModal={setShowModal} />}
 
     </main>
