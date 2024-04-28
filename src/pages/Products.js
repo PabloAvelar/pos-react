@@ -28,7 +28,7 @@ function Products() {
       }
     }
 
-      getData();
+      getData()
   }, []);
 
   return (
