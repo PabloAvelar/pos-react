@@ -188,16 +188,16 @@ function Dashboard() {
               <BarChart
                 width={470}
                 height={320}
-                data={clientsData}
+                data={sellsData}
                 margin={{ top: 5, right: 90, left: 5, bottom: 20 }}
                 barSize={20}
               >
-                <XAxis dataKey="product_name" scale="point" padding={{ left: 40, right: 40 }} />
+                <XAxis dataKey="date" scale="point" padding={{ left: 40, right: 40 }} />
                 <YAxis />
                 <Tooltip />
                 <Legend />
                 <CartesianGrid strokeDasharray="3 3" />
-                <Bar dataKey="total_records" fill="#8C5340" background={{ fill: '#eee' }} />
+                <Bar name="Ventas" dataKey="total_records" fill="#8C5340" background={{ fill: '#eee' }} />
               </BarChart>
             </div>
           </div>
