@@ -7,13 +7,13 @@ import suppliersService from '../services/suppliersService';
 import Sidebar from '../components/Sidebar';
 import Header from '../components/Header';
 import statisticsService from '../services/statisticsService';
-import clientsService from  '../services/clientsService';
+import clientsService from '../services/clientsService';
 
 function Dashboard() {
   const [suppliers, setSuppliers] = useState([]);
-  const [_data1, set_Data1] = useState([]);
-  const [_data2, set_Data2] = useState([]);
-  const [_data3, set_Data3] = useState([]);
+  const [clientsData, setClientsData] = useState([]);
+  const [productsData, setProductsData] = useState([]);
+  const [sellsData, setSellsData] = useState([]);
   const [dataLoaded, setDataLoaded] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
@@ -28,36 +28,40 @@ function Dashboard() {
         console.error(err);
       });
 
-      statisticsService.getFrequentCostumers()
+    statisticsService.getFrequentCostumers()
       .then((tilin) => {
-        set_Data1(tilin); 
+        setClientsData(tilin);
       })
       .catch((e) => {
         console.log("no se pudo", e);
       });
-  }, []);
 
-  statisticsService.getProductsSold()
+    statisticsService.getProductsSold()
       .then((dats) => {
-        set_Data2(dats);
+        // Para transformar total_records a entero
+        dats.forEach((dato) => {
+          dato.total_records = parseInt(dato.total_records)
+        })
+        setProductsData(dats);
       })
       .catch((e) => {
         console.log("no se pudo nuv", e);
       });
 
-  statisticsService.getNumSales()
+    statisticsService.getNumSales()
       .then((datss) => {
-        set_Data3(datss);
+        // Para transformar total_records a entero
+        datss.forEach((dato) => {
+          dato.total_records = parseInt(dato.total_records)
+        })
+
+        setSellsData(datss);
       })
       .catch((e) => {
         console.log("no se pudo nuv", e);
       });
 
-
-
-  
-
-  console.log(suppliers);
+  }, []);
 
   const data1 = [
     { name: "Facebook", value: 2000 },
@@ -110,7 +114,7 @@ function Dashboard() {
       amt: 2100,
     },
   ];
-  
+
 
 
   return (
@@ -128,46 +132,46 @@ function Dashboard() {
         <section style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', overflowY: 'auto', maxHeight: '80vh' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
             <div>
-              <h1 style={{marginRight: 80}}>Ventas</h1>
-              <PieChart width={400} height={300}>
+              <h1 style={{ marginRight: 80 }}>Ventas</h1>
+              <PieChart width={400} height={300} data={sellsData}>
                 <Pie
-                  dataKey="total_records"
+                  dataKey={"total_records"}
                   isAnimationActive={false}
-                  data={_data3}
+                  data={sellsData}
                   cx="40%"
                   cy="50%"
                   outerRadius={80}
                   fill="#8C5340"
-                  label
+                  nameKey='date'
                 />
                 <Tooltip />
               </PieChart>
             </div>
             <div>
-              
-            <h1 style={{marginRight: 80}}>Artículos más vendidos</h1>
-              <PieChart width={400} height={300}>
+
+              <h1 style={{ marginRight: 80 }}>Artículos más vendidos</h1>
+              <PieChart width={400} height={300} data={productsData}>
                 <Pie
                   dataKey="total_records"
                   isAnimationActive={false}
-                  data={_data3}
+                  data={productsData}
                   cx="40%"
-                  cy="50%"  
+                  cy="50%"
                   outerRadius={110}
                   fill="#8C5340"
-                  label
+                  nameKey='product_name'
                 />
                 <Tooltip />
               </PieChart>
             </div>
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <div>
-          <h1>Clientes </h1>
+            <div>
+              <h1>Clientes </h1>
               <BarChart
                 width={470}
                 height={320}
-                data={_data1}
+                data={clientsData}
                 margin={{ top: 5, right: 90, left: 5, bottom: 20 }}
                 barSize={20}
               >
@@ -180,11 +184,11 @@ function Dashboard() {
               </BarChart>
             </div>
             <div>
-            <h1>Ventas totales</h1>
+              <h1>Ventas totales</h1>
               <BarChart
                 width={470}
                 height={320}
-                data={_data1}
+                data={clientsData}
                 margin={{ top: 5, right: 90, left: 5, bottom: 20 }}
                 barSize={20}
               >
@@ -198,14 +202,14 @@ function Dashboard() {
             </div>
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-       
+
             <div>
-            <h1>Clientes frecuentes</h1>
+              <h1>Clientes frecuentes</h1>
               <ComposedChart
                 layout="vertical"
                 width={500}
                 height={500}
-                data={_data1}
+                data={clientsData}
                 margin={{ top: 5, right: 70, bottom: 20, left: 20 }}
               >
                 <CartesianGrid stroke="#f5f5f5" />
@@ -217,7 +221,7 @@ function Dashboard() {
               </ComposedChart>
             </div>
           </div>
-      
+
         </section>
       </article>
       {showModal && <PopupSuppliers closeModal={setShowModal} />}
