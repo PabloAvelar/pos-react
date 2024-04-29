@@ -25,14 +25,6 @@ function PopupClients({ closeModal, data }) {
             document.clientForm.membership_number.value = data.membership_number;
             setInputs(values => ({ ...values, ['membership_number']: data.membership_number }))
 
-            document.clientForm.prod_name.value = data.prod_name;
-            setInputs(values => ({ ...values, ['prod_name']: data.prod_name }))
-
-            document.clientForm.note.value = data.note;
-            setInputs(values => ({ ...values, ['note']: data.note }))
-
-            document.clientForm.expected_date.value = data.expected_date;
-            setInputs(values => ({ ...values, ['expected_date']: data.expected_date }))
         }
     }, [])
 
@@ -55,9 +47,6 @@ function PopupClients({ closeModal, data }) {
                 'contact': inputs.contact,
                 'address': inputs.address,
                 'membership_number': inputs.membership_number,
-                'prod_name': inputs.prod_name,
-                'note': inputs.note,
-                'expected_date': inputs.expected_date,
             })
 
             // If it's a new customer
@@ -124,18 +113,6 @@ function PopupClients({ closeModal, data }) {
                     <div className="input-add-client-container">
                         <span style={{ fontSize: 16 }}>Membership #: </span>
                         <input className='input-form-popup' onChange={handleChange} type="text" name="membership_number" required />
-                    </div>
-                    <div className="input-add-client-container">
-                        <span style={{ fontSize: 16 }}>Product Name: </span>
-                        <input className='input-form-popup' onChange={handleChange} type="text" name="prod_name" required />
-                    </div>
-                    <div className="input-add-client-container">
-                        <span style={{ fontSize: 16 }}>Note: </span>
-                        <input className='input-form-popup' onChange={handleChange} type="text" name="note" required />
-                    </div>
-                    <div className="input-add-client-container">
-                        <span style={{ fontSize: 16 }}>Expected Date: </span>
-                        <input className='input-form-popup' onChange={handleChange} type="date" name="expected_date" required />
                     </div>
                 </div>
 
