@@ -8,6 +8,7 @@ import Sales from './pages/Sales';
 import Products from './pages/Products';
 import Reports from './pages/Reports';
 import Suppliers from './pages/Suppliers';
+import Receipt from './pages/Receipt';
 import React, { useEffect, useState } from 'react';
 import { useAuth } from './components/AuthContext';
 
@@ -43,6 +44,7 @@ function App() {
           <Route path="/clients" element={<ProtectedRoute><Clients/></ProtectedRoute>} />
           <Route path="/products" element={<ProtectedRoute><Products/></ProtectedRoute>} />
           <Route path="/reports" element={<ProtectedRoute><Reports/></ProtectedRoute>} />
+          <Route path="/receipt" element={<ProtectedRoute><Receipt/></ProtectedRoute>} />
         </Routes>
       </Router>
     </div>

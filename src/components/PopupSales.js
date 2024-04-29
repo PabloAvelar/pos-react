@@ -5,12 +5,14 @@ import '../styles/popupclients.css';
 import suppliersService from '../services/suppliersService';
 import { useAuth } from './AuthContext';
 import salesService from '../services/salesService';
+import { useNavigate } from 'react-router-dom';
 
 function PopupSales({ closeModal, data, customers }) {
 
     const [inputs, setInputs] = useState({});
     const [customerSelected, setCustomerSelected] = useState(customers[0]);
     const [change, setChange] = useState(0);
+    let navigate = useNavigate();
     const auth = useAuth();
     const getTotal = data.reduce((total, p) => total + p.amount, 0);
 
@@ -34,8 +36,10 @@ function PopupSales({ closeModal, data, customers }) {
         try {
             // Se va iterar por todos los productos del carrito para registrar cada venta por separado
 
+            const receipt = []
+        
             // Inserción a tabla Sales
-            data.map( async (product) => {
+            data.map(async (product) => {
 
                 const dataForSalesOrder = {
                     'product_id': product.product_id,
@@ -47,14 +51,28 @@ function PopupSales({ closeModal, data, customers }) {
                     'qty': product.quantity,
                 }
 
+                const dataForReceipt = {
+                    'product_id': product.product_id,
+                    'product_code': product.product_code,
+                    'product_name': product.product_name,
+                    'customer': customerSelected.customer_name,
+                    'qty': product.quantity,
+                    'amount': product.quantity * product.price,
+                    'date': date,
+                    'customerMoney': inputs.customerMoney // Este sólo se usa para hacer el ticket/recibo
+                }
+
                 const urlParamsSalesOrder = new URLSearchParams(dataForSalesOrder).toString();
 
                 // Mandando datos la table `sales_order`
+                receipt.push(dataForReceipt)
+
                 const res = await salesService.postSalesOrder(urlParamsSalesOrder)
                 console.log(res)
-
-                window.location.reload();
             })
+
+            navigate("/receipt", { state: receipt });
+
         } catch (e) {
             console.log(e);
         }

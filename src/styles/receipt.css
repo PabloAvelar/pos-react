@@ -1,0 +1,47 @@
+.recepit-header{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    flex-direction: row;
+}
+
+.receipt-description{
+    flex-direction: 'column';
+}
+
+.recepit-info{
+    display: flex;
+    margin-left: 5%;
+}
+
+.cash-container{
+    display: flex;
+    justify-content: flex-start;
+}
+
+.cash{
+    width: 40%;
+    margin-left: 2%;
+    border: 1px #dddd solid;
+}
+
+.cash-item{
+    display: flex;
+    justify-content: space-between;
+    padding: 0 15px 0 15px;
+}
+
+.cash-change{
+    background-color: #f2dec4;
+}
+
+.cash-change > p{
+    font-size: xx-large;
+    font-weight: bolder;
+}
+
+.cash-item > p{
+    color: #bf8339;
+    font-weight: 700;
+}
+
