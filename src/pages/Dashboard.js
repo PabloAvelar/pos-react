@@ -18,19 +18,13 @@ function Dashboard() {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    // Cargando sólo una vez los clientes que hay
-    suppliersService.getSuppliers()
-      .then((clients) => {
-        setSuppliers(clients);
-        setDataLoaded(true);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-
     statisticsService.getFrequentCostumers()
-      .then((tilin) => {
-        setClientsData(tilin);
+      .then((raw_data) => {
+        // Para transformar total_records a entero
+        raw_data.forEach((dato) => {
+          dato.total_records = parseInt(dato.total_records)
+        })
+        setClientsData(raw_data);
       })
       .catch((e) => {
         console.log("no se pudo", e);
