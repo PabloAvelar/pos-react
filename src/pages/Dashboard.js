@@ -126,17 +126,17 @@ function Dashboard() {
         <section style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', overflowY: 'auto', maxHeight: '80vh' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
             <div>
-              <h1 style={{ marginRight: 80 }}>Ventas</h1>
-              <PieChart width={400} height={300} data={sellsData}>
+              <h1 style={{ marginRight: 80 }}>Clientes frecuentes</h1>
+              <PieChart width={400} height={300} data={clientsData}>
                 <Pie
                   dataKey={"total_records"}
                   isAnimationActive={false}
-                  data={sellsData}
+                  data={clientsData}
                   cx="40%"
                   cy="50%"
-                  outerRadius={80}
+                  outerRadius={125}
                   fill="#8C5340"
-                  nameKey='date'
+                  nameKey='customer_name'
                 />
                 <Tooltip />
               </PieChart>
@@ -151,7 +151,7 @@ function Dashboard() {
                   data={productsData}
                   cx="40%"
                   cy="50%"
-                  outerRadius={110}
+                  outerRadius={125}
                   fill="#8C5340"
                   nameKey='product_name'
                 />
@@ -201,8 +201,8 @@ function Dashboard() {
               <h1>Clientes frecuentes</h1>
               <ComposedChart
                 layout="vertical"
-                width={500}
-                height={500}
+                width={520}
+                height={350}
                 data={clientsData}
                 margin={{ top: 5, right: 70, bottom: 20, left: 20 }}
               >
