@@ -4,10 +4,10 @@ import { faXmarkSquare } from '@fortawesome/free-solid-svg-icons'
 import '../styles/popuproducts.css';
 import productsService from '../services/productsService';
 
-function PopupProducts({ closeModal, data, suppliers }) {
+function PopupProducts({ displayModal, data, suppliers, onProductAdded  }) {
     const [inputs, setInputs] = useState({});
     const [supplierSelected, setSupplierSelected] = useState(suppliers === undefined ? "" : suppliers[0]);
-
+    
     useEffect(() => {
         // Setting data to edit a product
         if (data) {
@@ -75,7 +75,14 @@ function PopupProducts({ closeModal, data, suppliers }) {
                 const res = await productsService.postProduct(sendData);
                 if (res.status === 'success') {
                     console.log("Producto agregado");
-                    window.location.reload();
+                    onProductAdded(
+                        "¡Producto registrado!",
+                        "Se ha registrado " + inputs.product_name,
+                        "success",
+                        5000
+                      );
+
+                    displayModal(false);
                 }
 
             } else {
@@ -96,7 +103,7 @@ function PopupProducts({ closeModal, data, suppliers }) {
     return (
 
         <div className='popup-client-card-container shadow'>
-            <a className='close-modal' onClick={() => closeModal(false)}>
+            <a className='close-modal' onClick={() => displayModal(false)}>
                 <FontAwesomeIcon icon={faXmarkSquare} size='2x' color='#260B01' />
             </a>
             <div style={{ marginTop: 20 }}>

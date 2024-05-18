@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import '../styles/clients.css';
 import '../styles/uniqueStyleSales.css';
 import PopupSales from '../components/PopupSales';
@@ -8,6 +8,8 @@ import Header from '../components/Header';
 import TableSales from '../components/TableSales';
 import { useAuth } from '../components/AuthContext';
 import clientsService from '../services/clientsService';
+import { ReactNotifications, Store } from 'react-notifications-component'
+import 'react-notifications-component/dist/theme.css'
 
 function Sales() {
 
@@ -19,30 +21,58 @@ function Sales() {
   const [productsCart, setProductsCart] = useState([]);
   const [productsQuantity, setProductsQuantity] = useState(0);
   const auth = useAuth();
+  const notificationShownRef = useRef(false); // Referencia para notificación
+
+  const showNotification = (title, message, type) => {
+    Store.addNotification({
+      title: title,
+      message: message,
+      type: type,
+      insert: "top",
+      container: "top-right",
+      animationIn: ["animate__animated", "animate__fadeIn"],
+      animationOut: ["animate__animated", "animate__fadeOut"],
+      dismiss: {
+        duration: 10000,
+        onScreen: true
+      }
+    });
+  };
+
+
+  const getData = async () => {
+    try {
+      const getproducts = await productsService.getProducts();
+      const getClients = await clientsService.getClients();
+      setProducts(getproducts);
+      setCustomers(getClients);
+
+      // asignando el primer producto en el select por defecto
+      setProductSelected(getproducts[0])
+
+      // Checando nivel inventario en cantidad de productos
+      let stock_qty = getproducts.length;
+      // Verifica si la notificación ya se mostró
+      if (!notificationShownRef.current) {
+        if (stock_qty > 0 && stock_qty < 7) {
+          showNotification("¡Pocos productos en stock!", "Quedan " + stock_qty + " productos.", "warning");
+        } else if (stock_qty === 0) {
+          showNotification("¡No hay productos en stock!", "Es necesario ingresar nuevos productos", "danger");
+        }
+
+        // Marca que la notificación se ha mostrado
+        notificationShownRef.current = true;
+      }
+
+      setDataLoaded(true);
+
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
-    // Cargando sólo una vez los clientes que hay
-    productsService.getProducts()
-      .then((prod) => {
-        setProducts(prod);
-        // asignando el primer producto en el select por defecto
-        try {
-          setProductSelected(prod[0])
-        } catch (error) { }
-        setDataLoaded(true);
-      })
-      .catch((err) => {
-        console.error(err);
-      })
-
-    // Cargando customers
-    clientsService.getClients()
-      .then((clients) => {
-        setCustomers(clients);
-      })
-      .catch((e) => {
-        console.error(e);
-      })
+    getData()
   }, []);
 
   const handleAddCart = () => {
@@ -76,7 +106,7 @@ function Sales() {
   return (
 
     <main className="page-container">
-
+      <ReactNotifications />
       <aside>
         <Sidebar />
       </aside>
@@ -116,7 +146,7 @@ function Sales() {
                 <a className='add-customer' onClick={handleAddCart}>+ Add to Cart</a>
 
               </div>
-              }
+            }
           </div>
         </section>
         {dataLoaded ? <TableSales data={productsCart} handleDeleteProduct={deleteProduct} /> : <p>cargando datos</p>}

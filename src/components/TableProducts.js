@@ -15,7 +15,6 @@ function TableProducts({data, suppliers}) {
     useEffect(() => {
         data.map((p) => {
             p.total = p.o_price * p.qty
-            console.log(p.qty)
         })
 
     }, [data])
@@ -29,7 +28,7 @@ function TableProducts({data, suppliers}) {
             productsService.deleteProduct(data)
                 .then((res) => {
                     if (res.status === 'success') {
-                        console.log("Customer deleted");
+                        console.log("Product deleted");
                         window.location.reload();
                     } else {
                         console.log(res.status);
