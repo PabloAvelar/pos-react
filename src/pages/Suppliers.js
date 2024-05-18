@@ -76,7 +76,7 @@ function Suppliers() {
             </div>
           </div>
         </section>
-        {dataLoaded ? <TableSuppliers data={suppliers} /> : <p>cargando datos</p>}
+        {dataLoaded ? <TableSuppliers data={suppliers} onSupplierAdded={handleSupplierAdded} /> : <p>cargando datos</p>}
       </article>
 
       {showModal && <PopupSuppliers displayModal={setShowModal} onSupplierAdded={handleSupplierAdded} />}

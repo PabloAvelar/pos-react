@@ -66,8 +66,9 @@ function PopupSuppliers({ displayModal, data, onSupplierAdded }) {
                 // If a Supplier is being edited
                 const res = await suppliersService.putSupplier(data.toString());
                 if (res.status === 'success') {
-                    console.log("cliente editado");
+                    console.log("proveedor editado");
                     onSupplierAdded("¡Proveedor modificado!", "Se ha modificar el proveedor", 'success', 5000);
+                    displayModal(false)
                 }
             }
 

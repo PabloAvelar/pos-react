@@ -7,7 +7,7 @@ import PopupSuppliers from './PopupSuppliers';
 import '../styles/tableclients.css';
 import suppliersService from '../services/suppliersService';
 
-function TableSuppliers({ data }) {
+function TableSuppliers({ data, onSupplierAdded }) {
     const [showModal, setShowModal] = useState(false);
     const [clientData, setClientData] = useState({});
     const auth = useAuth();
@@ -102,7 +102,7 @@ function TableSuppliers({ data }) {
                 </Column>
             </DataTable>
 
-            {showModal && <PopupSuppliers closeModal={setShowModal} data={clientData} />}
+            {showModal && <PopupSuppliers displayModal={setShowModal} data={clientData} onSupplierAdded={onSupplierAdded} />}
         </section>
 
     )
