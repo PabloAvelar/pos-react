@@ -1,20 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { PieChart, Pie, Tooltip, BarChart, Bar, XAxis, YAxis, CartesianGrid, Legend, ComposedChart } from "recharts";
-import TableSuppliers from '../components/TableSuppliers';
 import '../styles/clients.css';
 import PopupSuppliers from '../components/PopupSuppliers';
-import suppliersService from '../services/suppliersService';
 import Sidebar from '../components/Sidebar';
 import Header from '../components/Header';
 import statisticsService from '../services/statisticsService';
-import clientsService from '../services/clientsService';
 
 function Dashboard() {
-  const [suppliers, setSuppliers] = useState([]);
   const [clientsData, setClientsData] = useState([]);
   const [productsData, setProductsData] = useState([]);
   const [sellsData, setSellsData] = useState([]);
-  const [dataLoaded, setDataLoaded] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
@@ -56,59 +51,6 @@ function Dashboard() {
       });
 
   }, []);
-
-  const data1 = [
-    { name: "Facebook", value: 2000 },
-    { name: "Instagram", value: 900 },
-    { name: "TikTok", value: 1000 },
-    { name: "XDXD", value: 1000 },
-  ];
-
-  const data = [
-    {
-      name: 'Page A',
-      uv: 4000,
-      pv: 2400,
-      amt: 2400,
-    },
-    {
-      name: 'Page B',
-      uv: 3000,
-      pv: 1398,
-      amt: 2210,
-    },
-    {
-      name: 'Page C',
-      uv: 2000,
-      pv: 9800,
-      amt: 2290,
-    },
-    {
-      name: 'Page D',
-      uv: 2780,
-      pv: 3908,
-      amt: 2000,
-    },
-    {
-      name: 'Page E',
-      uv: 1890,
-      pv: 4800,
-      amt: 2181,
-    },
-    {
-      name: 'Page F',
-      uv: 2390,
-      pv: 3800,
-      amt: 2500,
-    },
-    {
-      name: 'Page G',
-      uv: 3490,
-      pv: 4300,
-      amt: 2100,
-    },
-  ];
-
 
 
   return (
