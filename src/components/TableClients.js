@@ -7,31 +7,31 @@ import PopupClients from './PopupClients';
 import '../styles/tableclients.css';
 import clientsService from '../services/clientsService';
 
-function TableClients({data}) {
+function TableClients({ data, onClientAdded}) {
 
     const [showModal, setShowModal] = useState(false);
     const [clientData, setClientData] = useState({});
     const auth = useAuth();
 
     const handleDeleteClient = (rowData) => {
-        try{
+        try {
             const data = new URLSearchParams({
                 'customer_id': rowData.customer_id
             }).toString();
 
             clientsService.deleteClient(data)
-            .then((res) => {
-                if (res.status === 'success'){
-                    console.log("Customer deleted");
-                    window.location.reload();
-                }else{
-                    console.log(res.status);
-                }
-            })
-            .catch((e) => {
-                console.error(e);
-            })
-        }catch($e){
+                .then((res) => {
+                    if (res.status === 'success') {
+                        console.log("Customer deleted");
+                        window.location.reload();
+                    } else {
+                        console.log(res.status);
+                    }
+                })
+                .catch((e) => {
+                    console.error(e);
+                })
+        } catch ($e) {
             console.error($e);
         }
     }
@@ -52,7 +52,7 @@ function TableClients({data}) {
                     headerClassName='table-column-header'
                     bodyClassName='table-column-body'
                     header=""
-                    style={{minWidth: 20}}
+                    style={{ minWidth: 20 }}
                     body={(rowData) => <DeleteButton onDeleteClick={() => handleDeleteClient(rowData)} />}
                 >
 
@@ -60,7 +60,7 @@ function TableClients({data}) {
                 <Column headerClassName='table-column-header'
                     bodyClassName='table-column-body'
                     header=""
-                    style={{minWidth: 20}}
+                    style={{ minWidth: 20 }}
                     body={(rowData) => <EditButton onEditClick={() => handleEditClient(rowData)} />}
                 >
 
@@ -68,7 +68,7 @@ function TableClients({data}) {
                 <Column field="customer_name"
                     headerClassName='table-column-header'
                     bodyClassName='table-column-body'
-                    style={{minWidth: 190}}
+                    style={{ minWidth: 190 }}
                     header="Full Name"
                 >
 
@@ -76,7 +76,7 @@ function TableClients({data}) {
                 <Column field="address"
                     headerClassName='table-column-header'
                     bodyClassName='table-column-body'
-                    style={{minWidth: 250}}
+                    style={{ minWidth: 250 }}
                     header="Address"
                 >
 
@@ -84,7 +84,7 @@ function TableClients({data}) {
                 <Column field="contact"
                     headerClassName='table-column-header'
                     bodyClassName='table-column-body'
-                    style={{minWidth: 100}}
+                    style={{ minWidth: 100 }}
                     header="Phone"
                 >
 
@@ -92,14 +92,14 @@ function TableClients({data}) {
                 <Column field="membership_number"
                     headerClassName='table-column-header'
                     bodyClassName='table-column-body'
-                    style={{minWidth: 130}}
+                    style={{ minWidth: 130 }}
                     header="Membership"
                 >
 
                 </Column>
             </DataTable>
 
-            {showModal && <PopupClients closeModal={setShowModal} data={clientData} />}
+            {showModal && <PopupClients displayModal={setShowModal} data={clientData} onClientAdded={onClientAdded}/>}
         </section>
 
     )

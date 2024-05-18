@@ -4,7 +4,7 @@ import { faXmarkSquare } from '@fortawesome/free-solid-svg-icons'
 import '../styles/popupclients.css';
 import clientsService from '../services/clientsService';
 
-function PopupClients({ closeModal, data }) {
+function PopupClients({ displayModal, data, onClientAdded }) {
     const [inputs, setInputs] = useState({});
     const [customer_name, setCustomer_name] = useState(data ? data.customer_name : "");
 
@@ -53,28 +53,19 @@ function PopupClients({ closeModal, data }) {
             if (inputs.customer_id === undefined) {
                 data.delete("customer_id");
 
-                clientsService.postClient(data.toString())
-                    .then((res) => {
-                        if (res.status === 'success') {
-                            console.log("cliente agregado");
-                            window.location.reload();
-                        }
-                    })
-                    .catch((err) => {
-                        console.error(err);
-                    })
+                const res = await clientsService.postClient(data.toString())
+                if (res.status === 'success') {
+                    console.log("cliente agregado");
+                    onClientAdded("¡Cliente registrado!", "Se ha agregado un nuevo cliente", 'success', 5000)
+                }
             } else {
                 // If a client is being edited
-                clientsService.putClient(data.toString())
-                    .then((res) => {
-                        if (res.status === 'success') {
-                            console.log("cliente editado");
-                            window.location.reload();
-                        }
-                    })
-                    .catch((err) => {
-                        console.error(err);
-                    })
+                const res = await clientsService.putClient(data.toString())
+                if (res.status === 'success') {
+                    console.log("cliente editado");
+                    displayModal(false)
+                    onClientAdded("¡Cliente modificado!", "Se ha modificado el cliente", 'success', 5000)
+                }
             }
 
         } catch (e) {
@@ -85,7 +76,7 @@ function PopupClients({ closeModal, data }) {
     return (
 
         <div className='popup-client-card-container shadow'>
-            <a className='close-modal' onClick={() => closeModal(false)}>
+            <a className='close-modal' onClick={() => displayModal(false)}>
                 <FontAwesomeIcon icon={faXmarkSquare} size='2x' color='#260B01' />
             </a>
             <div style={{ marginTop: 20 }}>
