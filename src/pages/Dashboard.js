@@ -58,6 +58,7 @@ function Dashboard() {
       <aside>
         <Sidebar />
       </aside>
+
       <article className='page-content-container'>
         <Header />
         <section className='clients-container'>
@@ -65,97 +66,101 @@ function Dashboard() {
             <span className='page-title'>Dashboard</span>
           </div>
         </section>
-        <section style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', overflowY: 'auto', maxHeight: '80vh' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
-            <div>
-              <h1 style={{ marginRight: 80 }}>Clientes frecuentes</h1>
-              <PieChart width={400} height={300} data={clientsData}>
-                <Pie
-                  dataKey={"total_records"}
-                  isAnimationActive={false}
-                  data={clientsData}
-                  cx="40%"
-                  cy="50%"
-                  outerRadius={125}
-                  fill="#8C5340"
-                  nameKey='customer_name'
-                />
-                <Tooltip />
-              </PieChart>
-            </div>
-            <div>
-
-              <h1 style={{ marginRight: 80 }}>Artículos más vendidos</h1>
-              <PieChart width={400} height={300} data={productsData}>
-                <Pie
-                  dataKey="total_records"
-                  isAnimationActive={false}
-                  data={productsData}
-                  cx="40%"
-                  cy="50%"
-                  outerRadius={125}
-                  fill="#8C5340"
-                  nameKey='product_name'
-                />
-                <Tooltip />
-              </PieChart>
-            </div>
-          </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <div>
-              <h1>Clientes </h1>
-              <BarChart
-                width={470}
-                height={320}
+        <section
+          style={{
+            height: '77%',
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr',
+            justifyContent: 'center',
+            overflowY: 'auto'
+          }}
+        >
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <h3 style={{ marginRight: 80 }}>Clientes frecuentes</h3>
+            <PieChart width={400} height={300} data={clientsData}>
+              <Pie
+                dataKey={"total_records"}
+                isAnimationActive={false}
                 data={clientsData}
-                margin={{ top: 5, right: 90, left: 5, bottom: 20 }}
-                barSize={20}
-              >
-                <XAxis dataKey="customer_name" scale="point" padding={{ left: 40, right: 40 }} />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <CartesianGrid strokeDasharray="3 3" />
-                <Bar dataKey="total_records" fill="#8C5340" background={{ fill: '#eee' }} />
-              </BarChart>
-            </div>
-            <div>
-              <h1>Ventas totales</h1>
-              <BarChart
-                width={470}
-                height={320}
-                data={sellsData}
-                margin={{ top: 5, right: 90, left: 5, bottom: 20 }}
-                barSize={20}
-              >
-                <XAxis dataKey="date" scale="point" padding={{ left: 40, right: 40 }} />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <CartesianGrid strokeDasharray="3 3" />
-                <Bar name="Ventas" dataKey="total_records" fill="#8C5340" background={{ fill: '#eee' }} />
-              </BarChart>
-            </div>
+                cx="40%"
+                cy="50%"
+                outerRadius={125}
+                fill="#8C5340"
+                nameKey='customer_name'
+              />
+              <Tooltip />
+            </PieChart>
           </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
 
-            <div>
-              <h1>Clientes frecuentes</h1>
-              <ComposedChart
-                layout="vertical"
-                width={520}
-                height={350}
-                data={clientsData}
-                margin={{ top: 5, right: 70, bottom: 20, left: 20 }}
-              >
-                <CartesianGrid stroke="#f5f5f5" />
-                <XAxis type="number" />
-                <YAxis dataKey="customer_name" type="category" scale="band" />
-                <Tooltip />
-                <Legend />
-                <Bar dataKey="total_records" barSize={20} fill="#8C5340" />
-              </ComposedChart>
-            </div>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <h3 style={{ marginRight: 80 }}>Artículos más vendidos</h3>
+            <PieChart width={400} height={300} data={productsData}>
+              <Pie
+                dataKey="total_records"
+                isAnimationActive={false}
+                data={productsData}
+                cx="40%"
+                cy="50%"
+                outerRadius={125}
+                fill="#8C5340"
+                nameKey='product_name'
+              />
+              <Tooltip />
+            </PieChart>
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <h3 style={{ marginRight: 80 }}>Clientes</h3>
+            <BarChart
+              width={470}
+              height={320}
+              data={clientsData}
+              margin={{ top: 5, right: 90, left: 5, bottom: 20 }}
+              barSize={20}
+            >
+              <XAxis dataKey="customer_name" scale="point" padding={{ left: 40, right: 40 }} />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <CartesianGrid strokeDasharray="3 3" />
+              <Bar dataKey="total_records" fill="#8C5340" background={{ fill: '#eee' }} />
+            </BarChart>
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <h3>Ventas totales</h3>
+            <BarChart
+              width={470}
+              height={320}
+              data={sellsData}
+              margin={{ top: 5, right: 90, left: 5, bottom: 20 }}
+              barSize={20}
+            >
+              <XAxis dataKey="date" scale="point" padding={{ left: 40, right: 40 }} />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <CartesianGrid strokeDasharray="3 3" />
+              <Bar name="Ventas" dataKey="total_records" fill="#8C5340" background={{ fill: '#eee' }} />
+            </BarChart>
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <h3>Clientes frecuentes</h3>
+            <ComposedChart
+              layout="vertical"
+              width={520}
+              height={350}
+              data={clientsData}
+              margin={{ top: 5, right: 70, bottom: 20, left: 20 }}
+            >
+              <CartesianGrid stroke="#f5f5f5" />
+              <XAxis type="number" />
+              <YAxis dataKey="customer_name" type="category" scale="band" />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="total_records" barSize={20} fill="#8C5340" />
+            </ComposedChart>
           </div>
 
         </section>
