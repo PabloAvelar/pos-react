@@ -1,33 +1,63 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import TableSuppliers from '../components/TableSuppliers';
 import '../styles/clients.css';
 import PopupSuppliers from '../components/PopupSuppliers';
 import suppliersService from '../services/suppliersService';
 import Sidebar from '../components/Sidebar';
 import Header from '../components/Header';
+import { ReactNotifications, Store } from 'react-notifications-component'
+import 'react-notifications-component/dist/theme.css'
 
 function Suppliers() {
 
   const [suppliers, setSuppliers] = useState([]);
   const [dataLoaded, setDataLoaded] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const notificationShownRef = useRef(false); // Referencia para notificación
+
+  const showNotification = (title, message, type, duration) => {
+    Store.addNotification({
+      title: title,
+      message: message,
+      type: type,
+      insert: "top",
+      container: "top-right",
+      animationIn: ["animate__animated", "animate__fadeIn"],
+      animationOut: ["animate__animated", "animate__fadeOut"],
+      dismiss: {
+        duration: duration,
+        onScreen: true
+      }
+    });
+  };
+
+  const getData = async () => {
+    try {
+      const getSuppliers = await suppliersService.getSuppliers();
+      setSuppliers(getSuppliers)
+      setDataLoaded(true);
+
+    } catch (error) {
+      console.log(error)
+      // Aquí pudieras poner una notificación para cuando no carguen los datos
+
+    }
+  }
 
   useEffect(() => {
-    // Cargando sólo una vez los clientes que hay
-    suppliersService.getSuppliers()
-      .then((clients) => {
-        setSuppliers(clients);
-        setDataLoaded(true);
-      })
-      .catch((err) => {
-        console.error(err);
-      })
+    getData()
   }, []);
+
+  const handleSupplierAdded = async (title, message, type, duration) => {
+    await getData();
+    showNotification(title, message, type, duration);
+    setShowModal(false);
+  }
 
   return (
 
     <main className="page-container">
-
+      <ReactNotifications />
       <aside>
         <Sidebar />
       </aside>
@@ -48,8 +78,8 @@ function Suppliers() {
         </section>
         {dataLoaded ? <TableSuppliers data={suppliers} /> : <p>cargando datos</p>}
       </article>
-      
-      {showModal && <PopupSuppliers closeModal={setShowModal} />}
+
+      {showModal && <PopupSuppliers displayModal={setShowModal} onSupplierAdded={handleSupplierAdded} />}
 
     </main>
   );

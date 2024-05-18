@@ -4,7 +4,7 @@ import { faXmarkSquare } from '@fortawesome/free-solid-svg-icons'
 import '../styles/popupclients.css';
 import suppliersService from '../services/suppliersService';
 
-function PopupSuppliers({ closeModal, data }) {
+function PopupSuppliers({ displayModal, data, onSupplierAdded }) {
     const [inputs, setInputs] = useState({});
 
     useEffect(() => {
@@ -56,28 +56,19 @@ function PopupSuppliers({ closeModal, data }) {
             if (inputs.supplier_id === undefined) {
                 data.delete("supplier_id");
 
-                suppliersService.postSupplier(data.toString())
-                    .then((res) => {
-                        if (res.status === 'success') {
-                            console.log("Supplier agregado");
-                            window.location.reload();
-                        }
-                    })
-                    .catch((err) => {
-                        console.error(err);
-                    })
+                const res = await suppliersService.postSupplier(data.toString());
+                if (res.status === 'success') {
+                    console.log("Supplier agregado");
+                    onSupplierAdded("¡Nuevo proveedor registrado!", "Se ha agregado un nuevo proveedor", 'success', 5000);
+                }
+
             } else {
                 // If a Supplier is being edited
-                suppliersService.putSupplier(data.toString())
-                    .then((res) => {
-                        if (res.status === 'success') {
-                            console.log("cliente editado");
-                            window.location.reload();
-                        }
-                    })
-                    .catch((err) => {
-                        console.error(err);
-                    })
+                const res = await suppliersService.putSupplier(data.toString());
+                if (res.status === 'success') {
+                    console.log("cliente editado");
+                    onSupplierAdded("¡Proveedor modificado!", "Se ha modificar el proveedor", 'success', 5000);
+                }
             }
 
         } catch (e) {
@@ -88,7 +79,7 @@ function PopupSuppliers({ closeModal, data }) {
     return (
 
         <div className='popup-client-card-container shadow'>
-            <a className='close-modal' onClick={() => closeModal(false)}>
+            <a className='close-modal' onClick={() => displayModal(false)}>
                 <FontAwesomeIcon icon={faXmarkSquare} size='2x' color='#260B01' />
             </a>
             <div style={{ marginTop: 20 }}>
@@ -117,7 +108,7 @@ function PopupSuppliers({ closeModal, data }) {
                         <span style={{ fontSize: 16 }}>Contact Number: </span>
                         <input className='input-form-popup' onChange={handleChange} type="text" name="supplier_contact" required />
                     </div>
-                    
+
                     <div className="input-add-client-container">
                         <span style={{ fontSize: 16 }}>Note: </span>
                         <input className='input-form-popup' onChange={handleChange} type="text" name="note" required />
