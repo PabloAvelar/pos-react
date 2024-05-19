@@ -15,10 +15,9 @@ function Dashboard() {
   useEffect(() => {
     statisticsService.getFrequentCostumers()
       .then((raw_data) => {
-        // Para transformar total_records a entero
         raw_data.forEach((dato) => {
-          dato.total_records = parseInt(dato.total_records)
-        })
+          dato.total_records = parseInt(dato.total_records);
+        });
         setClientsData(raw_data);
       })
       .catch((e) => {
@@ -27,10 +26,9 @@ function Dashboard() {
 
     statisticsService.getProductsSold()
       .then((dats) => {
-        // Para transformar total_records a entero
         dats.forEach((dato) => {
-          dato.total_records = parseInt(dato.total_records)
-        })
+          dato.total_records = parseInt(dato.total_records);
+        });
         setProductsData(dats);
       })
       .catch((e) => {
@@ -39,19 +37,23 @@ function Dashboard() {
 
     statisticsService.getNumSales()
       .then((datss) => {
-        // Para transformar total_records a entero
         datss.forEach((dato) => {
-          dato.total_records = parseInt(dato.total_records)
-        })
-
+          dato.total_records = parseInt(dato.total_records);
+        });
         setSellsData(datss);
       })
       .catch((e) => {
         console.log("no se pudo nuv", e);
       });
-
   }, []);
 
+  const renderChart = (data, ChartComponent, chartProps) => {
+    if (data.length === 0) {
+      return <p style={{color: 'gray'}}>No data were found for the graphs</p>;
+    }
+
+    return <ChartComponent {...chartProps} />;
+  };
 
   return (
     <main className="page-container">
@@ -77,92 +79,108 @@ function Dashboard() {
         >
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <h3 style={{ marginRight: 80 }}>Clientes frecuentes</h3>
-            <PieChart width={400} height={300} data={clientsData}>
-              <Pie
-                dataKey={"total_records"}
-                isAnimationActive={false}
-                data={clientsData}
-                cx="40%"
-                cy="50%"
-                outerRadius={125}
-                fill="#8C5340"
-                nameKey='customer_name'
-              />
-              <Tooltip />
-            </PieChart>
+            {renderChart(clientsData, PieChart, {
+              width: 400,
+              height: 300,
+              children: (
+                <Pie
+                  dataKey={"total_records"}
+                  isAnimationActive={false}
+                  data={clientsData}
+                  cx="40%"
+                  cy="50%"
+                  outerRadius={125}
+                  fill="#8C5340"
+                  nameKey='customer_name'
+                />
+              ),
+            })}
+            <Tooltip />
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <h3 style={{ marginRight: 80 }}>Artículos más vendidos</h3>
-            <PieChart width={400} height={300} data={productsData}>
-              <Pie
-                dataKey="total_records"
-                isAnimationActive={false}
-                data={productsData}
-                cx="40%"
-                cy="50%"
-                outerRadius={125}
-                fill="#8C5340"
-                nameKey='product_name'
-              />
-              <Tooltip />
-            </PieChart>
+            {renderChart(productsData, PieChart, {
+              width: 400,
+              height: 300,
+              children: (
+                <Pie
+                  dataKey="total_records"
+                  isAnimationActive={false}
+                  data={productsData}
+                  cx="40%"
+                  cy="50%"
+                  outerRadius={125}
+                  fill="#8C5340"
+                  nameKey='product_name'
+                />
+              ),
+            })}
+            <Tooltip />
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <h3 style={{ marginRight: 80 }}>Clientes</h3>
-            <BarChart
-              width={470}
-              height={320}
-              data={clientsData}
-              margin={{ top: 5, right: 90, left: 5, bottom: 20 }}
-              barSize={20}
-            >
-              <XAxis dataKey="customer_name" scale="point" padding={{ left: 40, right: 40 }} />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <CartesianGrid strokeDasharray="3 3" />
-              <Bar dataKey="total_records" fill="#8C5340" background={{ fill: '#eee' }} />
-            </BarChart>
+            {renderChart(clientsData, BarChart, {
+              width: 470,
+              height: 320,
+              data: clientsData,
+              margin: { top: 5, right: 90, left: 5, bottom: 20 },
+              barSize: 20,
+              children: (
+                <>
+                  <XAxis dataKey="customer_name" scale="point" padding={{ left: 40, right: 40 }} />
+                  <YAxis />
+                  <Tooltip />
+                  <Legend />
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <Bar dataKey="total_records" fill="#8C5340" background={{ fill: '#eee' }} />
+                </>
+              ),
+            })}
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <h3>Ventas totales</h3>
-            <BarChart
-              width={470}
-              height={320}
-              data={sellsData}
-              margin={{ top: 5, right: 90, left: 5, bottom: 20 }}
-              barSize={20}
-            >
-              <XAxis dataKey="date" scale="point" padding={{ left: 40, right: 40 }} />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <CartesianGrid strokeDasharray="3 3" />
-              <Bar name="Ventas" dataKey="total_records" fill="#8C5340" background={{ fill: '#eee' }} />
-            </BarChart>
+            {renderChart(sellsData, BarChart, {
+              width: 470,
+              height: 320,
+              data: sellsData,
+              margin: { top: 5, right: 90, left: 5, bottom: 20 },
+              barSize: 20,
+              children: (
+                <>
+                  <XAxis dataKey="date" scale="point" padding={{ left: 40, right: 40 }} />
+                  <YAxis />
+                  <Tooltip />
+                  <Legend />
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <Bar name="Ventas" dataKey="total_records" fill="#8C5340" background={{ fill: '#eee' }} />
+                </>
+              ),
+            })}
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <h3>Clientes frecuentes</h3>
-            <ComposedChart
-              layout="vertical"
-              width={520}
-              height={350}
-              data={clientsData}
-              margin={{ top: 5, right: 70, bottom: 20, left: 20 }}
-            >
-              <CartesianGrid stroke="#f5f5f5" />
-              <XAxis type="number" />
-              <YAxis dataKey="customer_name" type="category" scale="band" />
-              <Tooltip />
-              <Legend />
-              <Bar dataKey="total_records" barSize={20} fill="#8C5340" />
-            </ComposedChart>
+            {renderChart(clientsData, ComposedChart, {
+              layout: "vertical",
+              width: 520,
+              height: 350,
+              data: clientsData,
+              margin: { top: 5, right: 70, bottom: 20, left: 20 },
+              children: (
+                <>
+                  <CartesianGrid stroke="#f5f5f5" />
+                  <XAxis type="number" />
+                  <YAxis dataKey="customer_name" type="category" scale="band" />
+                  <Tooltip />
+                  <Legend />
+                  <Bar dataKey="total_records" barSize={20} fill="#8C5340" />
+                </>
+              ),
+            })}
           </div>
-
         </section>
       </article>
       {showModal && <PopupSuppliers closeModal={setShowModal} />}
