@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmarkSquare } from '@fortawesome/free-solid-svg-icons'
 import '../styles/popupclients.css';
 import clientsService from '../services/clientsService';
+import DOMPurify from 'dompurify';
 
 function PopupClients({ displayModal, data, onClientAdded }) {
     const [inputs, setInputs] = useState({});
@@ -13,24 +14,28 @@ function PopupClients({ displayModal, data, onClientAdded }) {
         if (data) {
             setInputs(values => ({ ...values, ['customer_id']: data.customer_id }))
 
-            document.clientForm.customer_name.value = data.customer_name;
-            setInputs(values => ({ ...values, ['customer_name']: data.customer_name }))
+            const sanitizedCustomerName = DOMPurify.sanitize(data.customer_name);
+            document.clientForm.customer_name.value = sanitizedCustomerName;
+            setInputs(values => ({ ...values, ['customer_name']: sanitizedCustomerName }))
 
-            document.clientForm.contact.value = data.contact;
-            setInputs(values => ({ ...values, ['contact']: data.contact }))
+            const sanitizedContact = DOMPurify.sanitize(data.contact);
+            document.clientForm.contact.value = sanitizedContact;
+            setInputs(values => ({ ...values, ['contact']: sanitizedContact }))
 
-            document.clientForm.address.value = data.address;
-            setInputs(values => ({ ...values, ['address']: data.address }))
+            const sanitizedAddress = DOMPurify.sanitize(data.address);
+            document.clientForm.address.value = sanitizedAddress;
+            setInputs(values => ({ ...values, ['address']: sanitizedAddress }))
 
-            document.clientForm.membership_number.value = data.membership_number;
-            setInputs(values => ({ ...values, ['membership_number']: data.membership_number }))
+            const sanitizedMembership = DOMPurify.sanitize(data.membership_number);
+            document.clientForm.membership_number.value = sanitizedMembership;
+            setInputs(values => ({ ...values, ['membership_number']: sanitizedMembership }))
 
         }
     }, [])
 
     const handleChange = (event) => {
         const name = event.target.name;
-        const value = event.target.value;
+        const value = DOMPurify.sanitize(event.target.value);
 
         setInputs(values => ({ ...values, [name]: value }));
     }
@@ -41,26 +46,26 @@ function PopupClients({ displayModal, data, onClientAdded }) {
         try {
 
 
-            const data = new URLSearchParams({
+            const sanitizedData = new URLSearchParams({
                 'customer_id': inputs.customer_id,
-                'customer_name': inputs.customer_name,
-                'contact': inputs.contact,
-                'address': inputs.address,
-                'membership_number': inputs.membership_number,
+                'customer_name': DOMPurify.sanitize(inputs.customer_name),
+                'contact': DOMPurify.sanitize(inputs.contact),
+                'address': DOMPurify.sanitize(inputs.address),
+                'membership_number': DOMPurify.sanitize(inputs.membership_number),
             })
 
             // If it's a new customer
             if (inputs.customer_id === undefined) {
-                data.delete("customer_id");
+                sanitizedData.delete("customer_id");
 
-                const res = await clientsService.postClient(data.toString())
+                const res = await clientsService.postClient(sanitizedData.toString())
                 if (res.status === 'success') {
                     console.log("cliente agregado");
                     onClientAdded("¡Cliente registrado!", "Se ha agregado un nuevo cliente", 'success', 5000)
                 }
             } else {
                 // If a client is being edited
-                const res = await clientsService.putClient(data.toString())
+                const res = await clientsService.putClient(sanitizedData.toString())
                 if (res.status === 'success') {
                     console.log("cliente editado");
                     displayModal(false)

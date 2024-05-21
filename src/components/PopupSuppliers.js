@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmarkSquare } from '@fortawesome/free-solid-svg-icons'
 import '../styles/popupclients.css';
 import suppliersService from '../services/suppliersService';
+import DOMPurify from 'dompurify';
 
 function PopupSuppliers({ displayModal, data, onSupplierAdded }) {
     const [inputs, setInputs] = useState({});
@@ -12,27 +13,32 @@ function PopupSuppliers({ displayModal, data, onSupplierAdded }) {
         if (data) {
             setInputs(values => ({ ...values, ['supplier_id']: data.supplier_id }))
 
-            document.clientForm.supplier_name.value = data.supplier_name;
-            setInputs(values => ({ ...values, ['supplier_name']: data.supplier_name }))
+            const sanitizedSupplierName = DOMPurify.sanitize(data.supplier_name);
+            document.clientForm.supplier_name.value = sanitizedSupplierName;
+            setInputs(values => ({ ...values, ['supplier_name']: sanitizedSupplierName }))
 
-            document.clientForm.contact_person.value = data.contact_person;
-            setInputs(values => ({ ...values, ['contact_person']: data.contact_person }))
+            const sanitizedContactPerson = DOMPurify.sanitize(data.contact_person);
+            document.clientForm.contact_person.value = sanitizedContactPerson;
+            setInputs(values => ({ ...values, ['contact_person']: sanitizedContactPerson }))
 
-            document.clientForm.supplier_contact.value = data.supplier_contact;
-            setInputs(values => ({ ...values, ['supplier_contact']: data.supplier_contact }))
+            const sanitizedContactSupplier = DOMPurify.sanitize(data.supplier_contact);
+            document.clientForm.supplier_contact.value = sanitizedContactSupplier;
+            setInputs(values => ({ ...values, ['supplier_contact']: sanitizedContactSupplier }))
 
-            document.clientForm.supplier_address.value = data.supplier_address;
-            setInputs(values => ({ ...values, ['supplier_address']: data.supplier_address }))
+            const sanitizedSupplierAddress = DOMPurify.sanitize(data.supplier_address);
+            document.clientForm.supplier_address.value = sanitizedSupplierAddress;
+            setInputs(values => ({ ...values, ['supplier_address']: sanitizedSupplierAddress }))
 
-            document.clientForm.note.value = data.note;
-            setInputs(values => ({ ...values, ['note']: data.note }))
+            const sanitizedNote = DOMPurify.sanitize(data.note);
+            document.clientForm.note.value = sanitizedNote;
+            setInputs(values => ({ ...values, ['note']: sanitizedNote }))
 
         }
     }, [])
 
     const handleChange = (event) => {
         const name = event.target.name;
-        const value = event.target.value;
+        const value = DOMPurify.sanitize(event.target.value);
 
         setInputs(values => ({ ...values, [name]: value }));
     }
@@ -43,20 +49,20 @@ function PopupSuppliers({ displayModal, data, onSupplierAdded }) {
         try {
 
 
-            const data = new URLSearchParams({
+            const sanitizedData = new URLSearchParams({
                 'supplier_id': inputs.supplier_id,
-                'supplier_name': inputs.supplier_name,
-                'contact_person': inputs.contact_person,
-                'supplier_contact': inputs.supplier_contact,
-                'supplier_address': inputs.supplier_address,
-                'note': inputs.note,
+                'supplier_name': DOMPurify.sanitize(inputs.supplier_name),
+                'contact_person': DOMPurify.sanitize(inputs.contact_person),
+                'supplier_contact': DOMPurify.sanitize(inputs.supplier_contact),
+                'supplier_address': DOMPurify.sanitize(inputs.supplier_address),
+                'note': DOMPurify.sanitize(inputs.note),
             })
 
             // If it's a new customer
             if (inputs.supplier_id === undefined) {
-                data.delete("supplier_id");
+                sanitizedData.delete("supplier_id");
 
-                const res = await suppliersService.postSupplier(data.toString());
+                const res = await suppliersService.postSupplier(sanitizedData.toString());
                 if (res.status === 'success') {
                     console.log("Supplier agregado");
                     onSupplierAdded("¡Nuevo proveedor registrado!", "Se ha agregado un nuevo proveedor", 'success', 5000);
@@ -64,7 +70,7 @@ function PopupSuppliers({ displayModal, data, onSupplierAdded }) {
 
             } else {
                 // If a Supplier is being edited
-                const res = await suppliersService.putSupplier(data.toString());
+                const res = await suppliersService.putSupplier(sanitizedData.toString());
                 if (res.status === 'success') {
                     console.log("proveedor editado");
                     onSupplierAdded("¡Proveedor modificado!", "Se ha modificar el proveedor", 'success', 5000);

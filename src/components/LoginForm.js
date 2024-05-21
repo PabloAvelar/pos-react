@@ -4,6 +4,7 @@ import { Auth, use } from './AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLock, faUser } from '@fortawesome/free-solid-svg-icons'
+import DOMPurify from 'dompurify';
 
 import '../styles/loginform.css';
 
@@ -14,9 +15,13 @@ function LoginForm() {
     let navigate = useNavigate();
     const auth = useContext(Auth);
 
+    const sanitizeInput = (input) => {
+        return DOMPurify.sanitize(input);
+    };
+
     const handleChange = (event) => {
         const name = event.target.name;
-        const value = event.target.value;
+        const value = sanitizeInput(event.target.value);
 
         setInputs(values => ({ ...values, [name]: value }))
     }
@@ -26,10 +31,12 @@ function LoginForm() {
 
         try {
 
-            const data = new URLSearchParams({
-                'username': inputs.username,
-                'password': inputs.password
+            const sanitizedInputs = new URLSearchParams({
+                'username': sanitizeInput(inputs.username),
+                'password': sanitizeInput(inputs.password)
             }).toString()
+
+            const data = new URLSearchParams(sanitizedInputs).toString();
 
             registerService.login(data)
                 .then((res) => {

@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmarkSquare } from '@fortawesome/free-solid-svg-icons'
 import '../styles/popuproducts.css';
 import productsService from '../services/productsService';
+import DOMPurify from 'dompurify';
 
 function PopupProducts({ displayModal, data, suppliers, onProductAdded  }) {
     const [inputs, setInputs] = useState({});
@@ -13,38 +14,47 @@ function PopupProducts({ displayModal, data, suppliers, onProductAdded  }) {
         if (data) {
             setInputs(values => ({ ...values, ['product_id']: data.product_id }))
 
-            document.clientForm.product_code.value = data.product_code;
-            setInputs(values => ({ ...values, ['product_code']: data.product_code }))
+            const sanitizedProductCode = DOMPurify.sanitize(data.product_code);
+            document.clientForm.product_code.value = sanitizedProductCode;
+            setInputs(values => ({ ...values, ['product_code']: sanitizedProductCode }))
 
-            document.clientForm.product_name.value = data.product_name;
-            setInputs(values => ({ ...values, ['product_name']: data.product_name }))
+            const sanitizedProductName = DOMPurify.sanitize(data.product_name);
+            document.clientForm.product_name.value = sanitizedProductName;
+            setInputs(values => ({ ...values, ['product_name']: sanitizedProductName }))
 
-            document.clientForm.gen_name.value = data.gen_name;
-            setInputs(values => ({ ...values, ['gen_name']: data.gen_name }))
+            const sanitizedGenName = DOMPurify.sanitize(data.gen_name);
+            document.clientForm.gen_name.value = sanitizedGenName;
+            setInputs(values => ({ ...values, ['gen_name']: sanitizedGenName }))
 
-            document.clientForm.supplier.value = data.supplier;
-            setInputs(values => ({ ...values, ['supplier_id']: data.supplier }))
+            const sanitizedSupplier = DOMPurify.sanitize(data.supplier);
+            document.clientForm.supplier.value = sanitizedSupplier;
+            setInputs(values => ({ ...values, ['supplier_id']: sanitizedSupplier }))
 
-            document.clientForm.qty.value = data.qty;
-            setInputs(values => ({ ...values, ['qty']: data.qty }))
+            const sanitizedQty = DOMPurify.sanitize(data.qty);
+            document.clientForm.qty.value = sanitizedQty;
+            setInputs(values => ({ ...values, ['qty']: sanitizedQty }))
 
-            document.clientForm.onhand_qty.value = data.onhand_qty;
-            setInputs(values => ({ ...values, ['onhand_qty']: data.onhand_qty }))
+            const sanitizedOnHandQty = DOMPurify.sanitize(data.onhand_qty);
+            document.clientForm.onhand_qty.value = sanitizedOnHandQty;
+            setInputs(values => ({ ...values, ['onhand_qty']: sanitizedOnHandQty }))
 
-            document.clientForm.price.value = data.price;
-            setInputs(values => ({ ...values, ['price']: data.price }))
+            const sanitizedPrice = DOMPurify.sanitize(data.price);
+            document.clientForm.price.value = sanitizedPrice;
+            setInputs(values => ({ ...values, ['price']: sanitizedPrice }))
 
-            document.clientForm.o_price.value = data.o_price;
-            setInputs(values => ({ ...values, ['o_price']: data.o_price }))
+            const sanitizedOPrice = DOMPurify.sanitize(data.o_price);
+            document.clientForm.o_price.value = sanitizedOPrice;
+            setInputs(values => ({ ...values, ['o_price']: sanitizedOPrice }))
 
-            document.clientForm.date_arrival.value = data.date_arrival;
-            setInputs(values => ({ ...values, ['date_arrival']: data.date_arrival }))
+            const sanitizedDateArrival = DOMPurify.sanitize(data.date_arrival);
+            document.clientForm.date_arrival.value = sanitizedDateArrival;
+            setInputs(values => ({ ...values, ['date_arrival']: sanitizedDateArrival }))
         }
     }, [])
 
     const handleChange = (event) => {
         const name = event.target.name;
-        const value = event.target.value;
+        const value = DOMPurify.sanitize(event.target.value);
 
         setInputs(values => ({ ...values, [name]: value }));
     }
@@ -53,24 +63,24 @@ function PopupProducts({ displayModal, data, suppliers, onProductAdded  }) {
         e.preventDefault();
         
         try {
-            const data = {
+            const sanitizedData = {
                 'product_id': inputs.product_id,
-                'product_code': inputs.product_code,
-                'product_name': inputs.product_name,
-                'gen_name': inputs.gen_name,
+                'product_code': DOMPurify.sanitize(inputs.product_code),
+                'product_name': DOMPurify.sanitize(inputs.product_name),
+                'gen_name': DOMPurify.sanitize(inputs.gen_name),
                 'supplier_id': supplierSelected.supplier_id,
-                'qty': inputs.qty,
-                'onhand_qty': inputs.onhand_qty,
-                'price': inputs.price,
-                'o_price': inputs.o_price,
-                'date_arrival': inputs.date_arrival
+                'qty': DOMPurify.sanitize(inputs.qty),
+                'onhand_qty': DOMPurify.sanitize(inputs.onhand_qty),
+                'price': DOMPurify.sanitize(inputs.price),
+                'o_price': DOMPurify.sanitize(inputs.o_price),
+                'date_arrival': DOMPurify.sanitize(inputs.date_arrival)
             }
 
             // If it's a new product
             if (inputs.product_id === undefined) {
-                delete data.product_id;
+                delete sanitizedData.product_id;
 
-                const sendData = new URLSearchParams(data).toString();
+                const sendData = new URLSearchParams(sanitizedData).toString();
 
                 const res = await productsService.postProduct(sendData);
                 if (res.status === 'success') {
@@ -87,7 +97,7 @@ function PopupProducts({ displayModal, data, suppliers, onProductAdded  }) {
 
             } else {
                 // If a Product is being edited
-                const sendData = new URLSearchParams(data).toString();
+                const sendData = new URLSearchParams(sanitizedData).toString();
                 const res = await productsService.putProduct(sendData);
                 if (res.status === 'success') {
                     console.log("cliente editado");
