@@ -8,7 +8,7 @@ import DOMPurify from 'dompurify';
 
 import '../styles/loginform.css';
 
-function LoginForm() {
+function LoginForm({badAuth}) {
     const [inputs, setInputs] = useState({});
     const [userData, setUserData] = useState('');
 
@@ -46,7 +46,7 @@ function LoginForm() {
                         // navigate('/');
 
                     } else {
-                        console.log("NOOOO");
+                        badAuth()
                     }
                 })
                 .catch((err) => {

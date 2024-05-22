@@ -19,7 +19,6 @@ function Dashboard() {
           dato.total_records = parseInt(dato.total_records);
         });
         setClientsData(raw_data);
-        console.log(raw_data[0])
       })
       .catch((e) => {
         console.log("no se pudo", e);
