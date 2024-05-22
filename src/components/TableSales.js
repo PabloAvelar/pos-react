@@ -21,7 +21,10 @@ function TableSales({data, handleDeleteProduct}) {
     }
 
     return (
-        <section className='datatable-container'>
+        <section className='datatable-container' style={{
+            height: '40%',
+            overflowY: 'auto',
+        }}>
 
             <DataTable value={data} scrollable stripedRows editMode="row" dataKey="product_id" className='table-container'>
                 <Column

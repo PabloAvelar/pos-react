@@ -6,6 +6,7 @@ import { EditButton, DeleteButton } from './Buttons';
 import PopupProducts from './PopupProducts';
 import productsService from '../services/productsService';
 
+
 function TableProducts({data, suppliers}) {
     const [showModal, setShowModal] = useState(false);
     const [clientData, setClientData] = useState({});
@@ -52,7 +53,10 @@ function TableProducts({data, suppliers}) {
     }
 
     return (
-        <section className='datatable-container'>
+        <section className='datatable-container' style={{
+            height: '77%',
+            overflowY: 'auto',
+        }}>
 
             <DataTable value={data} scrollable stripedRows editMode="row" dataKey="product_id" className='table-container'>
                 <Column

@@ -40,7 +40,10 @@ function TableSuppliers({ data, onSupplierAdded }) {
         return <></>
     }
     return (
-        <section className='datatable-container'>
+        <section className='datatable-container' style={{
+            height: '77%',
+            overflowY: 'auto',
+        }}>
 
             <DataTable value={data} scrollable stripedRows editMode="row" dataKey="supplier_id" className='table-container'>
                 <Column

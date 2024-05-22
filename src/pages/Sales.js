@@ -157,8 +157,15 @@ function Sales() {
 
         {
           productsCart.length > 0 && productSelected !== undefined &&
-          <div className='add-customer-content'>
-            <div className='add-customer-container save-sale'>
+          <div
+          style={{
+            display: 'flex',
+            justifyContent: 'flex-end',
+            marginRight: 15
+          }}>
+            <div className='add-customer-container save-sale'
+            style={{
+            }}>
               <a className='add-customer' onClick={handleSave}>Save</a>
             </div>
           </div>

@@ -14,7 +14,10 @@ function TableReceipt({ data }) {
     }
 
     return (
-        <section className='datatable-container'>
+        <section className='datatable-container' style={{
+            height: '77%',
+            overflowY: 'auto',
+        }}>
 
             <DataTable value={data} scrollable stripedRows editMode="row" dataKey="product_id" className='table-container'>
 
