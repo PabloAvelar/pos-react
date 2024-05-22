@@ -19,6 +19,7 @@ function Dashboard() {
           dato.total_records = parseInt(dato.total_records);
         });
         setClientsData(raw_data);
+        console.log(raw_data[0])
       })
       .catch((e) => {
         console.log("no se pudo", e);
@@ -49,10 +50,14 @@ function Dashboard() {
 
   const renderChart = (data, ChartComponent, chartProps) => {
     if (data.length === 0) {
-      return <p style={{color: 'gray'}}>No data were found for the graphs</p>;
+      return <p style={{ color: 'gray' }}>No data were found for the graphs</p>;
     }
 
-    return <ChartComponent {...chartProps} />;
+    return (
+      <ChartComponent {...chartProps} >;
+        {chartProps.children}
+      </ChartComponent>
+    )
   };
 
   return (
@@ -83,19 +88,21 @@ function Dashboard() {
               width: 400,
               height: 300,
               children: (
-                <Pie
-                  dataKey={"total_records"}
-                  isAnimationActive={false}
-                  data={clientsData}
-                  cx="40%"
-                  cy="50%"
-                  outerRadius={125}
-                  fill="#8C5340"
-                  nameKey='customer_name'
-                />
+                <>
+                  <Pie
+                    dataKey={"total_records"}
+                    isAnimationActive={false}
+                    data={clientsData}
+                    cx="40%"
+                    cy="50%"
+                    outerRadius={125}
+                    fill="#8C5340"
+                    nameKey="customer_name"
+                  />
+                  <Tooltip />
+                </>
               ),
             })}
-            <Tooltip />
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -104,19 +111,21 @@ function Dashboard() {
               width: 400,
               height: 300,
               children: (
-                <Pie
-                  dataKey="total_records"
-                  isAnimationActive={false}
-                  data={productsData}
-                  cx="40%"
-                  cy="50%"
-                  outerRadius={125}
-                  fill="#8C5340"
-                  nameKey='product_name'
-                />
+                <>
+                  <Pie
+                    dataKey="total_records"
+                    isAnimationActive={false}
+                    data={productsData}
+                    cx="40%"
+                    cy="50%"
+                    outerRadius={125}
+                    fill="#8C5340"
+                    nameKey='product_name'
+                  />
+                  <Tooltip />
+                </>
               ),
             })}
-            <Tooltip />
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
