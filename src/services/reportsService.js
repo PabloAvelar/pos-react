@@ -1,19 +1,18 @@
-import { postByUrl, getByUrl, postByUrlWithConfig } from "./utils";
+import { postByUrl, getByUrl } from "./utils";
 
-const baseUrl = 'http://localhost/pos-backend/api/reports';
+const endpoint = `${process.env.REACT_APP_API_URL}/reports`;
 
 // GET
 async function getReports(){
-    const endpoint = baseUrl + '/getreports.php';
     const res = getByUrl(endpoint);
     return res;
 }
 
-async function getReportById(id){
-    const endpoint = baseUrl + '/getproduct.php?' + id;
-    const res = getByUrl(endpoint);
-    return res;
-}
+// async function getReportById(id){
+//     const endpoint = baseUrl + '/getproduct.php?' + id;
+//     const res = getByUrl(endpoint);
+//     return res;
+// }
 
 
 export default {

@@ -1,17 +1,15 @@
-import { postByUrl, getByUrl, postByUrlWithConfig } from "./utils";
+import { postByUrl, getByUrl } from "./utils";
 
-const baseUrl = 'http://localhost/pos-backend/api/sales';
+const endpoint = `${process.env.REACT_APP_API_URL}/sales`;
 
 // POST
 async function postSalesOrder(data){
-    const endpoint = baseUrl + '/postsalesorder.php';
     const res = postByUrl(endpoint, data);
     return res;
 }
 
 // GET
 async function getSalesOrder(){
-    const endpoint = baseUrl + '/getsalesorder.php';
     const res = getByUrl(endpoint);
     return res;
 }

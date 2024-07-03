@@ -5,14 +5,13 @@ export async function postByUrl(url, data){
     return _data.data;
 }
 
-export async function deleteByUrl(url, data){
-    const _data = await axios.delete(url, data);
+export async function putByUrl(url, data){
+    const _data = await axios.put(url, data);
     return _data.data;
 }
 
-export async function postByUrlWithConfig(url, data, config){
-    const axiosConfig = axios.create(config);
-    const _data = await axiosConfig.post(url, data);
+export async function deleteByUrl(url, data){
+    const _data = await axios.delete(url, data);
     return _data.data;
 }
 
