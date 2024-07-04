@@ -48,6 +48,11 @@ function Suppliers() {
     getData()
   }, []);
 
+  const handleSupplierDeleted = async () => {
+    await getData();
+    showNotification('Deleted!', 'The supplier has been deleted successfully', 'success', 5000);
+  }
+
   const handleSupplierAdded = async (title, message, type, duration) => {
     await getData();
     showNotification(title, message, type, duration);
@@ -76,7 +81,7 @@ function Suppliers() {
             </div>
           </div>
         </section>
-        {dataLoaded ? <TableSuppliers data={suppliers} onSupplierAdded={handleSupplierAdded} /> : <p>cargando datos</p>}
+        {dataLoaded ? <TableSuppliers data={suppliers} onSupplierDeleted={handleSupplierDeleted} onSupplierAdded={handleSupplierAdded} /> : <p>cargando datos</p>}
       </article>
 
       {showModal && <PopupSuppliers displayModal={setShowModal} onSupplierAdded={handleSupplierAdded} />}

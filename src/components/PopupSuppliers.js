@@ -48,21 +48,20 @@ function PopupSuppliers({ displayModal, data, onSupplierAdded }) {
 
         try {
 
-
-            const sanitizedData = new URLSearchParams({
+            const sanitizedData = {
                 'supplier_id': inputs.supplier_id,
                 'supplier_name': DOMPurify.sanitize(inputs.supplier_name),
                 'contact_person': DOMPurify.sanitize(inputs.contact_person),
                 'supplier_contact': DOMPurify.sanitize(inputs.supplier_contact),
                 'supplier_address': DOMPurify.sanitize(inputs.supplier_address),
                 'note': DOMPurify.sanitize(inputs.note),
-            })
+            }
 
             // If it's a new customer
             if (inputs.supplier_id === undefined) {
-                sanitizedData.delete("supplier_id");
+                delete sanitizedData["supplier_id"]
 
-                const res = await suppliersService.postSupplier(sanitizedData.toString());
+                const res = await suppliersService.postSupplier(sanitizedData);
                 if (res.status === 'success') {
                     console.log("Supplier agregado");
                     onSupplierAdded("¡Nuevo proveedor registrado!", "Se ha agregado un nuevo proveedor", 'success', 5000);
@@ -70,7 +69,7 @@ function PopupSuppliers({ displayModal, data, onSupplierAdded }) {
 
             } else {
                 // If a Supplier is being edited
-                const res = await suppliersService.putSupplier(sanitizedData.toString());
+                const res = await suppliersService.putSupplier(sanitizedData);
                 if (res.status === 'success') {
                     console.log("proveedor editado");
                     onSupplierAdded("¡Proveedor modificado!", "Se ha modificar el proveedor", 'success', 5000);

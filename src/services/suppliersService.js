@@ -29,7 +29,7 @@ async function getSuppliers(){
 
 // DELETE
 async function deleteSupplier(data){
-    const res = deleteByUrl(endpoint, data);
+    const res = deleteByUrl(`${endpoint}/${data}`);
     return res;
 }
 

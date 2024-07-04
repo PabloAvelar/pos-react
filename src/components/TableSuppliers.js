@@ -7,23 +7,21 @@ import PopupSuppliers from './PopupSuppliers';
 import '../styles/tableclients.css';
 import suppliersService from '../services/suppliersService';
 
-function TableSuppliers({ data, onSupplierAdded }) {
+function TableSuppliers({ data, onSupplierAdded, onSupplierDeleted }) {
     const [showModal, setShowModal] = useState(false);
     const [clientData, setClientData] = useState({});
     const auth = useAuth();
 
     const handleDelete = async (rowData) => {
         try {
-            const data = new URLSearchParams({
-                'supplier_id': rowData.supplier_id
-            }).toString();
 
-            const res = await suppliersService.deleteSupplier(data)
+            const id = rowData.supplier_id;
+
+            const res = await suppliersService.deleteSupplier(id)
             if (res.status === 'success') {
-                console.log("Customer deleted");
-                window.location.reload();
+                onSupplierDeleted()
             } else {
-                console.log(res.status);
+                throw new Error('The operation failed. Status is not success');
             }
         } catch (e) {
             console.error(e);

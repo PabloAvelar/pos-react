@@ -42,34 +42,32 @@ function PopupClients({ displayModal, data, onClientAdded }) {
 
     async function handleSubmit(e) {
         e.preventDefault();
-
+        
         try {
 
 
-            const sanitizedData = new URLSearchParams({
-                'customer_id': inputs.customer_id,
+            const sanitizedData = {
                 'customer_name': DOMPurify.sanitize(inputs.customer_name),
                 'contact': DOMPurify.sanitize(inputs.contact),
                 'address': DOMPurify.sanitize(inputs.address),
                 'membership_number': DOMPurify.sanitize(inputs.membership_number),
-            })
+            }
 
             // If it's a new customer
-            if (inputs.customer_id === undefined) {
-                sanitizedData.delete("customer_id");
+            if (inputs.customer_id != undefined) {
+                sanitizedData['customer_id'] = inputs.customer_id;
 
-                const res = await clientsService.postClient(sanitizedData.toString())
+                const res = await clientsService.putClient(sanitizedData)
                 if (res.status === 'success') {
-                    console.log("cliente agregado");
-                    onClientAdded("¡Cliente registrado!", "Se ha agregado un nuevo cliente", 'success', 5000)
+                    console.log("cliente modificado");
+                    onClientAdded("¡Cliente registrado!", "Se ha modificado el cliente", 'success', 5000)
                 }
             } else {
                 // If a client is being edited
-                const res = await clientsService.putClient(sanitizedData.toString())
+                const res = await clientsService.postClient(sanitizedData)
                 if (res.status === 'success') {
-                    console.log("cliente editado");
                     displayModal(false)
-                    onClientAdded("¡Cliente modificado!", "Se ha modificado el cliente", 'success', 5000)
+                    onClientAdded("¡Cliente modificado!", "Se ha agregado un nuevo cliente", 'success', 5000)
                 }
             }
 

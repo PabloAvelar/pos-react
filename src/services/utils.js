@@ -32,9 +32,9 @@ export async function putByUrl(url, data) {
     return _data.data;
 }
 
-export async function deleteByUrl(url, data) {
+export async function deleteByUrl(url) {
     const { accessToken } = await authExtractor();
-    const _data = await axios.delete(url, data,
+    const _data = await axios.delete(url,
         {
             headers: {
                 Authorization: `Bearer ${accessToken}`
