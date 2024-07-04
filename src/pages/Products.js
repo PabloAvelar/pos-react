@@ -17,7 +17,7 @@ function Products() {
   const [dataLoaded, setDataLoaded] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const notificationShownRef = useRef(false); // Referencia para notificación
-  
+
 
   const showNotification = (title, message, type, duration) => {
     Store.addNotification({
@@ -67,8 +67,13 @@ function Products() {
     getData();
   }, []);
 
+  const handleProductDeleted = async () => {
+    await getData();
+    showNotification('Deleted!', 'The product has been deleted successfully', 'success', 5000);
+  }
+
   const handleProductAdded = async (title, message, type, duration) => {
-    
+
     await getData();
     showNotification(title, message, type, duration);
     setShowModal(false);
@@ -96,13 +101,13 @@ function Products() {
             </div>
           </div>
         </section>
-        {dataLoaded ? <TableProducts data={products} suppliers={suppliers} /> : <p>cargando datos</p>}
+        {dataLoaded ? <TableProducts displayModal={setShowModal} data={products} onProductAdded={handleProductAdded} onProductDeleted={handleProductDeleted} suppliers={suppliers} /> : <p>cargando datos</p>}
       </article>
 
       {showModal && <PopupProducts
-      displayModal={setShowModal}
-      suppliers={suppliers}
-      onProductAdded={handleProductAdded}
+        displayModal={setShowModal}
+        suppliers={suppliers}
+        onProductAdded={handleProductAdded}
       />}
 
     </main>

@@ -34,7 +34,7 @@ function TableReports({ data }) {
                 </Column>
 
                 <Column
-                    field="customer_name"
+                    field="Customer.customer_name"
                     headerClassName='table-column1-header'
                     bodyClassName='table-column1-body'
                     style={{ minWidth: 20 }}
@@ -44,7 +44,7 @@ function TableReports({ data }) {
                 </Column>
 
                 <Column
-                    field="product_name"
+                    field="Product.product_name"
                     headerClassName='table-column1-header'
                     bodyClassName='table-column1-body'
                     style={{ minWidth: 20 }}

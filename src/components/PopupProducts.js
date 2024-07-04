@@ -5,10 +5,10 @@ import '../styles/popuproducts.css';
 import productsService from '../services/productsService';
 import DOMPurify from 'dompurify';
 
-function PopupProducts({ displayModal, data, suppliers, onProductAdded  }) {
+function PopupProducts({ displayModal, data, suppliers, onProductAdded }) {
     const [inputs, setInputs] = useState({});
     const [supplierSelected, setSupplierSelected] = useState(suppliers === undefined ? "" : suppliers[0]);
-    
+
     useEffect(() => {
         // Setting data to edit a product
         if (data) {
@@ -61,7 +61,7 @@ function PopupProducts({ displayModal, data, suppliers, onProductAdded  }) {
 
     async function handleSubmit(e) {
         e.preventDefault();
-        
+
         try {
             const sanitizedData = {
                 'product_id': inputs.product_id,
@@ -82,7 +82,7 @@ function PopupProducts({ displayModal, data, suppliers, onProductAdded  }) {
 
 
                 const res = await productsService.postProduct(sanitizedData);
-                
+
                 if (res.status === 'success') {
                     console.log("Producto agregado");
                     onProductAdded(
@@ -90,7 +90,7 @@ function PopupProducts({ displayModal, data, suppliers, onProductAdded  }) {
                         "Se ha registrado " + inputs.product_name,
                         "success",
                         5000
-                      );
+                    );
 
                     displayModal(false);
                 }
@@ -100,7 +100,14 @@ function PopupProducts({ displayModal, data, suppliers, onProductAdded  }) {
                 const res = await productsService.putProduct(sanitizedData);
                 if (res.status === 'success') {
                     console.log("cliente editado");
-                    window.location.reload();
+                    onProductAdded(
+                        "¡Producto modificado!",
+                        "Se ha modificado " + inputs.product_name,
+                        "success",
+                        5000
+                    );
+                    displayModal(false);
+
                 }
             }
 
@@ -139,7 +146,7 @@ function PopupProducts({ displayModal, data, suppliers, onProductAdded  }) {
                     <div className="input-add-client-container">
                         <span style={{ fontSize: 16 }}>Supplier: </span>
                         <select name='supplier' className='input-form-popup' onChange={(e) => { setSupplierSelected(JSON.parse(e.target.value)) }}>
-                            { suppliers !== undefined &&
+                            {suppliers !== undefined &&
                                 suppliers.map((supp) => (
                                     <option key={supp.supplier_id} value={JSON.stringify(supp)}>{supp.supplier_name}</option>
                                 ))

@@ -7,12 +7,12 @@ import PopupProducts from './PopupProducts';
 import productsService from '../services/productsService';
 
 
-function TableProducts({data, suppliers}) {
+function TableProducts({ data, onProductDeleted, onProductAdded, suppliers }) {
     const [showModal, setShowModal] = useState(false);
     const [clientData, setClientData] = useState({});
 
     const auth = useAuth();
-    
+
     useEffect(() => {
         data.map((p) => {
             p.total = p.o_price * p.qty
@@ -22,17 +22,15 @@ function TableProducts({data, suppliers}) {
 
     const handleDeleteClient = (rowData) => {
         try {
-            const data = new URLSearchParams({
-                'product_id': rowData.product_id
-            }).toString();
+            const id = rowData.product_id;
 
-            productsService.deleteProduct(data)
+            productsService.deleteProduct(id)
                 .then((res) => {
                     if (res.status === 'success') {
                         console.log("Product deleted");
-                        window.location.reload();
+                        onProductDeleted();
                     } else {
-                        console.log(res.status);
+                        throw new Error('The operation failed. Status is not success');
                     }
                 })
                 .catch((e) => {
@@ -82,8 +80,8 @@ function TableProducts({data, suppliers}) {
                     field="product_code"
                     headerClassName='table-column1-header'
                     bodyClassName='table-column1-body'
-                    style={{ minWidth: 20 }}
-                    header="Brand name"
+                    style={{ minWidth: 150 }}
+                    header="Code"
                 >
 
                 </Column>
@@ -92,7 +90,7 @@ function TableProducts({data, suppliers}) {
                     field="gen_name"
                     headerClassName='table-column1-header'
                     bodyClassName='table-column1-body'
-                    style={{ minWidth: 20 }}
+                    style={{ minWidth: 120 }}
                     header="Generic name"
                 >
 
@@ -109,7 +107,7 @@ function TableProducts({data, suppliers}) {
                 </Column>
 
                 <Column
-                    field="supplier_name"
+                    field="Supplier.supplier_name"
                     headerClassName='table-column1-header'
                     bodyClassName='table-column1-body'
                     style={{ minWidth: 20 }}
@@ -171,7 +169,7 @@ function TableProducts({data, suppliers}) {
 
             </DataTable>
 
-            {showModal && <PopupProducts closeModal={setShowModal} data={clientData} suppliers={suppliers} />}
+            {showModal && <PopupProducts onProductAdded={onProductAdded} displayModal={setShowModal} data={clientData} suppliers={suppliers} />}
         </section>
 
     )
