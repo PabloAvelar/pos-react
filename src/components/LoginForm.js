@@ -8,7 +8,7 @@ import DOMPurify from 'dompurify';
 
 import '../styles/loginform.css';
 
-function LoginForm({badAuth}) {
+function LoginForm({ badAuth }) {
     const [inputs, setInputs] = useState({});
     const [userData, setUserData] = useState('');
 
@@ -28,30 +28,25 @@ function LoginForm({badAuth}) {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-
+        console.log("erntrasadasdsa")
         try {
 
-            const sanitizedInputs = new URLSearchParams({
+            const data = {
                 'username': sanitizeInput(inputs.username),
                 'password': sanitizeInput(inputs.password)
-            }).toString()
+            };
 
-            const data = new URLSearchParams(sanitizedInputs).toString();
+            const res = await registerService.login(data)
+            console.log("res", res);
+            if (res.accessToken) {
+                // Guardando el perro token en local
+                auth.updateAuth(res);
+                // navigate('/');
 
-            registerService.login(data)
-                .then((res) => {
-                    if (res.success) {
-                        // Guardando el perro token en local
-                        auth.updateAuth(res);
-                        // navigate('/');
-
-                    } else {
-                        badAuth()
-                    }
-                })
-                .catch((err) => {
-                    console.log(err);
-                })
+            } else {
+                console.log("bad!!")
+                badAuth()
+            }
 
         } catch (e) {
             console.log("Error: ", e);
@@ -63,7 +58,7 @@ function LoginForm({badAuth}) {
         setTimeout(() => {
             if (userData) {
                 // verifying the token
-                async function validateToken() { 
+                async function validateToken() {
                     try {
                         const response = registerService.validateToken({
                             userData
@@ -71,7 +66,7 @@ function LoginForm({badAuth}) {
                         console.log(response);
                         if (response) {
                             console.log("Token validated");
-                        }else{
+                        } else {
                             console.log("no validado")
                         }
                     } catch (error) {

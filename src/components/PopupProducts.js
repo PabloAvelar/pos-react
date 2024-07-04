@@ -80,9 +80,9 @@ function PopupProducts({ displayModal, data, suppliers, onProductAdded  }) {
             if (inputs.product_id === undefined) {
                 delete sanitizedData.product_id;
 
-                const sendData = new URLSearchParams(sanitizedData).toString();
 
-                const res = await productsService.postProduct(sendData);
+                const res = await productsService.postProduct(sanitizedData);
+                
                 if (res.status === 'success') {
                     console.log("Producto agregado");
                     onProductAdded(
@@ -97,8 +97,7 @@ function PopupProducts({ displayModal, data, suppliers, onProductAdded  }) {
 
             } else {
                 // If a Product is being edited
-                const sendData = new URLSearchParams(sanitizedData).toString();
-                const res = await productsService.putProduct(sendData);
+                const res = await productsService.putProduct(sanitizedData);
                 if (res.status === 'success') {
                     console.log("cliente editado");
                     window.location.reload();

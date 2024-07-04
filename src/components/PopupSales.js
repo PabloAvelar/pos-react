@@ -28,6 +28,7 @@ function PopupSales({ closeModal, data, customers }) {
         }
 
     }
+
     async function handleSubmit(e) {
         e.preventDefault();
         const todaysDate = new Date();
@@ -44,7 +45,7 @@ function PopupSales({ closeModal, data, customers }) {
                 const dataForSalesOrder = {
                     'product_id': product.product_id,
                     'customer_id': customerSelected.customer_id,
-                    'user_id': auth.auth.id,
+                    'user_id': auth.auth.user.id,
                     'date': date,
                     'price': product.price,
                     'amount': product.quantity * product.price,
@@ -62,12 +63,10 @@ function PopupSales({ closeModal, data, customers }) {
                     'customerMoney': inputs.customerMoney // Este sólo se usa para hacer el ticket/recibo
                 }
 
-                const urlParamsSalesOrder = new URLSearchParams(dataForSalesOrder).toString();
-
                 // Mandando datos la table `sales_order`
                 receipt.push(dataForReceipt)
-
-                const res = await salesService.postSalesOrder(urlParamsSalesOrder)
+                console.log(dataForSalesOrder)
+                const res = await salesService.postSalesOrder(dataForSalesOrder)
                 console.log(res)
             })
 

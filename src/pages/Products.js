@@ -68,6 +68,7 @@ function Products() {
   }, []);
 
   const handleProductAdded = async (title, message, type, duration) => {
+    
     await getData();
     showNotification(title, message, type, duration);
     setShowModal(false);

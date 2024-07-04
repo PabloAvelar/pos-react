@@ -59,6 +59,8 @@ function Dashboard() {
     )
   };
 
+  console.log(productsData);
+
   return (
     <main className="page-container">
       <aside>
@@ -128,7 +130,7 @@ function Dashboard() {
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <h3 style={{ marginRight: 80 }}>Clientes</h3>
+            <h3 style={{ marginRight: 80 }}>Clientes frecuentes</h3>
             {renderChart(clientsData, BarChart, {
               width: 470,
               height: 320,
