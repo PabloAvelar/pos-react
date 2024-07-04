@@ -7,7 +7,7 @@ import PopupClients from './PopupClients';
 import '../styles/tableclients.css';
 import clientsService from '../services/clientsService';
 
-function TableClients({ data, onClientAdded}) {
+function TableClients({ data, onClientAdded, onClientDeleted }) {
 
     const [showModal, setShowModal] = useState(false);
     const [clientData, setClientData] = useState({});
@@ -15,17 +15,14 @@ function TableClients({ data, onClientAdded}) {
 
     const handleDeleteClient = (rowData) => {
         try {
-            const data = new URLSearchParams({
-                'customer_id': rowData.customer_id
-            }).toString();
+            const id = rowData.customer_id;
 
-            clientsService.deleteClient(data)
+            clientsService.deleteClient(id)
                 .then((res) => {
                     if (res.status === 'success') {
-                        console.log("Customer deleted");
-                        window.location.reload();
+                        onClientDeleted()
                     } else {
-                        console.log(res.status);
+                        throw new Error('The operation failed. Status is not success');
                     }
                 })
                 .catch((e) => {
@@ -102,7 +99,7 @@ function TableClients({ data, onClientAdded}) {
                 </Column>
             </DataTable>
 
-            {showModal && <PopupClients displayModal={setShowModal} data={clientData} onClientAdded={onClientAdded}/>}
+            {showModal && <PopupClients displayModal={setShowModal} data={clientData} onClientAdded={onClientAdded} />}
         </section>
 
     )

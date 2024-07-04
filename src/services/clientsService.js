@@ -28,7 +28,7 @@ async function putClient(data){
 
 // DELETE
 async function deleteClient(data){
-    const res = deleteByUrl(`${endpoint}`, data);
+    const res = deleteByUrl(`${endpoint}/${data}`);
     return res;
 }
 

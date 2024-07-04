@@ -60,6 +60,7 @@ function PopupClients({ displayModal, data, onClientAdded }) {
                 const res = await clientsService.putClient(sanitizedData)
                 if (res.status === 'success') {
                     console.log("cliente modificado");
+                    displayModal(false)
                     onClientAdded("¡Cliente registrado!", "Se ha modificado el cliente", 'success', 5000)
                 }
             } else {

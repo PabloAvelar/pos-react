@@ -47,7 +47,12 @@ function Clients() {
   useEffect(() => {
     getData()
   }, []);
-  
+
+  const handleSupplierDeleted = async () => {
+    await getData();
+    showNotification('Deleted!', 'The customer has been deleted successfully', 'success', 5000);
+  }
+
   const handleClientAdded = async (title, message, type, duration) => {
     await getData();
     showNotification(title, message, type, duration);
@@ -76,7 +81,7 @@ function Clients() {
             </div>
           </div>
         </section>
-        {dataLoaded ? <TableClients data={clientsRegistered} onClientAdded={handleClientAdded} /> : <p>cargando datos</p>}
+        {dataLoaded ? <TableClients data={clientsRegistered} onClientDeleted={handleSupplierDeleted} onClientAdded={handleClientAdded} /> : <p>cargando datos</p>}
       </article>
 
 
